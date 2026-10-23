@@ -1,12 +1,11 @@
 :root {
-  --navy: #17613f;
-  --blue: #287f9f;
-  --aqua: #e4f3f7;
-  --sand: #f5f8f6;
-  --orange: #008a36;
-  --neon: #39ff14;
+  --navy: #241333;
+  --blue: #6941a5;
+  --aqua: #eee6f7;
+  --sand: #faf8fc;
+  --orange: #6f3fa0;
   --white: #fff;
-  --muted: #66736e;
+  --muted: #685d73;
 }
 * {
   box-sizing: border-box;
@@ -567,7 +566,7 @@ body {
 }
 .hero {
   background-image:
-    linear-gradient(90deg, rgba(18, 61, 49, 0.84), rgba(18, 61, 49, 0.32)),
+    linear-gradient(90deg, rgba(34, 16, 53, 0.84), rgba(34, 16, 53, 0.32)),
     url("fotos/portada.jpeg");
 }
 .hero h1,
@@ -575,12 +574,12 @@ body {
   color: #fff;
 }
 .hero h1 em {
-  color: #b9e6f4;
+  color: #d9c2f5;
 }
 .hero .eyebrow,
 .brand span,
 .navlinks a:hover {
-  color: #b9e6f4;
+  color: #d9c2f5;
 }
 .section-head h2 {
   color: var(--orange);
@@ -598,8 +597,8 @@ body {
 }
 .btn-primary,
 .mobile-cta {
-  background: var(--neon);
-  color: #071f17;
+  background: var(--orange);
+  color: #fff;
 }
 .btn-light {
   color: var(--navy);
@@ -611,34 +610,34 @@ body {
   color: var(--navy);
 }
 .band {
-  background: #123d31;
+  background: #241333;
 }
 .footer {
-  background: #123d31;
-  color: #e5f0ec;
+  background: #241333;
+  color: #eee6f7;
 }
 .footer small {
-  color: #c5d8d0;
+  color: #c6b7d4;
 }
 .band p,
 .hero p {
-  color: #edf7f4;
+  color: #f0eaf6;
 }
 .faq details {
-  border-bottom-color: #dbe5e1;
+  border-bottom-color: #e8ddf5;
 }
 .contact-line {
-  border-bottom-color: #dbe5e1;
+  border-bottom-color: #e8ddf5;
 }
 .weather {
-  border-color: #dbe5e1;
+  border-color: #eee8f4;
 }
 .form-field input,
 .form-field textarea {
-  border-color: #c9d9d2;
+  border-color: #d9cde5;
 }
 .form-field input:focus,
 .form-field textarea:focus {
-  outline-color: #b9e6f4;
+  outline-color: #d9c2f5;
   border-color: var(--blue);
 }
