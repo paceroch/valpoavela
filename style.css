@@ -297,6 +297,33 @@ h1 em {
   grid-template-columns: 1fr 1fr;
   gap: 50px;
 }
+.video-placeholder {
+  aspect-ratio: 16 / 9;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 24px;
+  border-radius: 22px;
+  background: var(--navy);
+  color: #fff;
+  text-align: center;
+}
+.video-placeholder-icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  padding-left: 4px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  font-size: 1.25rem;
+}
+.video-placeholder p {
+  margin: 0;
+  font-weight: 750;
+}
 .contact-panel {
   background: var(--sand);
   padding: 30px;
