@@ -676,3 +676,19 @@ body {
   outline-color: #d9c2f5;
   border-color: var(--blue);
 }
+
+
+.video-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+}
+
+.video-container video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
