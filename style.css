@@ -1564,3 +1564,19 @@ body #detalle-raquero .timeline article strong {
 #detalle-raquero .feature strong {
   color: #fff;
 }
+
+/* Ajuste del logo en vista móvil */
+@media (max-width: 768px) {
+  .nav .brand {
+    display: flex;
+    align-items: center;
+    margin-top: -8px;
+  }
+
+  .nav .brand img {
+    height: 55px;
+    width: auto;
+    display: block;
+  }
+} 
+
