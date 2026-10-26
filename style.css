@@ -2277,3 +2277,69 @@ h2 {
   background-color: #24465C !important;
   color: #D6B98C !important;
 }
+
+
+/* CORREGIR MENÚ MÓVIL MORADO */
+
+@media (max-width: 760px) {
+  .navlinks {
+    background: #17324D !important;
+    background-color: #17324D !important;
+  }
+
+  .navlinks a,
+  .navlinks a:visited,
+  .navlinks a:active {
+    color: #F8F6F0 !important;
+    background: transparent !important;
+  }
+
+  .navlinks a:hover,
+  .navlinks a:focus {
+    color: #D6B98C !important;
+    background: #24465C !important;
+  }
+
+  .navlinks ul,
+  .navlinks li,
+  .navlinks .dropdown-menu,
+  .navlinks .submenu {
+    background-color: #17324D !important;
+  }
+}
+
+
+/* VALPO A VELA — COLORES DEL MENÚ MÓVIL */
+
+.mobile-nav {
+  background: #17324D !important;
+  background-color: #17324D !important;
+  border-color: #7396A6 !important;
+  color: #F8F6F0 !important;
+}
+
+.mobile-nav a,
+.mobile-nav a:visited,
+.mobile-nav a:active {
+  background: transparent !important;
+  color: #F8F6F0 !important;
+  border-color: rgba(248, 246, 240, 0.18) !important;
+}
+
+.mobile-nav a:hover,
+.mobile-nav a:focus {
+  background: #24465C !important;
+  color: #D6B98C !important;
+}
+
+/* Botón de las tres líneas */
+
+.mobile-menu-btn {
+  color: #F8F6F0 !important;
+}
+
+/* Evitar que estilos adicionales mantengan el morado */
+
+.mobile-nav * {
+  border-color: rgba(248, 246, 240, 0.18);
+}
