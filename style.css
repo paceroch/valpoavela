@@ -105,6 +105,52 @@ a {
   opacity: 1;
 }
 
+/* MENÚ DESPLEGABLE DROPDOWN */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgba(91, 33, 138, 0.98);
+  min-width: 230px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 30;
+  padding: 8px 0;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 18px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.dropdown-menu a:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* MANEJO DE HOJAS / VISTAS */
+.page-view {
+  display: none;
+}
+
+.page-view.active {
+  display: block;
+}
+
 .navcta,
 .btn {
   display: inline-flex;
@@ -129,6 +175,14 @@ a {
 .btn-light {
   background: #fff;
   color: var(--navy);
+}
+
+.btn-back {
+  background: transparent;
+  color: var(--vv-ink);
+  border: 1px solid var(--vv-ink);
+  margin-left: 10px;
+  cursor: pointer;
 }
 
 .btn:hover,
@@ -263,6 +317,7 @@ h1 em {
   overflow: hidden;
   box-shadow: none;
   border: 0;
+  transition: transform 0.3s ease;
 }
 
 .card img {
@@ -304,6 +359,63 @@ h1 em {
   text-decoration: none;
   color: #236c70;
   font-size: 14px;
+}
+
+/* ESTILOS PARA EL CARRUSEL DE CADA ACTIVIDAD */
+.activity-carousel-wrap {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(91, 33, 138, .18);
+}
+
+.activity-carousel-wrap h3 {
+  font-size: 20px;
+  color: var(--vv-ink);
+  margin-bottom: 18px;
+  font-family: inherit;
+  font-weight: 750;
+  letter-spacing: -.02em;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-bottom: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel-track::-webkit-scrollbar {
+  height: 6px;
+}
+
+.carousel-track::-webkit-scrollbar-thumb {
+  background: var(--vv-sea);
+  border-radius: 999px;
+}
+
+.carousel-slide {
+  flex: 0 0 300px;
+  scroll-snap-align: start;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(36, 19, 51, 0.08);
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
 }
 
 .split {
@@ -966,9 +1078,6 @@ h2 {
 }
 }
 
-/* Dirección visual inspirada en el minimalismo editorial de Apple,
-adaptada a Valpo a Vela y sin copiar su identidad de marca. */
-
 .btn,
 .btn-primary,
 .hero .btn-primary {
@@ -981,8 +1090,7 @@ adaptada a Valpo a Vela y sin copiar su identidad de marca. */
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
-  transition: transform 0.2s,
-background 0.2s;
+  transition: transform 0.2s, background 0.2s;
 }
 
 .btn:hover,
@@ -1037,12 +1145,6 @@ h2 {
 
 .text-link:hover {
   text-decoration: underline;
-}
-
-#detalle-raquero .section-head {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .timeline article,
@@ -1341,119 +1443,6 @@ html {
   margin-right: auto;
 }
 
-#detalle-raquero .timeline {
-  gap: 16px;
-  margin: 1.5rem 0;
-}
-
-#detalle-raquero .timeline article {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-  min-width: 0;
-  padding: 22px;
-  border: 1px solid #d8dfd7;
-  border-top: 3px solid #71958b;
-  border-radius: 8px;
-  background: #fbfaf7;
-  box-shadow: 0 3px 12px rgba(23, 51, 59, 0.045);
-}
-
-#detalle-raquero .step-number {
-  color: var(--vv-sea);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-}
-
-#detalle-raquero .timeline article strong {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 22px;
-  font-weight: 500;
-  line-height: 1.2;
-}
-
-#detalle-raquero .timeline .time {
-  display: inline-flex;
-  align-items: center;
-  min-height: 26px;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: #e8eee7;
-  color: #3c5755;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0;
-}
-
-#detalle-raquero .timeline p {
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-@media (max-width: 760px) {
-.hero {
-  min-height: 710px;
-}
-
-.hero-content {
-  padding: 4rem 1rem;
-}
-
-.hero-note {
-  align-items: center;
-}
-
-#detalle-raquero .timeline {
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-
-#detalle-raquero .timeline article {
-  padding: 18px 20px;
-}
-}
-
-#detalle-raquero .feature-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 1rem;
-}
-
-#detalle-raquero > .wrap > h3 {
-  color: #563178;
-}
-
-#detalle-raquero .feature {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 5px;
-  min-width: 0;
-  padding: 13px 15px;
-  border: 1px solid #654286;
-  border-radius: 7px;
-  background: #563178;
-  box-shadow: 0 2px 8px rgba(49, 26, 69, 0.08);
-  color: #fff;
-}
-
-#detalle-raquero .feature strong {
-  margin: 0;
-  color: #fff;
-  font-size: 14px;
-  line-height: 1.35;
-}
-
-#detalle-raquero .feature p {
-  margin: 0;
-  color: #f3edf8;
-  font-size: 13px;
-  line-height: 1.45;
-}
-
 .band > div {
   width: min(100%, 760px);
   margin: 0 auto;
@@ -1484,17 +1473,7 @@ html {
   aspect-ratio: 16 / 9;
 }
 
-@media (min-width: 761px) and (max-width: 980px) {
-#detalle-raquero .feature-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-}
-
 @media (max-width: 760px) {
-#detalle-raquero .feature-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
 .band {
   align-items: center;
 }
@@ -1508,21 +1487,13 @@ html {
 }
 }
 
-@media (max-width: 480px) {
-#detalle-raquero .feature-grid {
-  grid-template-columns: 1fr;
-}
-}
-
 body .hero h1,
 body .section-head h2,
 body .story-copy h2,
 body #contacto .contact-details h2,
 body .band h2,
 body .card h3,
-body .story-caption strong,
-body #detalle-raquero > .wrap > h3,
-body #detalle-raquero .timeline article strong {
+body .story-caption strong {
   font-family: inherit;
   font-weight: 700;
   letter-spacing: -0.035em;
@@ -1552,17 +1523,9 @@ body #detalle-raquero .timeline article strong {
 }
 
 .pill,
-#detalle-raquero .timeline .time,
-#detalle-raquero > .wrap > h3,
-#detalle-raquero .step-number,
 .text-link,
 .safety-note {
   color: #6d28d9;
-}
-
-#detalle-raquero .feature,
-#detalle-raquero .feature strong {
-  color: #fff;
 }
 
 /* Ajuste del logo en vista móvil */
@@ -1580,12 +1543,7 @@ body #detalle-raquero .timeline article strong {
   }
 } 
 
-
-/* ==========================================
-   VALPO A VELA — EXPERIENCIA RAQUERO
-   Colores originales de la marca
-========================================== */
-
+/* ESTILOS DE CADA ACTIVIDAD (RAQUERO) */
 .section-raquero {
   background: var(--vv-cloud);
   color: var(--vv-ink);
@@ -1598,8 +1556,6 @@ body #detalle-raquero .timeline article strong {
   width: min(1160px, calc(100% - 56px));
   margin-inline: auto;
 }
-
-/* ENCABEZADO */
 
 .raquero-header {
   max-width: 800px;
@@ -1640,8 +1596,6 @@ body #detalle-raquero .timeline article strong {
   font-size: 16px;
   line-height: 1.8;
 }
-
-/* FOTOGRAFÍA PRINCIPAL */
 
 .raquero-hero {
   position: relative;
@@ -1693,8 +1647,6 @@ body #detalle-raquero .timeline article strong {
   font-weight: 700;
   letter-spacing: .13em;
 }
-
-/* ETAPAS DE LA EXPERIENCIA */
 
 .raquero-etapas {
   display: grid;
@@ -1754,8 +1706,6 @@ body #detalle-raquero .timeline article strong {
   font-size: 14px;
   line-height: 1.8;
 }
-
-/* QUÉ INCLUYE */
 
 .raquero-incluye {
   display: grid;
@@ -1836,40 +1786,6 @@ body #detalle-raquero .timeline article strong {
   line-height: 1.7;
 }
 
-/* SEGURIDAD */
-
-.raquero-seguridad {
-  display: flex;
-  align-items: stretch;
-  gap: 20px;
-  max-width: 850px;
-  margin: 0 auto;
-  padding-top: 25px;
-  border-top: 1px solid rgba(91, 33, 138, .18);
-}
-
-.seguridad-linea {
-  flex-shrink: 0;
-  width: 3px;
-  background: var(--vv-sea);
-}
-
-.raquero-seguridad h4 {
-  margin: 0 0 7px;
-  color: var(--vv-ink);
-  font-size: 14px;
-  font-weight: 750;
-}
-
-.raquero-seguridad p {
-  margin: 0;
-  color: var(--vv-muted);
-  font-size: 13px;
-  line-height: 1.8;
-}
-
-/* TABLET */
-
 @media (max-width: 900px) {
   .raquero-etapa {
     gap: 12px;
@@ -1898,8 +1814,6 @@ body #detalle-raquero .timeline article strong {
     max-width: 520px;
   }
 }
-
-/* MÓVIL */
 
 @media (max-width: 600px) {
   .section-raquero {
@@ -1978,15 +1892,5 @@ body #detalle-raquero .timeline article strong {
 
   .incluye-item {
     padding: 17px 0;
-  }
-
-  .raquero-seguridad {
-    gap: 15px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .raquero-hero img {
-    transition: none;
   }
 }

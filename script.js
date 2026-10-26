@@ -1,39 +1,31 @@
 document.getElementById("year").textContent = new Date().getFullYear();
 
-const weatherStatus = document.getElementById("weather-status");
-const forecast = document.getElementById("forecast");
-const weatherDescriptions = {
-  0: ["Despejado", "☀️"],
-  1: ["Mayormente despejado", "🌤️"],
-  2: ["Parcialmente nublado", "⛅"],
-  3: ["Nublado", "☁️"],
-  45: ["Niebla", "🌫️"],
-  48: ["Niebla con escarcha", "🌫️"],
-  51: ["Llovizna ligera", "🌦️"],
-  53: ["Llovizna", "🌦️"],
-  55: ["Llovizna intensa", "🌧️"],
-  56: ["Llovizna helada ligera", "🌧️"],
-  57: ["Llovizna helada intensa", "🌧️"],
-  61: ["Lluvia ligera", "🌦️"],
-  63: ["Lluvia", "🌧️"],
-  65: ["Lluvia intensa", "🌧️"],
-  66: ["Lluvia helada ligera", "🌧️"],
-  67: ["Lluvia helada intensa", "🌧️"],
-  71: ["Nieve ligera", "🌨️"],
-  73: ["Nieve", "🌨️"],
-  75: ["Nieve intensa", "❄️"],
-  77: ["Granizo pequeño", "🌨️"],
-  80: ["Chubascos ligeros", "🌦️"],
-  81: ["Chubascos", "🌧️"],
-  82: ["Chubascos intensos", "🌧️"],
-  85: ["Chubascos de nieve", "🌨️"],
-  86: ["Chubascos de nieve intensos", "🌨️"],
-  95: ["Tormenta", "⛈️"],
-  96: ["Tormenta con granizo", "⛈️"],
-  99: ["Tormenta intensa con granizo", "⛈️"],
-};
+// Manejo de cambio de vistas
+function showView(viewId) {
+  const views = document.querySelectorAll('.page-view');
+  views.forEach(view => {
+    view.classList.remove('active');
+  });
 
+  const targetView = document.getElementById(`view-${viewId}`);
+  if (targetView) {
+    targetView.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
 
+// Navegación hacia secciones del Home
+function navigateToSection(viewId, sectionId) {
+  showView(viewId);
+  setTimeout(() => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, 100);
+}
+
+// Formulario de Contacto
 document.getElementById("contact-form").addEventListener("submit", (event) => {
   event.preventDefault();
   const form = event.currentTarget;
