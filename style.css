@@ -1940,3 +1940,340 @@ body .story-caption strong {
     padding: 17px 0;
   }
 }
+
+
+/* =========================================
+   VALPO A VELA — NUEVA IDENTIDAD VISUAL
+   Azul marino, blanco cálido y arena
+   ========================================= */
+
+:root {
+  --navy: #17324D;
+  --blue: #7396A6;
+  --aqua: #E9F0F2;
+  --sand: #F8F6F0;
+  --orange: #D6B98C;
+  --white: #FFFFFF;
+  --muted: #596B78;
+
+  --vv-ink: #17324D;
+  --vv-sea: #7396A6;
+  --vv-sand: #F8F6F0;
+  --vv-muted: #596B78;
+  --vv-blue: #17324D;
+  --vv-cloud: #E9F0F2;
+  --vv-white: #F8F6F0;
+  --vv-sea-dark: #102638;
+}
+
+/* Tipografía general */
+
+body {
+  font-family: "DM Sans", sans-serif;
+  color: #17324D;
+  background: #F8F6F0;
+}
+
+h1,
+h2,
+.section-head h2,
+.band h2 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  color: #17324D;
+  letter-spacing: -0.025em;
+}
+
+h3,
+.card h3,
+.contact-form h3,
+.forecast-day h3 {
+  font-family: "DM Sans", sans-serif;
+  color: #17324D;
+}
+
+/* Barra de navegación */
+
+.topbar {
+  background: rgba(23, 50, 77, 0.97);
+  color: #FFFFFF;
+}
+
+.navlinks a {
+  color: #F8F6F0;
+}
+
+.navlinks a:hover,
+.hero .eyebrow {
+  color: #D6B98C;
+}
+
+/* Portada y video */
+
+.hero {
+  background-color: #17324D;
+  color: #FFFFFF;
+}
+
+.hero::before {
+  background: linear-gradient(
+    90deg,
+    rgba(16, 38, 56, 0.76),
+    rgba(23, 50, 77, 0.28)
+  );
+}
+
+.hero::after {
+  background: linear-gradient(
+    175deg,
+    transparent 49%,
+    #F8F6F0 50%
+  );
+}
+
+.hero h1,
+.hero h1 em {
+  color: #FFFFFF;
+}
+
+.hero h1 em {
+  font-style: italic;
+}
+
+.hero p {
+  color: rgba(255, 255, 255, 0.94);
+}
+
+/* Botones */
+
+.btn,
+.btn-primary,
+.hero .btn-primary {
+  border-radius: 999px;
+  font-family: "DM Sans", sans-serif;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.btn-primary,
+.hero .btn-primary,
+.mobile-cta {
+  background: #17324D;
+  color: #FFFFFF;
+  border: 1px solid #17324D;
+}
+
+.btn-primary:hover,
+.hero .btn-primary:hover,
+.mobile-cta:hover {
+  background: #24465C;
+  border-color: #24465C;
+  color: #FFFFFF;
+}
+
+.hero .btn:not(.btn-primary) {
+  background: rgba(23, 50, 77, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  color: #FFFFFF;
+}
+
+/* Fondos de las secciones */
+
+body,
+.section {
+  background-color: #F8F6F0;
+}
+
+.section-soft,
+.card,
+.contact-form,
+.feature,
+.timeline article {
+  background-color: #F2F1EC;
+}
+
+.band {
+  background-color: #17324D;
+  color: #FFFFFF;
+}
+
+.band h2 {
+  color: #FFFFFF;
+}
+
+.section-head h2,
+h2 {
+  color: #17324D;
+}
+
+.eyebrow,
+.num {
+  color: #527B90;
+}
+
+/* Tarjetas de experiencias */
+
+.card {
+  border: 1px solid #E2E4E1;
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+.card h3 {
+  color: #17324D;
+}
+
+.card p,
+.section-head p,
+.feature p,
+.contact-panel p {
+  color: #596B78;
+}
+
+.text-link,
+.form-status a {
+  color: #244F69;
+}
+
+/* Imágenes y detalles */
+
+.photo-stack img,
+.card img,
+.video-container {
+  border-radius: 8px;
+}
+
+.note {
+  background: #F8F6F0;
+  color: #17324D;
+  border: 1px solid #E2E4E1;
+}
+
+.checks li:before {
+  background: #E9F0F2;
+  color: #17324D;
+}
+
+.pill {
+  background: #E9F0F2;
+  color: #244F69;
+}
+
+.timeline article {
+  border-top-color: #7396A6;
+}
+
+.safety-note {
+  background: #E9F0F2;
+  color: #24465C;
+  border-color: #D5E0E5;
+}
+
+/* Formularios y contacto */
+
+.contact-panel,
+.contact-details,
+.contact-form {
+  background: #F2F1EC;
+}
+
+.contact-line {
+  border-bottom-color: #E2E4E1;
+}
+
+.form-field input,
+.form-field textarea {
+  color: #17324D;
+  border-color: #D5DDE1;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  outline-color: #7396A6;
+  border-color: #527B90;
+}
+
+/* Pronóstico meteorológico */
+
+.weather {
+  background: #FFFFFF;
+  border-color: #E2E7E8;
+  box-shadow: 0 10px 30px rgba(23, 50, 77, 0.06);
+}
+
+.forecast-day {
+  background: #F2F1EC;
+}
+
+.wind-map-wrap {
+  border-radius: 12px;
+}
+
+/* Pie de página */
+
+.footer {
+  background: #17324D;
+  color: #FFFFFF;
+}
+
+.footer small {
+  color: #D6E0E7;
+}
+
+/* Ajustes para móviles */
+
+@media (max-width: 760px) {
+  .topbar {
+    background: rgba(23, 50, 77, 0.98);
+  }
+
+  .hero {
+    background-color: #17324D;
+  }
+
+  .mobile-cta {
+    box-shadow: 0 6px 24px rgba(23, 50, 77, 0.22);
+  }
+}
+
+
+/* CORRECCIÓN DE COLORES DEL MENÚ DESPLEGABLE */
+
+.navlinks a,
+.navlinks a:visited {
+  color: #F8F6F0;
+}
+
+.navlinks a:hover,
+.navlinks a:focus {
+  color: #D6B98C;
+}
+
+/* Fondo y texto de los submenús */
+.navlinks ul,
+.navlinks .dropdown-menu,
+.navlinks .submenu,
+.dropdown-menu,
+.submenu {
+  background-color: #17324D !important;
+  border-color: #7396A6;
+}
+
+/* Enlaces dentro de las opciones desplegadas */
+.navlinks ul a,
+.navlinks .dropdown-menu a,
+.navlinks .submenu a,
+.dropdown-menu a,
+.submenu a {
+  background-color: transparent;
+  color: #F8F6F0 !important;
+}
+
+/* Al pasar el cursor por una opción */
+.navlinks ul a:hover,
+.navlinks .dropdown-menu a:hover,
+.navlinks .submenu a:hover,
+.dropdown-menu a:hover,
+.submenu a:hover {
+  background-color: #24465C !important;
+  color: #D6B98C !important;
+}
