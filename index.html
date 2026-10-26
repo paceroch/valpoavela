@@ -27,6 +27,7 @@
         <a class="brand" href="#" onclick="showView('home'); return false;" aria-label="Valpo a Vela, inicio">
           <img src="fotos/Vela.png" alt="Valpo a Vela" />
         </a>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Abrir menú">☰</button>
         <nav class="navlinks">
           <a href="#filosofia" onclick="navigateToSection('home', 'filosofia')">La experiencia</a>
           
@@ -41,9 +42,19 @@
             </div>
           </div>
 
-          <a href="#capitan" onclick="navigateToSection('home', 'capitan')">Para patrones</a>
-          <a href="#contacto" onclick="navigateToSection('home', 'contacto')">Contacto</a>
+          <a href="#embarcaciones" onclick="showView('embarcaciones')">Embarcaciones</a>
+          <a href="#preguntas" onclick="showView('preguntas')">Preguntas frecuentes</a>
+          <a href="#contacto" onclick="showView('contacto')">Contacto</a>
         </nav>
+
+        <!-- Menú Móvil Desplegable -->
+        <div class="mobile-nav" id="mobileNav">
+          <a href="#filosofia" onclick="navigateToSection('home', 'filosofia'); toggleMobileMenu();">La experiencia</a>
+          <a href="#actividades" onclick="navigateToSection('home', 'actividades'); toggleMobileMenu();">Actividades</a>
+          <a href="#embarcaciones" onclick="showView('embarcaciones'); toggleMobileMenu();">Embarcaciones</a>
+          <a href="#preguntas" onclick="showView('preguntas'); toggleMobileMenu();">Preguntas frecuentes</a>
+          <a href="#contacto" onclick="showView('contacto'); toggleMobileMenu();">Contacto</a>
+        </div>
       </div>
     </header>
 
@@ -62,7 +73,7 @@
               <p>Sube a bordo, siente el viento y contempla la ciudad desde el agua. Aprende a navegar, recupera confianza gobernando o disfruta una salida a vela solo, con familia o amigos.</p>
               <div class="actions">
                 <a class="btn btn-primary" href="#actividades">Encuentra tu experiencia <span aria-hidden="true">&nbsp;↗</span></a>
-                <a class="btn" href="#contacto">Hablemos de tu salida</a>
+                <a class="btn" href="#contacto" onclick="showView('contacto')">Hablemos de tu salida</a>
               </div>
             </div>
           </div>
@@ -82,27 +93,6 @@
               <img class="story-image-main" src="fotos/WhatsApp Image 2026-10-14 at 15.04.53.jpeg" alt="Velero navegando en la bahía de Valparaíso" loading="lazy" />
               <img class="story-image-small" src="fotos/practicando 3.jpeg" alt="Personas disfrutando de una experiencia de navegación" loading="lazy" />
               <div class="story-caption"><span>VALPARAÍSO</span><strong>La ciudad, desde otra perspectiva.</strong></div>
-            </div>
-          </div>
-        </section>
-
-        <!-- PARA PATRONES -->
-        <section class="section" id="capitan">
-          <div class="wrap split">
-            <div class="section-head">
-              <div class="eyebrow">Tienes licencia. Ahora viene la práctica.</div>
-              <h2>Da el paso de tener licencia a gobernar con confianza.</h2>
-              <p>Si ya tienes licencia y quieres reforzar tus habilidades, practica maniobras y gobierno en un velero de iniciación del tipo Raquero, con orientación asistida durante toda la navegación.</p>
-              <p>Trabaja la preparación de la salida, comprende la respuesta de la embarcación y desarrolla criterios para tomar decisiones con mayor confianza, de acuerdo con tu experiencia y habilitación.</p>
-              <ul class="checks">
-                <li>Practica maniobras y gobierno de una embarcación de iniciación.</li>
-                <li>Gana experiencia acompañado de un instructor durante la salida.</li>
-                <li>Refuerza la preparación, la seguridad y la toma de decisiones antes de navegar por tu cuenta.</li>
-              </ul>
-              <a class="btn btn-primary" href="#contacto">Quiero practicar como patrón ↗</a>
-            </div>
-            <div class="photo-stack">
-              <img src="fotos/practicando 2.png" alt="Práctica de navegación a vela en la bahía de Valparaíso" />
             </div>
           </div>
         </section>
@@ -160,8 +150,97 @@
           </div>
         </section>
 
-        <!-- PREGUNTAS FRECUENTES -->
-        <section class="section" id="preguntas">
+        <!-- CLIMA -->
+        <section class="section" id="clima">
+          <div class="wrap">
+            <div class="section-head">
+              <div class="eyebrow">Planifica tu salida</div>
+              <h2>Viento y pronóstico en Valparaíso</h2>
+              <p>Consulta el mapa del viento y revisa un resumen general de los próximos cinco días. Antes de zarpar, confirma siempre las condiciones reales en la bahía.</p>
+            </div>
+            <div class="wind-map-wrap">
+              <iframe
+                class="wind-map"
+                title="Mapa del viento en Valparaíso"
+                loading="lazy"
+                src="https://embed.windy.com/embed2.html?lat=-33.047&lon=-71.613&detailLat=-33.047&detailLon=-71.613&width=650&height=420&zoom=9&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=true&type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C"
+              ></iframe>
+            </div>
+            <div class="weather" aria-label="Resumen del pronóstico para Valparaíso">
+              Posiciona el cursor sobre el mapa, haz click y arrastra el indicador de ubicación para ver el pronóstico detallado del viento y la temperatura en tu zona.
+            </div>
+            <div class="forecast" id="forecast"></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- HOJA: EMBARCACIONES (5 TIPOS DE BARCO) -->
+      <div id="view-embarcaciones" class="page-view">
+        <section class="section section-raquero">
+          <div class="raquero-wrap">
+            <div class="raquero-header">
+              <span class="raquero-eyebrow">FLOTA Y EMBARCACIONES</span>
+              <h2>Nuestros tipos de barcos</h2>
+              <p>Conoce las embarcaciones que utilizamos en Valpo a Vela para la formación, la navegación recreativa y el apoyo en la bahía de Valparaíso.</p>
+            </div>
+            <div class="cards">
+              <article class="card">
+                <img src="fotos/navegando hansa.jpg" alt="Velero Hansa 303" loading="lazy" />
+                <div class="card-body">
+                  <div class="num">01 / VELERO</div>
+                  <h3>Hansa 303</h3>
+                  <p>Embarcación individual o doble de iniciación, diseñada para facilitar la participación a bordo con gran estabilidad, excelente respuesta y control asistido.</p>
+                  <p><span class="pill">Capacidad: 1-2 personas</span> <span class="pill">Uso: Iniciación y aprendizaje</span></p>
+                </div>
+              </article>
+              <article class="card">
+                <img src="fotos/practicando 3.jpeg" alt="Yate Recreativo" loading="lazy" />
+                <div class="card-body">
+                  <div class="num">02 / YATE</div>
+                  <h3>Yate Recreativo</h3>
+                  <p>Embarcación de mayor eslora ideal para travesías personalizadas y paseos costeros, permitiendo disfrutar del paisaje con total comodidad y seguridad.</p>
+                  <p><span class="pill">Capacidad: Hasta 9 pasajeros</span> <span class="pill">Uso: Travesías y paseos</span></p>
+                </div>
+              </article>
+              <article class="card">
+                <img src="fotos/WhatsApp Image 2026-10-14 at 15.04.53.jpeg" alt="Embarcación de Pesca" loading="lazy" />
+                <div class="card-body">
+                  <div class="num">03 / BOTE</div>
+                  <h3>Embarcación de Pesca</h3>
+                  <p>Bote adaptado para jornadas de pesca deportiva y recreativa en la bahía, equipado para brindar una experiencia óptima y segura en el mar.</p>
+                  <p><span class="pill">Capacidad: Hasta 6 participantes</span> <span class="pill">Uso: Pesca deportiva</span></p>
+                </div>
+              </article>
+              <article class="card">
+                <img src="fotos/navegando raquero.png" alt="Velero Raquero" loading="lazy" />
+                <div class="card-body">
+                  <div class="num">04 / VELERO LIGERO</div>
+                  <h3>Raquero</h3>
+                  <p>Embarcación abierta de vela ligera excelente para clases prácticas de vela, permitiendo participar activamente en las maniobras y gobierno.</p>
+                  <p><span class="pill">Capacidad: 4 personas + instructor</span> <span class="pill">Uso: Clases prácticas</span></p>
+                </div>
+              </article>
+              <article class="card">
+                <img src="fotos/practicando 2.png" alt="Zodiac de Apoyo" loading="lazy" />
+                <div class="card-body">
+                  <div class="num">05 / AUXILIAR</div>
+                  <h3>Zodiac de Apoyo</h3>
+                  <p>Embarcación neumática motorizada de apoyo operativo y seguridad, indispensable para el acompañamiento y supervisión durante las salidas.</p>
+                  <p><span class="pill">Uso: Seguridad y asistencia</span></p>
+                </div>
+              </article>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+              <a class="btn btn-primary" href="#contacto" onclick="showView('contacto')">Consultar disponibilidad ↗</a>
+              <button class="btn btn-back" onclick="showView('home')">← Volver al Inicio</button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- HOJA: PREGUNTAS FRECUENTES -->
+      <div id="view-preguntas" class="page-view">
+        <section class="section">
           <div class="wrap faq">
             <div class="section-head">
               <div class="eyebrow">Antes de embarcar</div>
@@ -199,33 +278,15 @@
               </details>
             </div>
           </div>
-        </section>
-
-        <!-- CLIMA -->
-        <section class="section" id="clima">
-          <div class="wrap">
-            <div class="section-head">
-              <div class="eyebrow">Planifica tu salida</div>
-              <h2>Viento y pronóstico en Valparaíso</h2>
-              <p>Consulta el mapa del viento y revisa un resumen general de los próximos cinco días. Antes de zarpar, confirma siempre las condiciones reales en la bahía.</p>
-            </div>
-            <div class="wind-map-wrap">
-              <iframe
-                class="wind-map"
-                title="Mapa del viento en Valparaíso"
-                loading="lazy"
-                src="https://embed.windy.com/embed2.html?lat=-33.047&lon=-71.613&detailLat=-33.047&detailLon=-71.613&width=650&height=420&zoom=9&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=true&type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C"
-              ></iframe>
-            </div>
-            <div class="weather" aria-label="Resumen del pronóstico para Valparaíso">
-              Posiciona el cursor sobre el mapa, haz click y arrastra el indicador de ubicación para ver el pronóstico detallado del viento y la temperatura en tu zona.
-            </div>
-            <div class="forecast" id="forecast"></div>
+          <div style="text-align: center; margin-top: 40px;">
+            <button class="btn btn-back" onclick="showView('home')">← Volver al Inicio</button>
           </div>
         </section>
+      </div>
 
-        <!-- CONTACTO -->
-        <section class="section" id="contacto">
+      <!-- HOJA: CONTACTO -->
+      <div id="view-contacto" class="page-view">
+        <section class="section" id="contacto-page">
           <div class="wrap contact">
             <div>
               <div class="eyebrow">Hablemos de tu próxima salida</div>
@@ -238,25 +299,25 @@
               </div>
             </div>
             <div>
-              <form class="contact-form" id="contact-form">
+              <form class="contact-form" id="contact-form-page">
                 <h3>Envíanos tu consulta</h3>
                 <div class="form-field">
-                  <label for="contact-name">Nombre</label>
-                  <input id="contact-name" name="name" autocomplete="name" required />
+                  <label for="contact-name-page">Nombre</label>
+                  <input id="contact-name-page" name="name" autocomplete="name" required />
                 </div>
                 <div class="form-field">
-                  <label for="contact-info">Correo de contacto</label>
-                  <input id="contact-info" name="contact" autocomplete="email" required />
+                  <label for="contact-info-page">Correo de contacto</label>
+                  <input id="contact-info-page" name="contact" autocomplete="email" required />
                 </div>
                 <div class="form-field">
-                  <label for="contact-message">Mensaje</label>
-                  <textarea id="contact-message" name="message" required></textarea>
+                  <label for="contact-message-page">Mensaje</label>
+                  <textarea id="contact-message-page" name="message" required></textarea>
                 </div>
                 <button class="btn btn-primary" type="submit">
                   Preparar mensaje por WhatsApp ↗
                 </button>
                 <p class="form-note">Se abrirá WhatsApp con tu consulta lista para enviar.</p>
-                <p class="form-status" id="contact-status" role="status" aria-live="polite"></p>
+                <p class="form-status" id="contact-status-page" role="status" aria-live="polite"></p>
               </form>
               <div class="contact-details">
                 <p>
@@ -273,6 +334,9 @@
                 ></iframe>
               </div>
             </div>
+          </div>
+          <div style="text-align: center; margin-top: 40px;">
+            <button class="btn btn-back" onclick="showView('home')">← Volver al Inicio</button>
           </div>
         </section>
       </div>
@@ -333,7 +397,7 @@
             </div>
 
             <div style="text-align: center; margin-top: 40px;">
-              <a class="btn btn-primary" href="#contacto" onclick="navigateToSection('home', 'contacto')">Reservar esta actividad ↗</a>
+              <a class="btn btn-primary" href="#contacto" onclick="showView('contacto')">Reservar esta actividad ↗</a>
               <button class="btn btn-back" onclick="showView('home')">← Volver al Inicio</button>
             </div>
           </div>
@@ -393,7 +457,7 @@
             </div>
 
             <div style="text-align: center; margin-top: 40px;">
-              <a class="btn btn-primary" href="#contacto" onclick="navigateToSection('home', 'contacto')">Consultar paseos y capacidad ↗</a>
+              <a class="btn btn-primary" href="#contacto" onclick="showView('contacto')">Consultar paseos y capacidad ↗</a>
               <button class="btn btn-back" onclick="showView('home')">← Volver al Inicio</button>
             </div>
           </div>
@@ -430,7 +494,7 @@
             </div>
 
             <div style="text-align: center; margin-top: 40px;">
-              <a class="btn btn-primary" href="#contacto" onclick="navigateToSection('home', 'contacto')">Consultar salidas de pesca ↗</a>
+              <a class="btn btn-primary" href="#contacto" onclick="showView('contacto')">Consultar salidas de pesca ↗</a>
               <button class="btn btn-back" onclick="showView('home')">← Volver al Inicio</button>
             </div>
           </div>
@@ -493,7 +557,7 @@
             </div>
 
             <div style="text-align: center; margin-top: 40px;">
-              <a class="btn btn-primary" href="#contacto" onclick="navigateToSection('home', 'contacto')">Reservar clase de raquero ↗</a>
+              <a class="btn btn-primary" href="#contacto" onclick="showView('contacto')">Reservar clase de raquero ↗</a>
               <button class="btn btn-back" onclick="showView('home')">← Volver al Inicio</button>
             </div>
           </div>
