@@ -672,6 +672,11 @@ p {
   padding: clamp(68px, 8vw, 116px) 0;
 }
 
+.raquero-wrap {
+  width: min(1160px, calc(100% - 56px));
+  margin-inline: auto;
+}
+
 .raquero-header {
   max-width: 800px;
   margin: 0 auto 38px;
