@@ -356,6 +356,7 @@ p {
   width: 100%;
   max-width: 860px;
   padding: clamp(3.5rem, 9vh, 7rem) 1rem;
+  text-align: center;
 }
 
 .hero .eyebrow {
