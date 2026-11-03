@@ -1159,12 +1159,6 @@ p {
   box-shadow: 2px 4px 14px rgba(0, 0, 0, 0.4);
 }
 
-/* En Contacto ya están el formulario y el número */
-body[data-view="contacto"] .whatsapp-float {
-  display: none;
-}
-
-
 /* 16. ACCESIBILIDAD --------------------------------------------------- */
 a:focus-visible,
 button:focus-visible,

@@ -15,10 +15,9 @@
     raquero: "Clase práctica de vela en raquero | Valpo a Vela",
     embarcaciones: "Nuestras embarcaciones | Valpo a Vela",
     preguntas: "Preguntas frecuentes | Valpo a Vela",
-    contacto: "Contacto y reservas | Valpo a Vela",
   };
   // Anclas que viven dentro de la home
-  var HOME_SECTIONS = ["filosofia", "actividades", "clima"];
+  var HOME_SECTIONS = ["filosofia", "actividades", "clima", "contacto"];
 
   var currentView = null;
 

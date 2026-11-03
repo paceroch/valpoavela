@@ -257,6 +257,103 @@
             </div>
           </div>
         </section>
+        <!-- CONTACTO -->
+        <section class="section" id="contacto">
+          <div class="wrap contact">
+            <div>
+              <div class="eyebrow">Hablemos de tu próxima salida</div>
+              <div class="section-head">
+                <h2>Cuéntanos qué experiencia estás buscando.</h2>
+                <p>
+                  Escríbenos para consultar cursos de iniciación, prácticas
+                  acompañadas para navegantes con licencia y actividades
+                  recreativas. Coordinaremos contigo la zona, fechas, valores y
+                  embarcación disponible.
+                </p>
+              </div>
+              <div class="video-container">
+                <img src="fotos/portada.webp" alt="Tripulantes con chaleco salvavidas a bordo de un velero en la bahía de Valparaíso" width="960" height="882" loading="lazy" decoding="async" />
+              </div>
+            </div>
+            <div>
+              <form class="contact-form" id="contact-form-page">
+                <h3>Envíanos tu consulta</h3>
+                <div class="form-field">
+                  <label for="contact-name-page">Nombre</label>
+                  <input
+                    id="contact-name-page"
+                    name="name"
+                    autocomplete="name"
+                    required
+                  />
+                </div>
+                <div class="form-field">
+                  <label for="contact-activity-page">Actividad de interés</label>
+                  <select id="contact-activity-page" name="activity">
+                    <option value="">Aún no lo sé, necesito orientación</option>
+                    <option value="raquero">Clase práctica de vela en raquero</option>
+                    <option value="hansa">Navegación en velero Hansa</option>
+                    <option value="yate">Paseo en yate</option>
+                    <option value="pesca">Salida de pesca</option>
+                    <option value="practica">Práctica acompañada (con licencia)</option>
+                  </select>
+                </div>
+                <div class="form-row">
+                  <div class="form-field">
+                    <label for="contact-people-page">Nº de participantes</label>
+                    <input
+                      id="contact-people-page"
+                      name="people"
+                      type="number"
+                      inputmode="numeric"
+                      min="1"
+                      max="20"
+                      required
+                    />
+                  </div>
+                  <div class="form-field">
+                    <label for="contact-date-page">Fecha preferida <span class="optional">(opcional)</span></label>
+                    <input id="contact-date-page" name="date" type="date" />
+                  </div>
+                </div>
+                <div class="form-field">
+                  <label for="contact-message-page">Mensaje <span class="optional">(opcional)</span></label>
+                  <textarea id="contact-message-page" name="message"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">
+                  Preparar mensaje por WhatsApp ↗
+                </button>
+                <p class="form-note">
+                  Se abrirá WhatsApp con tu consulta lista para enviar.
+                </p>
+                <p
+                  class="form-status"
+                  id="contact-status-page"
+                  role="status"
+                  aria-live="polite"
+                ></p>
+              </form>
+              <div class="contact-details">
+                <p>
+                  <strong>WhatsApp:</strong>
+                  <a href="https://wa.me/56993145696?text=Hola%2C%20quiero%20consultar%20por%20una%20salida%20a%20vela." target="_blank" rel="noopener">+56 9 9314 5696</a><br />
+                  <strong>Lugar de zarpe:</strong> Muelle Barón, Valparaíso<br />
+                  <strong>Zona de navegación para prácticas:</strong> Bahía de
+                  Valparaíso<br />
+                  <strong>Horario:</strong> Martes a domingo, de 11:00 a 17:00
+                  hrs
+                </p>
+                <h3>¿Cómo llegar?</h3>
+                <iframe
+                  class="contact-map"
+                  title="Mapa de Muelle Barón, Valparaíso"
+                  loading="lazy"
+                  src="https://www.google.com/maps?q=Muelle%20Bar%C3%B3n%2C%20Valpara%C3%ADso&output=embed"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
 
       <!-- EMBARCACIONES -->
@@ -397,109 +494,6 @@
           </div>
           <div class="view-actions">
             <a class="btn btn-primary" href="#contacto">Hacer una consulta ↗</a>
-            <a class="btn btn-back" href="#inicio">← Volver al inicio</a>
-          </div>
-        </section>
-      </div>
-
-      <!-- CONTACTO -->
-      <div id="view-contacto" class="page-view">
-        <section class="section" id="contacto-page">
-          <div class="wrap contact">
-            <div>
-              <div class="eyebrow">Hablemos de tu próxima salida</div>
-              <div class="section-head">
-                <h2>Cuéntanos qué experiencia estás buscando.</h2>
-                <p>
-                  Escríbenos para consultar cursos de iniciación, prácticas
-                  acompañadas para navegantes con licencia y actividades
-                  recreativas. Coordinaremos contigo la zona, fechas, valores y
-                  embarcación disponible.
-                </p>
-              </div>
-              <div class="video-container">
-                <img src="fotos/portada.webp" alt="Tripulantes con chaleco salvavidas a bordo de un velero en la bahía de Valparaíso" width="960" height="882" loading="lazy" decoding="async" />
-              </div>
-            </div>
-            <div>
-              <form class="contact-form" id="contact-form-page">
-                <h3>Envíanos tu consulta</h3>
-                <div class="form-field">
-                  <label for="contact-name-page">Nombre</label>
-                  <input
-                    id="contact-name-page"
-                    name="name"
-                    autocomplete="name"
-                    required
-                  />
-                </div>
-                <div class="form-field">
-                  <label for="contact-activity-page">Actividad de interés</label>
-                  <select id="contact-activity-page" name="activity">
-                    <option value="">Aún no lo sé, necesito orientación</option>
-                    <option value="raquero">Clase práctica de vela en raquero</option>
-                    <option value="hansa">Navegación en velero Hansa</option>
-                    <option value="yate">Paseo en yate</option>
-                    <option value="pesca">Salida de pesca</option>
-                    <option value="practica">Práctica acompañada (con licencia)</option>
-                  </select>
-                </div>
-                <div class="form-row">
-                  <div class="form-field">
-                    <label for="contact-people-page">Nº de participantes</label>
-                    <input
-                      id="contact-people-page"
-                      name="people"
-                      type="number"
-                      inputmode="numeric"
-                      min="1"
-                      max="20"
-                      required
-                    />
-                  </div>
-                  <div class="form-field">
-                    <label for="contact-date-page">Fecha preferida <span class="optional">(opcional)</span></label>
-                    <input id="contact-date-page" name="date" type="date" />
-                  </div>
-                </div>
-                <div class="form-field">
-                  <label for="contact-message-page">Mensaje <span class="optional">(opcional)</span></label>
-                  <textarea id="contact-message-page" name="message"></textarea>
-                </div>
-                <button class="btn btn-primary" type="submit">
-                  Preparar mensaje por WhatsApp ↗
-                </button>
-                <p class="form-note">
-                  Se abrirá WhatsApp con tu consulta lista para enviar.
-                </p>
-                <p
-                  class="form-status"
-                  id="contact-status-page"
-                  role="status"
-                  aria-live="polite"
-                ></p>
-              </form>
-              <div class="contact-details">
-                <p>
-                  <strong>WhatsApp:</strong>
-                  <a href="https://wa.me/56993145696?text=Hola%2C%20quiero%20consultar%20por%20una%20salida%20a%20vela." target="_blank" rel="noopener">+56 9 9314 5696</a><br />
-                  <strong>Lugar de zarpe:</strong> Muelle Barón, Valparaíso<br />
-                  <strong>Zona de navegación para prácticas:</strong> Bahía de
-                  Valparaíso<br />
-                  <strong>Horario:</strong> Martes a domingo, de 11:00 a 17:00
-                  hrs
-                </p>
-                <h3>¿Cómo llegar?</h3>
-                <iframe
-                  class="contact-map"
-                  title="Mapa de Muelle Barón, Valparaíso"
-                  loading="lazy"
-                  src="https://www.google.com/maps?q=Muelle%20Bar%C3%B3n%2C%20Valpara%C3%ADso&output=embed"
-                ></iframe>
-              </div>
-            </div>
-          </div>
-          <div class="view-actions">
             <a class="btn btn-back" href="#inicio">← Volver al inicio</a>
           </div>
         </section>
