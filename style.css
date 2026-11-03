@@ -625,14 +625,14 @@ p {
 }
 
 .licencia-cta .btn-primary {
-  background: var(--gold);
-  border-color: var(--gold);
+  background: var(--white);
+  border-color: var(--white);
   color: var(--navy);
 }
 
 .licencia-cta .btn-primary:hover {
-  background: #E4CDA6;
-  border-color: #E4CDA6;
+  background: var(--cream);
+  border-color: var(--cream);
 }
 
 
