@@ -101,6 +101,10 @@ p {
   scroll-margin-top: 72px;
 }
 
+[id^="embarcacion-"] {
+  scroll-margin-top: 84px;
+}
+
 .section-head {
   max-width: 780px;
   margin-bottom: 34px;
@@ -168,9 +172,12 @@ p {
 
 .navlinks {
   display: flex;
-  flex-wrap: wrap;
+  flex: 1;
+  flex-wrap: nowrap;
+  height: 100%;
   align-items: center;
-  gap: 26px;
+  justify-content: flex-end;
+  gap: clamp(12px, 1.8vw, 24px);
 }
 
 .navlinks a {
@@ -192,7 +199,32 @@ p {
 /* Menú desplegable de actividades (hover y teclado) */
 .dropdown {
   position: relative;
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  height: 100%;
+}
+
+.navlinks > a,
+.navlinks .dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  white-space: nowrap;
+}
+
+.dropdown-toggle {
+  white-space: nowrap;
+}
+
+.dropdown-toggle span {
   display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.dropdown:hover .dropdown-toggle span,
+.dropdown:focus-within .dropdown-toggle span {
+  transform: rotate(180deg);
 }
 
 .dropdown-menu {
@@ -211,6 +243,10 @@ p {
   visibility: hidden;
   transform: translateY(6px);
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.dropdown-menu a {
+  display: block;
 }
 
 .dropdown:hover .dropdown-menu,

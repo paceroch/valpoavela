@@ -16,8 +16,18 @@
     embarcaciones: "Nuestras embarcaciones | Valpo a Vela",
     preguntas: "Preguntas frecuentes | Valpo a Vela",
   };
-  // Anclas que viven dentro de la home
-  var HOME_SECTIONS = ["filosofia", "actividades", "clima", "contacto"];
+  // Anclas que viven dentro de vistas, en lugar de ser vistas por sí mismas.
+  var SECTION_VIEWS = {
+    filosofia: "home",
+    actividades: "home",
+    clima: "home",
+    contacto: "home",
+    "embarcacion-hansa": "embarcaciones",
+    "embarcacion-yate": "embarcaciones",
+    "embarcacion-pesca": "embarcaciones",
+    "embarcacion-raquero": "embarcaciones",
+    "embarcacion-apoyo": "embarcaciones",
+  };
 
   var currentView = null;
 
@@ -57,7 +67,8 @@
     var section = null;
     if (id !== "home" && VIEWS[id]) {
       view = id;
-    } else if (HOME_SECTIONS.indexOf(id) > -1) {
+    } else if (SECTION_VIEWS[id]) {
+      view = SECTION_VIEWS[id];
       section = id;
     }
 
@@ -97,11 +108,6 @@
   // ------------------------------------------------------------ menú móvil
   var menuBtn = document.getElementById("menuBtn");
   var mobileNav = document.getElementById("mobileNav");
-  var mobileActivitiesToggle = mobileNav
-    ? mobileNav.querySelector(".mobile-activities-toggle")
-    : null;
-  var mobileActivitiesMenu = document.getElementById("mobileActivities");
-
   function setMenu(open) {
     if (!mobileNav || !menuBtn) return;
     mobileNav.classList.toggle("open", open);
@@ -116,17 +122,17 @@
     menuBtn.addEventListener("click", function () {
       setMenu(!mobileNav.classList.contains("open"));
     });
-    if (mobileActivitiesToggle && mobileActivitiesMenu) {
-      mobileActivitiesToggle.addEventListener("click", function () {
-        var expanded =
-          mobileActivitiesToggle.getAttribute("aria-expanded") === "true";
-        mobileActivitiesToggle.setAttribute(
-          "aria-expanded",
-          expanded ? "false" : "true"
-        );
-        mobileActivitiesMenu.hidden = expanded;
+    mobileNav.querySelectorAll(".mobile-activities-toggle").forEach(function (toggle) {
+      var submenu = document.getElementById(
+        toggle.getAttribute("aria-controls")
+      );
+      if (!submenu) return;
+      toggle.addEventListener("click", function () {
+        var expanded = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", expanded ? "false" : "true");
+        submenu.hidden = expanded;
       });
-    }
+    });
     mobileNav.addEventListener("click", function (e) {
       if (e.target.closest("a")) closeMobileMenu();
     });

@@ -51,7 +51,7 @@
         <nav class="navlinks" aria-label="Principal">
           <a href="#filosofia">La experiencia</a>
           <div class="dropdown">
-            <a href="#actividades" class="dropdown-toggle">Actividades ▾</a>
+            <a href="#actividades" class="dropdown-toggle">Actividades <span aria-hidden="true">⌄</span></a>
             <div class="dropdown-menu">
               <a href="#hansa">Navegación Hansa</a>
               <a href="#yate">Paseos en yate</a>
@@ -59,7 +59,15 @@
               <a href="#raquero">Iniciación a la vela</a>
             </div>
           </div>
-          <a href="#embarcaciones">Embarcaciones</a>
+          <div class="dropdown">
+            <a href="#embarcaciones" class="dropdown-toggle">Embarcaciones <span aria-hidden="true">⌄</span></a>
+            <div class="dropdown-menu">
+              <a href="#embarcacion-hansa">Hansa 303</a>
+              <a href="#embarcacion-yate">Yate recreativo</a>
+              <a href="#embarcacion-pesca">Embarcación de pesca</a>
+              <a href="#embarcacion-raquero">Raquero</a>
+            </div>
+          </div>
           <a href="#preguntas">Preguntas frecuentes</a>
           <a href="#contacto">Contacto</a>
         </nav>
@@ -83,7 +91,22 @@
               <a href="#raquero">Iniciación a la vela</a>
             </div>
           </div>
-          <a href="#embarcaciones">Embarcaciones</a>
+          <div class="mobile-activities">
+            <button
+              class="mobile-activities-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="mobileVessels"
+            >
+              Embarcaciones <span aria-hidden="true">⌄</span>
+            </button>
+            <div class="mobile-activities-menu" id="mobileVessels" hidden>
+              <a href="#embarcacion-hansa">Hansa 303</a>
+              <a href="#embarcacion-yate">Yate recreativo</a>
+              <a href="#embarcacion-pesca">Embarcación de pesca</a>
+              <a href="#embarcacion-raquero">Raquero</a>
+            </div>
+          </div>
           <a href="#preguntas">Preguntas frecuentes</a>
           <a href="#contacto">Contacto</a>
         </div>
@@ -338,7 +361,7 @@
                   
                   
                   <strong>Lugar de zarpe:</strong> Muelle Barón, Valparaíso<br />
-                  <strong>Zona de navegación para prácticas:</strong> Bahía de
+                  <strong>Zona de navegación:</strong> Bahía de
                   Valparaíso<br />
                   <strong>Horario:</strong> Martes a domingo, de 11:00 a 17:00
                   hrs
@@ -370,7 +393,7 @@
               </p>
             </div>
             <div class="cards">
-              <article class="card">
+              <article class="card" id="embarcacion-hansa">
                 <img src="fotos/hansa.webp" alt="Velero Hansa 303 de vela naranja" width="1400" height="1400" loading="lazy" decoding="async" />
                 <div class="card-body">
                   <div class="num">VELERO DE INICIACIÓN</div>
@@ -379,7 +402,7 @@
                   <p><span class="pill">Capacidad: 1 participante + instructor</span><span class="pill">Uso: Iniciación y aprendizaje</span></p>
                 </div>
               </article>
-              <article class="card">
+              <article class="card" id="embarcacion-yate">
                 <img src="fotos/practicando-3.webp" alt="Pasajeros a bordo durante un paseo por la bahía" width="720" height="489" loading="lazy" decoding="async" />
                 <div class="card-body">
                   <div class="num">VELERO CLÁSICO</div>
@@ -388,7 +411,7 @@
                   <p><span class="pill">Capacidad: hasta 9 pasajeros</span><span class="pill">Uso: Travesías y paseos</span></p>
                 </div>
               </article>
-              <article class="card">
+              <article class="card" id="embarcacion-pesca">
                 <div class="photo-placeholder" aria-hidden="true"><img src="fotos/vela.webp" alt="" width="278" height="200" loading="lazy" decoding="async" /></div>
                 <div class="card-body">
                   <div class="num">BOTE DE PESCA</div>
@@ -397,7 +420,7 @@
                   <p><span class="pill">Capacidad: hasta 6 participantes</span><span class="pill">Uso: Pesca deportiva</span></p>
                 </div>
               </article>
-              <article class="card">
+              <article class="card" id="embarcacion-raquero">
                 <img src="fotos/raquero.webp" alt="Raquero navegando con la vela desplegada" width="494" height="379" loading="lazy" decoding="async" />
                 <div class="card-body">
                   <div class="num">VELERO LIGERO</div>
@@ -406,7 +429,7 @@
                   <p><span class="pill">Capacidad: 4 personas + instructor</span><span class="pill">Uso: Clases prácticas</span></p>
                 </div>
               </article>
-              <article class="card">
+              <article class="card" id="embarcacion-apoyo">
                 <div class="photo-placeholder" aria-hidden="true"><img src="fotos/vela.webp" alt="" width="278" height="200" loading="lazy" decoding="async" /></div>
                 <div class="card-body">
                   <div class="num">ZODIAC DE APOYO</div>
