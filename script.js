@@ -80,8 +80,20 @@
   }
 
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-  window.addEventListener("hashchange", route);
+  var hasInternalHashHistory = false;
+  window.addEventListener("hashchange", function () {
+    hasInternalHashHistory = true;
+    route();
+  });
   route();
+
+  document.querySelectorAll(".activity-back").forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      if (!hasInternalHashHistory) return;
+      event.preventDefault();
+      history.back();
+    });
+  });
 
   // ------------------------------------------------------------ menú móvil
   var menuBtn = document.getElementById("menuBtn");
