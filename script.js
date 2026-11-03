@@ -86,6 +86,10 @@
   // ------------------------------------------------------------ menú móvil
   var menuBtn = document.getElementById("menuBtn");
   var mobileNav = document.getElementById("mobileNav");
+  var mobileActivitiesToggle = mobileNav
+    ? mobileNav.querySelector(".mobile-activities-toggle")
+    : null;
+  var mobileActivitiesMenu = document.getElementById("mobileActivities");
 
   function setMenu(open) {
     if (!mobileNav || !menuBtn) return;
@@ -101,6 +105,17 @@
     menuBtn.addEventListener("click", function () {
       setMenu(!mobileNav.classList.contains("open"));
     });
+    if (mobileActivitiesToggle && mobileActivitiesMenu) {
+      mobileActivitiesToggle.addEventListener("click", function () {
+        var expanded =
+          mobileActivitiesToggle.getAttribute("aria-expanded") === "true";
+        mobileActivitiesToggle.setAttribute(
+          "aria-expanded",
+          expanded ? "false" : "true"
+        );
+        mobileActivitiesMenu.hidden = expanded;
+      });
+    }
     mobileNav.addEventListener("click", function (e) {
       if (e.target.closest("a")) closeMobileMenu();
     });

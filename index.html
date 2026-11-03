@@ -51,17 +51,6 @@
         <nav class="navlinks" aria-label="Principal">
           <a href="#filosofia">La experiencia</a>
 
-          <!-- Menú desplegable de actividades -->
-          <div class="dropdown">
-            <a href="#actividades" class="dropdown-toggle">Actividades ▾</a>
-            <div class="dropdown-menu">
-              <a href="#hansa"> Navegación Hansa </a>
-              <a href="#yate"> Paseos en yate</a>
-              <a href="#pesca"> Pesca deportiva</a>
-              <a href="#raquero"> Iniciación a la vela</a>
-            </div>
-          </div>
-
           <a href="#embarcaciones">Embarcaciones</a>
           <a href="#preguntas">Preguntas frecuentes</a>
           <a href="#contacto">Contacto</a>
@@ -70,7 +59,22 @@
         <!-- Menú móvil -->
         <div class="mobile-nav" id="mobileNav">
           <a href="#filosofia">La experiencia</a>
-          <a href="#actividades">Actividades</a>
+          <div class="mobile-activities">
+            <button
+              class="mobile-activities-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="mobileActivities"
+            >
+              Actividades <span aria-hidden="true">⌄</span>
+            </button>
+            <div class="mobile-activities-menu" id="mobileActivities" hidden>
+              <a href="#hansa">Navegación Hansa</a>
+              <a href="#yate">Paseos en yate</a>
+              <a href="#pesca">Pesca deportiva</a>
+              <a href="#raquero">Iniciación a la vela</a>
+            </div>
+          </div>
           <a href="#embarcaciones">Embarcaciones</a>
           <a href="#preguntas">Preguntas frecuentes</a>
           <a href="#contacto">Contacto</a>
@@ -637,7 +641,7 @@
         <section class="section section-raquero">
           <div class="raquero-wrap">
             <div class="raquero-header">
-              <span class="raquero-eyebrow">03 / PESCA DEPORTIVA Y RECREATIVA</span>
+              <span class="raquero-eyebrow">PESCA DEPORTIVA Y RECREATIVA</span>
               <h2>Salidas de pesca</h2>
               <p>
                 Vive una jornada en el mar enfocada en la pesca: puede ser una
