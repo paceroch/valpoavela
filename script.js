@@ -1,92 +1,188 @@
-document.getElementById("year").textContent = new Date().getFullYear();
+(function () {
+  "use strict";
 
-// Manejo de cambio de vistas
-function showView(viewId) {
-  const views = document.querySelectorAll('.page-view');
-  views.forEach(view => {
-    view.classList.remove('active');
-  });
+  var WA_NUMBER = "56993145696";
+  var prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
-  const targetView = document.getElementById(`view-${viewId}`);
-  if (targetView) {
-    targetView.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Título de la pestaña por vista (también queda en el historial del navegador)
+  var VIEWS = {
+    home: "Valpo a Vela | Clases de vela y paseos a vela en Valparaíso",
+    hansa: "Navegación en velero Hansa 303 | Valpo a Vela",
+    yate: "Paseos en yate en Valparaíso | Valpo a Vela",
+    pesca: "Salidas de pesca en Valparaíso | Valpo a Vela",
+    raquero: "Clase práctica de vela en raquero | Valpo a Vela",
+    embarcaciones: "Nuestras embarcaciones | Valpo a Vela",
+    preguntas: "Preguntas frecuentes | Valpo a Vela",
+    contacto: "Contacto y reservas | Valpo a Vela",
+  };
+  // Anclas que viven dentro de la home
+  var HOME_SECTIONS = ["filosofia", "actividades", "clima"];
+
+  var currentView = null;
+
+  var yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // ---------------------------------------------------------------- vistas
+  function showView(view) {
+    var changed = view !== currentView;
+    document.querySelectorAll(".page-view").forEach(function (el) {
+      el.classList.toggle("active", el.id === "view-" + view);
+    });
+    document.title = VIEWS[view] || VIEWS.home;
+    document.body.setAttribute("data-view", view);
+    closeMobileMenu();
+
+    if (changed && currentView !== null) {
+      // Lleva el foco al contenido nuevo para quien navega con teclado o lector de pantalla
+      var target = document.getElementById("view-" + view);
+      if (target) {
+        target.setAttribute("tabindex", "-1");
+        target.focus({ preventScroll: true });
+      }
+    }
+    currentView = view;
   }
-}
 
-// Navegación hacia secciones del Home
-function navigateToSection(viewId, sectionId) {
-  showView(viewId);
-  setTimeout(() => {
-    const section = document.getElementById(sectionId);
+  function route() {
+    var id = "";
+    try {
+      id = decodeURIComponent(location.hash.replace(/^#/, ""));
+    } catch (e) {
+      id = "";
+    }
+
+    var view = "home";
+    var section = null;
+    if (id !== "home" && VIEWS[id]) {
+      view = id;
+    } else if (HOME_SECTIONS.indexOf(id) > -1) {
+      section = id;
+    }
+
+    showView(view);
+
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      // Espera a que la vista esté visible antes de desplazarse
+      requestAnimationFrame(function () {
+        var el = document.getElementById(section);
+        if (el) {
+          el.scrollIntoView({
+            behavior: prefersReducedMotion ? "auto" : "smooth",
+          });
+        }
+      });
+    } else {
+      window.scrollTo(0, 0);
     }
-  }, 100);
-}
-
-// Menú móvil toggle
-function toggleMobileMenu() {
-  const mobileNav = document.getElementById("mobileNav");
-  if (mobileNav) {
-    mobileNav.classList.toggle("open");
   }
-}
 
-// Formulario de Contacto (Home / Principal)
-const contactForm = document.getElementById("contact-form");
-if (contactForm) {
-  contactForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (!(form instanceof HTMLFormElement) || !form.reportValidity()) return;
-    const name = form.elements.namedItem("name").value.trim();
-    const contact = form.elements.namedItem("contact").value.trim();
-    const message = form.elements.namedItem("message").value.trim();
-    const text = `Hola, soy ${name}.\nMi contacto: ${contact}\n\n${message}`;
-    const whatsappUrl = `https://wa.me/56993145696?text=${encodeURIComponent(text)}`;
-    const whatsappWindow = window.open(whatsappUrl, "_blank");
-    const status = document.getElementById("contact-status");
-    if (status) {
-      status.replaceChildren();
-      if (whatsappWindow) {
-        whatsappWindow.opener = null;
-        status.textContent =
-          "Se abrió WhatsApp. Revisa el mensaje y presiona enviar.";
-        form.reset();
-      } else {
-        status.textContent = "Abriendo WhatsApp…";
-        window.location.assign(whatsappUrl);
-      }
-    }
-  });
-}
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  window.addEventListener("hashchange", route);
+  route();
 
-// Formulario de Contacto (Página de Contacto)
-const contactFormPage = document.getElementById("contact-form-page");
-if (contactFormPage) {
-  contactFormPage.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (!(form instanceof HTMLFormElement) || !form.reportValidity()) return;
-    const name = form.elements.namedItem("name").value.trim();
-    const contact = form.elements.namedItem("contact").value.trim();
-    const message = form.elements.namedItem("message").value.trim();
-    const text = `Hola, soy ${name}.\nMi contacto: ${contact}\n\n${message}`;
-    const whatsappUrl = `https://wa.me/56993145696?text=${encodeURIComponent(text)}`;
-    const whatsappWindow = window.open(whatsappUrl, "_blank");
-    const status = document.getElementById("contact-status-page");
-    if (status) {
-      status.replaceChildren();
-      if (whatsappWindow) {
-        whatsappWindow.opener = null;
-        status.textContent =
-          "Se abrió WhatsApp. Revisa el mensaje y presiona enviar.";
-        form.reset();
-      } else {
-        status.textContent = "Abriendo WhatsApp…";
-        window.location.assign(whatsappUrl);
-      }
-    }
+  // ------------------------------------------------------------ menú móvil
+  var menuBtn = document.getElementById("menuBtn");
+  var mobileNav = document.getElementById("mobileNav");
+
+  function setMenu(open) {
+    if (!mobileNav || !menuBtn) return;
+    mobileNav.classList.toggle("open", open);
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    menuBtn.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    menuBtn.textContent = open ? "✕" : "☰";
+  }
+  function closeMobileMenu() {
+    setMenu(false);
+  }
+  if (menuBtn && mobileNav) {
+    menuBtn.addEventListener("click", function () {
+      setMenu(!mobileNav.classList.contains("open"));
+    });
+    mobileNav.addEventListener("click", function (e) {
+      if (e.target.closest("a")) closeMobileMenu();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeMobileMenu();
+    });
+  }
+
+  // ------------------------------- botones "Reservar" que preseleccionan actividad
+  document.addEventListener("click", function (e) {
+    var trigger = e.target.closest("[data-actividad]");
+    if (!trigger) return;
+    var select = document.getElementById("contact-activity-page");
+    if (select) select.value = trigger.getAttribute("data-actividad");
   });
-}
+
+  // -------------------------------------------------------------- formulario
+  var form = document.getElementById("contact-form-page");
+  if (form) {
+    var dateInput = form.elements.namedItem("date");
+    if (dateInput) {
+      var now = new Date();
+      var pad = function (n) {
+        return String(n).padStart(2, "0");
+      };
+      dateInput.min =
+        now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate());
+    }
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      var val = function (name) {
+        return form.elements.namedItem(name).value.trim();
+      };
+      var select = form.elements.namedItem("activity");
+      var activity = select.value
+        ? select.options[select.selectedIndex].text
+        : "";
+      var date = val("date");
+      var dateText = "";
+      if (date) {
+        dateText = new Date(date + "T12:00:00").toLocaleDateString("es-CL", {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+        });
+      }
+
+      var lines = ["Hola, soy " + val("name") + "."];
+      if (activity) lines.push("Me interesa: " + activity + ".");
+      lines.push("Participantes: " + val("people") + ".");
+      if (dateText) lines.push("Fecha preferida: " + dateText + ".");
+      if (val("message")) lines.push("", val("message"));
+
+      var whatsappUrl =
+        "https://wa.me/" +
+        WA_NUMBER +
+        "?text=" +
+        encodeURIComponent(lines.join("\n"));
+      var whatsappWindow = window.open(whatsappUrl, "_blank");
+      var status = document.getElementById("contact-status-page");
+      if (status) {
+        status.replaceChildren();
+        if (whatsappWindow) {
+          whatsappWindow.opener = null;
+          status.textContent =
+            "Se abrió WhatsApp. Revisa el mensaje y presiona enviar.";
+          form.reset();
+        } else {
+          status.textContent = "Abriendo WhatsApp…";
+          window.location.assign(whatsappUrl);
+        }
+      }
+    });
+  }
+
+  // ----------------------------------------------------- video del hero
+  var heroVideo = document.querySelector(".hero-video");
+  if (heroVideo && prefersReducedMotion) {
+    heroVideo.removeAttribute("autoplay");
+    heroVideo.pause();
+  }
+})();

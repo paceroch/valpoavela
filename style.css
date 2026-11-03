@@ -2343,3 +2343,258 @@ h2 {
 .mobile-nav * {
   border-color: rgba(248, 246, 240, 0.18);
 }
+
+
+/* =========================================================
+   AJUSTES NOVIEMBRE 2026
+   (formulario, navegación por URL, WhatsApp, paneles sin foto)
+   ========================================================= */
+
+/* Que el ancla no quede tapada por la barra superior */
+.section[id] {
+  scroll-margin-top: 72px;
+}
+
+/* El contenedor de la vista recibe foco al navegar; no necesita contorno */
+.page-view:focus {
+  outline: none;
+}
+
+/* Foco visible y consistente con la paleta actual */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+select:focus-visible,
+.carousel-track:focus-visible {
+  outline: 3px solid #D6B98C;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Menú de actividades también se abre con teclado */
+.dropdown:focus-within .dropdown-menu {
+  display: block;
+}
+
+/* Tarjetas de actividad: toda la tarjeta es un enlace real (se puede abrir con teclado o en otra pestaña) */
+.card {
+  position: relative;
+}
+
+.card-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.card:has(.card-link) {
+  cursor: pointer;
+}
+
+.card:has(.card-link):hover {
+  transform: translateY(-3px);
+}
+
+/* Panel de marca para actividades o embarcaciones que aún no tienen foto propia */
+.photo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: clamp(230px, 28vw, 350px);
+  background: #17324D;
+}
+
+.raquero-hero .photo-placeholder {
+  height: 100%;
+}
+
+.photo-placeholder img,
+.card .photo-placeholder img,
+.raquero-hero .photo-placeholder img {
+  width: auto;
+  height: auto;
+  max-width: 46%;
+  max-height: 52%;
+  object-fit: contain;
+  opacity: 0.92;
+  transform: none;
+}
+
+/* Botones al pie de cada vista (reemplaza estilos en línea) */
+.view-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.view-actions .btn-back {
+  margin-left: 0;
+}
+
+/* Llamado para quienes ya tienen licencia */
+.licencia-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: clamp(28px, 4vw, 48px);
+  padding: clamp(22px, 3vw, 34px);
+  background: #17324D;
+  color: #F8F6F0;
+}
+
+.licencia-cta h3 {
+  margin: 0 0 6px;
+  font-size: 1.35rem;
+  color: #fff;
+}
+
+.licencia-cta p {
+  margin: 0;
+  max-width: 52ch;
+  color: #D6E0E7;
+}
+
+.licencia-cta .btn-primary {
+  background: #D6B98C;
+  color: #17324D;
+}
+
+/* Formulario: selector, fila doble y textos opcionales */
+.form-field select {
+  width: 100%;
+  font: inherit;
+  color: var(--navy);
+  background: #fff;
+  border: 1px solid #d9d6cc;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus {
+  outline: 3px solid #D6B98C;
+  outline-offset: 0;
+  border-color: #17324D;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.form-field .optional {
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 0.85em;
+}
+
+@media (max-width: 520px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+.contact-details a,
+.weather .text-link {
+  color: #17324D;
+  font-weight: 700;
+}
+
+.weather .text-link {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+/* Pie de página con navegación y contacto */
+.footer-cols {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1.2fr;
+  gap: 28px;
+  padding-bottom: 20px;
+  font-size: 0.88rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer a {
+  color: #F8F6F0;
+  text-decoration: none;
+}
+
+.footer a:hover,
+.footer a:focus-visible {
+  color: #D6B98C;
+  text-decoration: underline;
+}
+
+.footer-contact small {
+  line-height: 1.7;
+}
+
+.footer-bottom {
+  padding-top: 16px;
+  border-top: 1px solid rgba(248, 246, 240, 0.16);
+}
+
+@media (max-width: 760px) {
+  .footer-cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Botón flotante de WhatsApp */
+.wa-float {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 999px;
+  background: #0F7A3D;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.92rem;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(15, 40, 30, 0.3);
+}
+
+.wa-float:hover {
+  background: #0c6733;
+}
+
+/* En la página de contacto ya está el formulario y el número */
+body[data-view="contacto"] .wa-float {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .wa-float span {
+    display: none;
+  }
+  .wa-float {
+    padding: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:has(.card-link):hover,
+  .btn:hover {
+    transform: none;
+  }
+}
