@@ -104,6 +104,11 @@
     mobileNav.addEventListener("click", function (e) {
       if (e.target.closest("a")) closeMobileMenu();
     });
+    document.addEventListener("click", function (e) {
+      if (!mobileNav.contains(e.target) && !menuBtn.contains(e.target)) {
+        closeMobileMenu();
+      }
+    });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") closeMobileMenu();
     });
