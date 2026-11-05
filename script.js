@@ -32,6 +32,7 @@
   };
 
   var currentView = null;
+  var activityNavigation = document.getElementById("activity-navigation");
 
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
@@ -56,6 +57,20 @@
     document.querySelectorAll(".page-view").forEach(function (el) {
       el.classList.toggle("active", el.id === "view-" + view);
     });
+    if (activityNavigation) {
+      var navigationTarget = isActivityView
+        ? document.querySelector("#view-" + view + " .raquero-wrap")
+        : document.querySelector("main");
+      if (navigationTarget) navigationTarget.appendChild(activityNavigation);
+      activityNavigation.querySelectorAll("a").forEach(function (link) {
+        var isCurrent = link.getAttribute("href") === "#" + view;
+        if (isCurrent) {
+          link.setAttribute("aria-current", "page");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+    }
     document.title = VIEWS[view] || VIEWS.home;
     document.body.setAttribute("data-view", view);
     closeMobileMenu();
@@ -307,7 +322,7 @@
     }, { threshold: 0.12, rootMargin: "0px 0px -35px 0px" });
 
     document.querySelectorAll(
-      ".section-head, .story-copy, .story-images, .facts, .raquero-header, .incluye-item, .contact-form, .licencia-cta"
+      ".section-head, .story-copy, .story-images, .raquero-header, .incluye-item, .contact-form, .licencia-cta"
     ).forEach(function (el) {
       el.classList.add("js-reveal");
       revealObserver.observe(el);
