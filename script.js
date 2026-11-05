@@ -16,6 +16,7 @@
     embarcaciones: "Nuestras embarcaciones | Valpo a Vela",
     preguntas: "Preguntas frecuentes | Valpo a Vela",
   };
+  var ACTIVITY_VIEWS = ["hansa", "yate", "pesca", "raquero"];
   // Anclas que viven dentro de vistas, en lugar de ser vistas por sí mismas.
   var SECTION_VIEWS = {
     filosofia: "home",
@@ -37,8 +38,25 @@
   // ---------------------------------------------------------------- vistas
   function showView(view) {
     var changed = view !== currentView;
+    var isActivityView = ACTIVITY_VIEWS.indexOf(view) !== -1;
+    if (isActivityView) {
+      var main = document.querySelector("main");
+      if (main) {
+        [view]
+          .concat(ACTIVITY_VIEWS.filter(function (activity) {
+            return activity !== view;
+          }))
+          .forEach(function (activity) {
+            var activityView = document.getElementById("view-" + activity);
+            if (activityView) main.appendChild(activityView);
+          });
+      }
+    }
     document.querySelectorAll(".page-view").forEach(function (el) {
-      el.classList.toggle("active", el.id === "view-" + view);
+      el.classList.toggle(
+        "active",
+        el.id === "view-" + view || (isActivityView && el.classList.contains("activity-view"))
+      );
     });
     document.title = VIEWS[view] || VIEWS.home;
     document.body.setAttribute("data-view", view);
@@ -222,4 +240,117 @@
     heroVideo.removeAttribute("autoplay");
     heroVideo.pause();
   }
+
+  // ---------------------------------------------- álbumes de fotos en carrusel continuo
+  if (!prefersReducedMotion) {
+    document.querySelectorAll(".carousel-track").forEach(function (track) {
+      var slides = Array.prototype.slice.call(track.children);
+      if (!slides.length) return;
+
+      var group = document.createElement("div");
+      group.className = "carousel-group";
+      slides.forEach(function (slide) {
+        group.appendChild(slide);
+      });
+      track.appendChild(group);
+
+      var duplicate = group.cloneNode(true);
+      duplicate.setAttribute("aria-hidden", "true");
+      track.appendChild(duplicate);
+      track.classList.add("is-infinite");
+    });
+  }
+
+  // ----------------------------------------------------- detalles de movimiento y navegación
+  var progress = document.createElement("div");
+  progress.className = "scroll-progress";
+  progress.setAttribute("aria-hidden", "true");
+  document.body.appendChild(progress);
+
+  var topbar = document.querySelector(".topbar");
+  var topButton = document.createElement("button");
+  topButton.className = "back-to-top";
+  topButton.type = "button";
+  topButton.setAttribute("aria-label", "Volver arriba");
+  topButton.textContent = "↑";
+  document.body.appendChild(topButton);
+  topButton.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+  });
+
+  function updateScrollUI() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var percent = max > 0 ? (window.scrollY / max) * 100 : 0;
+    progress.style.width = percent + "%";
+    if (topbar) topbar.classList.toggle("is-scrolled", window.scrollY > 12);
+    topButton.classList.toggle("visible", window.scrollY > 500);
+  }
+  window.addEventListener("scroll", updateScrollUI, { passive: true });
+  window.addEventListener("resize", updateScrollUI);
+  updateScrollUI();
+
+  // Aparición suave de secciones y tarjetas al entrar en pantalla.
+  if (!prefersReducedMotion && "IntersectionObserver" in window) {
+    var revealObserver = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -35px 0px" });
+
+    document.querySelectorAll(
+      ".section-head, .story-copy, .story-images, .facts, .raquero-header, .incluye-item, .contact-form, .licencia-cta"
+    ).forEach(function (el) {
+      el.classList.add("js-reveal");
+      revealObserver.observe(el);
+    });
+  }
+
+  // ------------------------------------------ efectos al desplazarse (paralaje y menú activo)
+  if (!prefersReducedMotion) {
+    var heroEl = document.querySelector(".hero");
+    var heroCopy = document.querySelector(".hero-content");
+    var plx = document.querySelectorAll("[data-parallax]");
+    var ticking = false;
+    var fx = function () {
+      ticking = false;
+      var y = window.scrollY, vh = window.innerHeight;
+      if (heroEl && y < vh * 1.2) {
+        if (heroVideo) heroVideo.style.transform = "translate3d(0," + y * 0.22 + "px,0) scale(" + (1 + y / vh * 0.08) + ")";
+        if (heroCopy) {
+          heroCopy.style.opacity = Math.max(0, 1 - y / (vh * 0.65));
+          heroCopy.style.transform = "translate3d(0," + y * 0.14 + "px,0)";
+        }
+      }
+      plx.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > vh) return;
+        el.style.transform = "translate3d(0," + (r.top + r.height / 2 - vh / 2) * parseFloat(el.dataset.parallax) + "px,0)";
+      });
+    };
+    window.addEventListener("scroll", function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(fx); }
+    }, { passive: true });
+    fx();
+  }
+
+  // Marca en el menú la sección que se está viendo
+  if ("IntersectionObserver" in window) {
+    var spyLinks = document.querySelectorAll('.navlinks a[href^="#"]');
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        spyLinks.forEach(function (a) {
+          a.classList.toggle("is-active", a.getAttribute("href") === "#" + entry.target.id);
+        });
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    ["filosofia", "actividades", "clima", "contacto"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) spy.observe(el);
+    });
+  }
+
 })();
