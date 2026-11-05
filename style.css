@@ -176,13 +176,13 @@ p { margin: 0 0 1em; }
 .contact-photo { min-height: 100%; overflow: hidden; border-radius: 28px; }
 .contact-photo img { display: block; width: 100%; height: 100%; min-height: 520px; object-fit: cover; }
 .video-container img { display: block; width: 100%; max-height: 520px; object-fit: cover; border-radius: 28px; }
-.contact-form { display: grid; height: 100%; align-content: start; gap: 16px; padding: clamp(24px, 4vw, 40px); border-radius: 28px; background: var(--foam); color: var(--ink); }
+.contact-form { display: grid; min-width: 0; height: 100%; align-content: start; gap: 16px; padding: clamp(24px, 4vw, 40px); border-radius: 28px; background: var(--foam); color: var(--ink); }
 .contact-form h3 { font-size: var(--text-subheading); }
-.form-field { display: grid; gap: 6px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-field { display: grid; min-width: 0; gap: 6px; }
+.form-row { display: grid; min-width: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 label { font-size: var(--text-label); font-weight: 600; }
 .optional { font-weight: 400; color: var(--muted); }
-input, select, textarea { width: 100%; padding: 13px 14px; border: 1.5px solid var(--line); border-radius: 14px; background: #fff; font: inherit; color: var(--ink); transition: border-color 0.2s, box-shadow 0.2s; }
+input, select, textarea { display: block; width: 100%; min-width: 0; max-width: 100%; padding: 13px 14px; border: 1.5px solid var(--line); border-radius: 14px; background: #fff; font: inherit; color: var(--ink); transition: border-color 0.2s, box-shadow 0.2s; }
 input:focus, select:focus, textarea:focus { outline: none; border-color: var(--tide); box-shadow: 0 0 0 4px rgba(18, 96, 122, 0.15); }
 textarea { min-height: 110px; resize: vertical; }
 .form-note, .form-status { margin: 0; font-size: var(--text-label); color: var(--muted); }
@@ -284,7 +284,7 @@ textarea { min-height: 110px; resize: vertical; }
 @media (max-width: 600px) {
   .story-image-frame { border-radius: 22px; }
   .story-caption { margin-top: 12px; }
-  .form-row { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: minmax(0, 1fr); }
   .scroll-cue { bottom: 84px; }
   .whatsapp-float { right: 14px; bottom: 14px; }
   .back-to-top { right: 20px; bottom: 84px; }
