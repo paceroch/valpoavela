@@ -125,6 +125,9 @@ p { margin: 0 0 1em; }
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
 .card { overflow: hidden; display: flex; flex-direction: column; background: #fff; border-radius: 28px; box-shadow: 0 20px 50px -30px rgba(6, 30, 43, 0.4); text-align: center; }
 .card > img, .photo-placeholder { display: block; width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+#view-embarcaciones .card-media { position: relative; flex: 0 0 auto; width: 100%; aspect-ratio: 1; overflow: hidden; }
+#view-embarcaciones .card-media > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+#view-embarcaciones .card-media > .photo-placeholder { width: 100%; height: 100%; aspect-ratio: auto; }
 .photo-placeholder { display: grid; place-items: center; background: radial-gradient(circle at 30% 20%, var(--tide), var(--abyss)); }
 .photo-placeholder img { width: 46%; max-height: 60%; object-fit: contain; }
 .card-body { display: flex; flex-direction: column; align-items: center; flex: 1; padding: 28px; }
