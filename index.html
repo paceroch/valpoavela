@@ -35,7 +35,7 @@
     <header class="topbar">
       <div class="wrap nav">
         <a class="brand" href="#inicio" aria-label="Valpo a Vela, inicio">
-          <img src="fotos/vela.webp" alt="Valpo a Vela" width="278" height="200" decoding="async" />
+          <img src="fotos/vela.webp" alt="Valpo a Vela" width="1024" height="512" decoding="async" />
         </a>
         <button
           class="mobile-menu-btn"
@@ -70,46 +70,46 @@
           <a href="#contacto">Contacto</a>
         </nav>
 
-        <!-- Menú móvil -->
-        <div class="mobile-nav" id="mobileNav">
-          <a href="#filosofia">La experiencia</a>
-          <div class="mobile-activities">
-            <button
-              class="mobile-activities-toggle"
-              type="button"
-              aria-expanded="false"
-              aria-controls="mobileActivities"
-            >
-              Actividades <span aria-hidden="true">⌄</span>
-            </button>
-            <div class="mobile-activities-menu" id="mobileActivities" hidden>
-              <a href="#hansa">Navegación Hansa</a>
-              <a href="#yate">Paseos en yate</a>
-              <a href="#pesca">Pesca deportiva</a>
-              <a href="#raquero">Iniciación a la vela</a>
-            </div>
-          </div>
-          <div class="mobile-activities">
-            <button
-              class="mobile-activities-toggle"
-              type="button"
-              aria-expanded="false"
-              aria-controls="mobileVessels"
-            >
-              Embarcaciones <span aria-hidden="true">⌄</span>
-            </button>
-            <div class="mobile-activities-menu" id="mobileVessels" hidden>
-              <a href="#embarcacion-hansa">Hansa 303</a>
-              <a href="#embarcacion-yate">Yate recreativo</a>
-              <a href="#embarcacion-pesca">Embarcación de pesca</a>
-              <a href="#embarcacion-raquero">Raquero</a>
-            </div>
-          </div>
-          <a href="#preguntas">Preguntas frecuentes</a>
-          <a href="#contacto">Contacto</a>
-        </div>
       </div>
     </header>
+    <!-- Menú móvil fuera de la cabecera para que su desenfoque no limite su altura -->
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#filosofia">La experiencia</a>
+      <div class="mobile-activities">
+        <button
+          class="mobile-activities-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobileActivities"
+        >
+          Actividades <span aria-hidden="true">⌄</span>
+        </button>
+        <div class="mobile-activities-menu" id="mobileActivities" hidden>
+          <a href="#hansa">Navegación Hansa</a>
+          <a href="#yate">Paseos en yate</a>
+          <a href="#pesca">Pesca deportiva</a>
+          <a href="#raquero">Iniciación a la vela</a>
+        </div>
+      </div>
+      <div class="mobile-activities">
+        <button
+          class="mobile-activities-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobileVessels"
+        >
+          Embarcaciones <span aria-hidden="true">⌄</span>
+        </button>
+        <div class="mobile-activities-menu" id="mobileVessels" hidden>
+          <a href="#embarcacion-hansa">Hansa 303</a>
+          <a href="#embarcacion-yate">Yate recreativo</a>
+          <a href="#embarcacion-pesca">Embarcación de pesca</a>
+          <a href="#embarcacion-raquero">Raquero</a>
+        </div>
+      </div>
+      <a href="#preguntas">Preguntas frecuentes</a>
+      <a href="#contacto">Contacto</a>
+    </div>
 
     <main>
       <!-- VISTA PRINCIPAL / HOME -->
@@ -147,7 +147,7 @@
           <li><strong>Chalecos incluidos</strong><span>En todas las actividades</span></li>
           <li><strong>Bahía de Valparaíso</strong><span>Zona de navegación</span></li>
         </ul>
-
+
         <section class="section story-section" id="filosofia">
           <div class="wrap story-layout">
             <div class="story-copy">
@@ -213,7 +213,7 @@
                 </div>
               </article>
               <article class="card">
-                <div class="photo-placeholder" aria-hidden="true"><img src="fotos/vela.webp" alt="" width="278" height="200" loading="lazy" decoding="async" /></div>
+                <div class="photo-placeholder" aria-hidden="true"><img src="fotos/vela.webp" alt="" width="1024" height="512" loading="lazy" decoding="async" /></div>
                 <div class="card-body">
                   <div class="num">Sesiones de pesca</div>
                   <h3>Salidas de pesca deportiva y recreativa</h3>
@@ -268,6 +268,9 @@
                 loading="lazy"
                 src="https://embed.windy.com/embed2.html?lat=-33.047&lon=-71.613&detailLat=-33.047&detailLon=-71.613&width=650&height=420&zoom=9&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=true&type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C"
               ></iframe>
+              <button class="wind-map-cover" type="button">
+                Toca o haz clic para interactuar con el mapa
+              </button>
             </div>
             <div class="weather">
               Posiciona el cursor sobre el mapa, haz clic y arrastra el
@@ -283,13 +286,39 @@
             </div>
           </div>
         </section>
-        <!-- CONTACTO -->
+        <section class="section home-location" id="datos-zarpe">
+          <div class="wrap">
+            <div class="section-head">
+              <p class="kicker">Antes de embarcar</p>
+              <h2>Zarpe desde Muelle Barón</h2>
+              <p>Encuéntranos en el punto de zarpe y consulta la zona y el horario de navegación.</p>
+            </div>
+            <div class="home-location-details">
+              <p>
+                <strong>Lugar de zarpe:</strong> Muelle Barón, Valparaíso<br />
+                <strong>Zona de navegación:</strong> Bahía de Valparaíso<br />
+                <strong>Horario:</strong> Martes a domingo, de 11:00 a 17:00 hrs
+              </p>
+              <h3>¿Cómo llegar?</h3>
+              <iframe
+                class="contact-map"
+                title="Mapa de Muelle Barón, Valparaíso"
+                loading="lazy"
+                src="https://www.google.com/maps?q=Muelle%20Bar%C3%B3n%2C%20Valpara%C3%ADso&output=embed"
+              ></iframe>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- CONTACTO -->
+      <div id="view-contacto" class="page-view">
         <section class="section" id="contacto">
           <div class="wrap contact">
             <div>
               <p class="kicker">Hablemos de tu próxima salida</p>
               <div class="section-head">
-                <h2>Cuéntanos qué experiencia estás buscando.</h2>
+                <h1>Cuéntanos qué experiencia estás buscando.</h1>
                 <p>
                   Escríbenos para consultar cursos de iniciación, prácticas
                   acompañadas para navegantes con licencia y actividades
@@ -301,83 +330,58 @@
                 <img src="fotos/portada.webp" alt="Tripulantes con chaleco salvavidas a bordo de un velero en la bahía de Valparaíso" width="960" height="882" loading="lazy" decoding="async" />
               </div>
             </div>
-            <div>
-              <form class="contact-form" id="contact-form-page">
-                <h3>Envíanos tu consulta</h3>
+            <form class="contact-form" id="contact-form-page">
+              <h3>Envíanos tu consulta</h3>
+              <div class="form-field">
+                <label for="contact-name-page">Nombre</label>
+                <input id="contact-name-page" name="name" autocomplete="name" required />
+              </div>
+              <div class="form-field">
+                <label for="contact-activity-page">Actividad de interés</label>
+                <select id="contact-activity-page" name="activity">
+                  <option value="">Aún no lo sé, necesito orientación</option>
+                  <option value="raquero">Clase práctica de vela en raquero</option>
+                  <option value="hansa">Navegación en velero Hansa</option>
+                  <option value="yate">Paseo en yate</option>
+                  <option value="pesca">Salida de pesca</option>
+                  <option value="practica">Práctica asistida (con licencia)</option>
+                </select>
+              </div>
+              <div class="form-row">
                 <div class="form-field">
-                  <label for="contact-name-page">Nombre</label>
+                  <label for="contact-people-page">Nº de participantes</label>
                   <input
-                    id="contact-name-page"
-                    name="name"
-                    autocomplete="name"
+                    id="contact-people-page"
+                    name="people"
+                    type="number"
+                    inputmode="numeric"
+                    min="1"
+                    max="20"
                     required
                   />
                 </div>
                 <div class="form-field">
-                  <label for="contact-activity-page">Actividad de interés</label>
-                  <select id="contact-activity-page" name="activity">
-                    <option value="">Aún no lo sé, necesito orientación</option>
-                    <option value="raquero">Clase práctica de vela en raquero</option>
-                    <option value="hansa">Navegación en velero Hansa</option>
-                    <option value="yate">Paseo en yate</option>
-                    <option value="pesca">Salida de pesca</option>
-                    <option value="practica">Práctica asistida (con licencia)</option>
-                  </select>
+                  <label for="contact-date-page">Fecha preferida <span class="optional">(opcional)</span></label>
+                  <input id="contact-date-page" name="date" type="date" />
                 </div>
-                <div class="form-row">
-                  <div class="form-field">
-                    <label for="contact-people-page">Nº de participantes</label>
-                    <input
-                      id="contact-people-page"
-                      name="people"
-                      type="number"
-                      inputmode="numeric"
-                      min="1"
-                      max="20"
-                      required
-                    />
-                  </div>
-                  <div class="form-field">
-                    <label for="contact-date-page">Fecha preferida <span class="optional">(opcional)</span></label>
-                    <input id="contact-date-page" name="date" type="date" />
-                  </div>
-                </div>
-                <div class="form-field">
-                  <label for="contact-message-page">Mensaje <span class="optional">(opcional)</span></label>
-                  <textarea id="contact-message-page" name="message"></textarea>
-                </div>
-                <button class="btn btn-primary" type="submit">
-                  Preparar mensaje por WhatsApp
-                </button>
-                <p class="form-note">
-                  Se abrirá WhatsApp con tu consulta lista para enviar.
-                </p>
-                <p
-                  class="form-status"
-                  id="contact-status-page"
-                  role="status"
-                  aria-live="polite"
-                ></p>
-              </form>
-              <div class="contact-details">
-                <p>
-                  
-                  
-                  <strong>Lugar de zarpe:</strong> Muelle Barón, Valparaíso<br />
-                  <strong>Zona de navegación:</strong> Bahía de
-                  Valparaíso<br />
-                  <strong>Horario:</strong> Martes a domingo, de 11:00 a 17:00
-                  hrs
-                </p>
-                <h3>¿Cómo llegar?</h3>
-                <iframe
-                  class="contact-map"
-                  title="Mapa de Muelle Barón, Valparaíso"
-                  loading="lazy"
-                  src="https://www.google.com/maps?q=Muelle%20Bar%C3%B3n%2C%20Valpara%C3%ADso&output=embed"
-                ></iframe>
               </div>
-            </div>
+              <div class="form-field">
+                <label for="contact-message-page">Mensaje <span class="optional">(opcional)</span></label>
+                <textarea id="contact-message-page" name="message"></textarea>
+              </div>
+              <button class="btn btn-primary" type="submit">
+                Preparar mensaje por WhatsApp
+              </button>
+              <p class="form-note">
+                Se abrirá WhatsApp con tu consulta lista para enviar.
+              </p>
+              <p
+                class="form-status"
+                id="contact-status-page"
+                role="status"
+                aria-live="polite"
+              ></p>
+            </form>
           </div>
         </section>
       </div>
@@ -387,8 +391,8 @@
         <section class="section section-raquero">
           <div class="raquero-wrap">
             <div class="raquero-header">
-              <span class="raquero-eyebrow">Segun tus necesidades</span>
-              <h2>Embarcaciones disponibles</h2>
+              <span class="raquero-eyebrow">Según tus necesidades</span>
+              <h1>Embarcaciones disponibles</h1>
               <p>
                 Conoce las embarcaciones que utilizamos en Valpo a Vela para la
                 formación, la navegación recreativa y el apoyo en la bahía de
@@ -420,7 +424,7 @@
               </article>
               <article class="card" id="embarcacion-pesca">
                 <div class="card-media">
-                  <div class="photo-placeholder" aria-hidden="true"><img src="fotos/vela.webp" alt="" width="278" height="200" loading="lazy" decoding="async" /></div>
+                  <div class="photo-placeholder" aria-hidden="true"><img src="fotos/vela.webp" alt="" width="1024" height="512" loading="lazy" decoding="async" /></div>
                 </div>
                 <div class="card-body">
                   <div class="num">Bote de pesca</div>
@@ -442,7 +446,7 @@
               </article>
               <article class="card" id="embarcacion-apoyo">
                 <div class="card-media">
-                  <div class="photo-placeholder" aria-hidden="true"><img src="fotos/vela.webp" alt="" width="278" height="200" loading="lazy" decoding="async" /></div>
+                  <div class="photo-placeholder" aria-hidden="true"><img src="fotos/vela.webp" alt="" width="1024" height="512" loading="lazy" decoding="async" /></div>
                 </div>
                 <div class="card-body">
                   <div class="num">Zodiac de apoyo</div>
@@ -466,7 +470,7 @@
           <div class="wrap faq">
             <div class="section-head">
               <p class="kicker">Antes de embarcar</p>
-              <h2>Preguntas frecuentes</h2>
+              <h1>Preguntas frecuentes</h1>
               <p>Si tienes otra duda, escríbenos y conversamos.</p>
             </div>
             <div>
@@ -541,7 +545,7 @@
           <div class="raquero-wrap">
             <div class="raquero-header">
               <span class="raquero-eyebrow">Navegación Hansa</span>
-              <h2>Tu primera experiencia en un velero Hansa</h2>
+              <h1>Tu primera experiencia en un velero Hansa</h1>
               <p>
                 Acércate a la navegación en una embarcación de iniciación
                 diseñada para facilitar la participación a bordo. Con un
@@ -599,7 +603,7 @@
                     <img src="fotos/hansa.webp" alt="Velero Hansa 303 navegando en la bahía de Valparaíso" width="1400" height="1400" loading="lazy" decoding="async" />
                   </div>
                   <div class="carousel-slide">
-                    <img src="fotos/portada.webp" alt="Tripulantes a bordo durante una navegación en Valparaíso" width="960" height="1280" loading="lazy" decoding="async" />
+                    <img src="fotos/portada.webp" alt="Tripulantes a bordo durante una navegación en Valparaíso" width="960" height="882" loading="lazy" decoding="async" />
                   </div>
                   <div class="carousel-slide">
                     <img src="fotos/practicando-1.webp" alt="Tripulantes participan en una clase práctica de vela" width="720" height="1280" loading="lazy" decoding="async" />
@@ -622,7 +626,7 @@
           <div class="raquero-wrap">
             <div class="raquero-header">
               <span class="raquero-eyebrow">Travesías personalizadas</span>
-              <h2>Paseos en yate</h2>
+              <h1>Paseos en yate</h1>
               <p>
                 Disfruta el paisaje costero desde el mar en una salida
                 recreativa, ideal para compartir con familia, amigos o en
@@ -697,7 +701,7 @@
           <div class="raquero-wrap">
             <div class="raquero-header">
               <span class="raquero-eyebrow">Pesca deportiva y recreativa</span>
-              <h2>Salidas de pesca</h2>
+              <h1>Salidas de pesca</h1>
               <p>
                 Vive una jornada en el mar enfocada en la pesca: puede ser una
                 salida deportiva, centrada en la experiencia y la técnica, o una
@@ -706,7 +710,7 @@
               </p>
             </div>
             <div class="raquero-hero">
-              <div class="photo-placeholder" aria-hidden="true"><img src="fotos/vela.webp" alt="" width="278" height="200" loading="lazy" decoding="async" /></div>
+              <div class="photo-placeholder" aria-hidden="true"><img src="fotos/vela.webp" alt="" width="1024" height="512" loading="lazy" decoding="async" /></div>
               <div class="raquero-hero-caption">
                 <span>Bahía de Valparaíso</span>
                 <span>Duración mínima: 5 horas</span>
@@ -756,7 +760,7 @@
                     <img src="fotos/whatsapp-53.webp" alt="Tripulantes a bordo en una salida por la bahía" width="960" height="1280" loading="lazy" decoding="async" />
                   </div>
                   <div class="carousel-slide">
-                    <img src="fotos/practicando-5.webp" alt="Embarcación a vela navegando en Valparaíso" width="960" height="1280" loading="lazy" decoding="async" />
+                    <img src="fotos/practicando-5.webp" alt="Embarcación a vela navegando en Valparaíso" width="381" height="314" loading="lazy" decoding="async" />
                   </div>
                 </div>
               </div>
@@ -776,7 +780,7 @@
           <div class="raquero-wrap">
             <div class="raquero-header">
               <span class="raquero-eyebrow">Iniciación a la vela</span>
-              <h2>Clase práctica de vela en raquero</h2>
+              <h1>Clase práctica de vela en raquero</h1>
               <p>
                 Descubre los fundamentos de la navegación a vela participando en
                 las maniobras, comprendiendo el viento y conociendo el
@@ -853,7 +857,7 @@
     <footer class="footer">
       <div class="wrap footer-cols">
         <div>
-          <img class="footer-logo" src="fotos/vela.webp" alt="Valpo a Vela" width="278" height="200" loading="lazy" decoding="async" />
+          <img class="footer-logo" src="fotos/vela.webp" alt="Valpo a Vela" width="1024" height="512" loading="lazy" decoding="async" />
           <small class="footer-tagline">El mar se vive en primera persona.</small>
           <div class="social-icons" role="group" aria-label="Redes sociales">
             <span class="social-icon" role="img" aria-label="Instagram">

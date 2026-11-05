@@ -15,6 +15,7 @@
     raquero: "Clase práctica de vela en raquero | Valpo a Vela",
     embarcaciones: "Nuestras embarcaciones | Valpo a Vela",
     preguntas: "Preguntas frecuentes | Valpo a Vela",
+    contacto: "Contacto | Valpo a Vela",
   };
   var ACTIVITY_VIEWS = ["hansa", "yate", "pesca", "raquero"];
   // Anclas que viven dentro de vistas, en lugar de ser vistas por sí mismas.
@@ -22,7 +23,7 @@
     filosofia: "home",
     actividades: "home",
     clima: "home",
-    contacto: "home",
+    "datos-zarpe": "home",
     "embarcacion-hansa": "embarcaciones",
     "embarcacion-yate": "embarcaciones",
     "embarcacion-pesca": "embarcaciones",
@@ -53,10 +54,7 @@
       }
     }
     document.querySelectorAll(".page-view").forEach(function (el) {
-      el.classList.toggle(
-        "active",
-        el.id === "view-" + view || (isActivityView && el.classList.contains("activity-view"))
-      );
+      el.classList.toggle("active", el.id === "view-" + view);
     });
     document.title = VIEWS[view] || VIEWS.home;
     document.body.setAttribute("data-view", view);
@@ -114,6 +112,14 @@
     route();
   });
   route();
+
+  var windMapWrap = document.querySelector(".wind-map-wrap");
+  var windMapCover = document.querySelector(".wind-map-cover");
+  if (windMapWrap && windMapCover) {
+    windMapCover.addEventListener("click", function () {
+      windMapWrap.classList.add("is-active");
+    });
+  }
 
   document.querySelectorAll(".activity-back").forEach(function (link) {
     link.addEventListener("click", function (event) {
