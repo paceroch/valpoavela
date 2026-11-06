@@ -35,7 +35,10 @@
   var activityNavigation = document.getElementById("activity-navigation");
 
   var yearEl = document.getElementById("year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  var mobileYearEl = document.getElementById("mobileYear");
+  var currentYear = new Date().getFullYear();
+  if (yearEl) yearEl.textContent = currentYear;
+  if (mobileYearEl) mobileYearEl.textContent = currentYear;
 
   // ---------------------------------------------------------------- vistas
   function showView(view) {
