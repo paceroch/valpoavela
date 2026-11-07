@@ -168,11 +168,13 @@ p { margin: 0 0 1em; }
 /* 9. CONTACTO */
 #contacto { background: var(--abyss); color: #fff; }
 #contacto .kicker { color: var(--spray); }
+#contacto .view-actions .btn-back { border-color: var(--foam); background: var(--foam); color: var(--abyss); }
+#contacto .view-actions .btn-back:hover { border-color: var(--mist); background: var(--mist); }
 .contact { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; align-items: stretch; }
 .contact-heading { grid-column: 1 / -1; width: min(860px, 100%); margin: 0 auto 8px; text-align: center; }
 .contact-heading h1 { margin-bottom: 16px; }
 .contact-heading .kicker { margin-bottom: 12px; }
-.contact-heading > p:last-child { color: rgba(255, 255, 255, 0.78); font-size: var(--text-lead); }
+.contact-heading > p:last-of-type { color: rgba(255, 255, 255, 0.78); font-size: var(--text-lead); }
 .contact-photo { min-height: 100%; overflow: hidden; border-radius: 28px; }
 .contact-photo img { display: block; width: 100%; height: 100%; min-height: 520px; object-fit: cover; }
 .video-container img { display: block; width: 100%; max-height: 520px; object-fit: cover; border-radius: 28px; }
