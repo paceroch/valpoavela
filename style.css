@@ -1514,3 +1514,59 @@ textarea {
     transform: none;
   }
 }
+
+/* Corrección del formulario en dispositivos móviles */
+.contact-form,
+.form-field,
+.form-row {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Corrección específica para Safari en iPhone */
+.contact-form input[type="date"] {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 52px;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Diseño responsive */
+@media (max-width: 768px) {
+  .contact {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .contact-form {
+    width: 100%;
+    min-width: 0;
+    padding: 24px 20px;
+    box-sizing: border-box;
+  }
+
+  .form-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    width: 100%;
+    max-width: 100%;
+  }
+}
