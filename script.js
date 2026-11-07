@@ -10,7 +10,7 @@
   var VIEWS = {
     home: "Valpo a Vela | Clases de vela y paseos a vela en Valparaíso",
     hansa: "Navegación en velero Hansa 303 | Valpo a Vela",
-    yate: "Paseos en yate en Valparaíso | Valpo a Vela",
+    yate: "Paseos en velero en Valparaíso | Valpo a Vela",
     pesca: "Salidas de pesca en Valparaíso | Valpo a Vela",
     raquero: "Clase práctica de vela en raquero | Valpo a Vela",
     embarcaciones: "Nuestras embarcaciones | Valpo a Vela",
