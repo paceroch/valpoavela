@@ -291,6 +291,8 @@ textarea { min-height: 110px; resize: vertical; }
   .story-image-frame { border-radius: 22px; }
   .story-caption { margin-top: 12px; }
   .form-row { grid-template-columns: minmax(0, 1fr); }
+  .contact-form .form-row, .contact-form .form-field { min-width: 0; max-width: 100%; }
+  .contact-form input[type="date"] { width: 100%; min-width: 0; max-width: 100%; box-sizing: border-box; }
   .scroll-cue { bottom: 84px; }
   .whatsapp-float { right: 14px; bottom: 14px; }
   .back-to-top { right: 20px; bottom: 84px; }
