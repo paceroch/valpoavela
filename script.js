@@ -21,6 +21,7 @@
   // Anclas que viven dentro de vistas, en lugar de ser vistas por sí mismas.
   var SECTION_VIEWS = {
     filosofia: "home",
+    capella: "home",
     actividades: "home",
     clima: "home",
     "datos-zarpe": "home",
