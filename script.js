@@ -29,7 +29,6 @@
     "embarcacion-yate": "embarcaciones",
     "embarcacion-pesca": "embarcaciones",
     "embarcacion-raquero": "embarcaciones",
-    "embarcacion-apoyo": "embarcaciones",
   };
 
   var currentView = null;

@@ -628,6 +628,10 @@ body[data-view="raquero"] a[href="#actividades"]::after {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.35s var(--ease);
+}
+.capella-gallery-media:hover img {
+  transform: scale(1.035);
 }
 .capella-gallery {
   display: grid;
