@@ -696,24 +696,11 @@ body[data-view="raquero"] a[href="#actividades"]::after {
   display: block;
 }
 #actividades .card {
-  position: sticky;
+  position: static;
   flex-direction: row;
   align-items: stretch;
   margin-bottom: 40px;
   min-height: 420px;
-  transform-origin: 50% 0;
-}
-#actividades .card:nth-child(1) {
-  top: 100px;
-}
-#actividades .card:nth-child(2) {
-  top: 118px;
-}
-#actividades .card:nth-child(3) {
-  top: 136px;
-}
-#actividades .card:nth-child(4) {
-  top: 154px;
 }
 #actividades .card:nth-child(even) {
   flex-direction: row-reverse;

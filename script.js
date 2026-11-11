@@ -17,7 +17,7 @@
     preguntas: "Preguntas frecuentes | Valpo a Vela",
     contacto: "Contacto | Valpo a Vela",
   };
-  var ACTIVITY_VIEWS = ["hansa", "yate", "pesca", "raquero"];
+  var ACTIVITY_VIEWS = ["yate", "raquero", "hansa", "pesca"];
   // Anclas que viven dentro de vistas, en lugar de ser vistas por sí mismas.
   var SECTION_VIEWS = {
     filosofia: "home",
