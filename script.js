@@ -89,11 +89,10 @@
     }
 
     if (heroMedia && !reduceMotion) {
-      var r = heroMedia.getBoundingClientRect();
-      var p = clamp((vh - r.top) / (vh * 0.85), 0, 1);
-      var width = heroMediaBaseWidth + (document.documentElement.clientWidth - heroMediaBaseWidth) * p;
+      var p = clamp(window.scrollY / (vh * 0.85), 0, 1);
+      var endWidth = document.documentElement.clientWidth * (window.innerWidth <= 560 ? 0.89 : 0.85);
+      var width = heroMediaBaseWidth + (endWidth - heroMediaBaseWidth) * p;
       heroMedia.style.setProperty("--hs", (width / heroMediaBaseWidth).toFixed(4));
-      heroMedia.style.setProperty("--hr", (28 * (1 - p)).toFixed(2) + "px");
     }
 
     if (words.length && !reduceMotion) {
@@ -112,7 +111,6 @@
   window.addEventListener("resize", function () {
     if (heroMedia) {
       heroMedia.style.removeProperty("--hs");
-      heroMedia.style.removeProperty("--hr");
       heroMediaBaseWidth = heroMedia.getBoundingClientRect().width;
     }
     onScroll();
