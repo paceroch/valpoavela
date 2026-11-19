@@ -92,8 +92,7 @@
       var r = heroMedia.getBoundingClientRect();
       var p = clamp((vh - r.top) / (vh * 0.85), 0, 1);
       var width = heroMediaBaseWidth + (document.documentElement.clientWidth - heroMediaBaseWidth) * p;
-      heroMedia.style.setProperty("--hp", p.toFixed(3));
-      heroMedia.style.setProperty("--hw", width.toFixed(2) + "px");
+      heroMedia.style.setProperty("--hs", (width / heroMediaBaseWidth).toFixed(4));
       heroMedia.style.setProperty("--hr", (28 * (1 - p)).toFixed(2) + "px");
     }
 
@@ -112,7 +111,8 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", function () {
     if (heroMedia) {
-      heroMedia.style.removeProperty("--hw");
+      heroMedia.style.removeProperty("--hs");
+      heroMedia.style.removeProperty("--hr");
       heroMediaBaseWidth = heroMedia.getBoundingClientRect().width;
     }
     onScroll();
