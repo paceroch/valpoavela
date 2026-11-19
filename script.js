@@ -291,6 +291,10 @@
     });
     activityModalClose.addEventListener("click", function () { closeActivityModal(true); });
     activityModalContent.addEventListener("click", function (event) {
+      if (event.target.closest(".activity-modal-back")) {
+        closeActivityModal(true);
+        return;
+      }
       if (event.target.closest("a[href^='#']")) closeActivityModal(false);
     });
   }
