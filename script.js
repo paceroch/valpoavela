@@ -75,11 +75,17 @@
 
   // ---------------------------------------------------------- efectos ligados al scroll
   var heroMedia = $("#heroMedia");
+  var backToTop = $(".back-to-top");
   var ticking = false;
   function update() {
     ticking = false;
     var vh = window.innerHeight;
     if (nav) nav.classList.toggle("is-scrolled", window.scrollY > 8);
+    if (backToTop) {
+      var showBackToTop = window.scrollY > 320;
+      backToTop.classList.toggle("is-visible", showBackToTop);
+      backToTop.setAttribute("aria-hidden", showBackToTop ? "false" : "true");
+    }
 
     if (heroMedia && !reduceMotion) {
       var r = heroMedia.getBoundingClientRect();
@@ -211,35 +217,83 @@
     state();
   });
 
-  // ---------------------------------------------------------- detalles superpuestos de actividades
-  var activityCards = $$(".fcard:not(.fcard-dark)");
-  var openActivityCard = null;
-  function closeActivityDetails(card, restoreFocus) {
-    var trigger = $(".fcard-details", card);
-    var overlay = $(".fcard-overlay", card);
-    if (!trigger || !overlay) return;
-    overlay.hidden = true;
-    trigger.setAttribute("aria-expanded", "false");
-    if (openActivityCard === card) openActivityCard = null;
-    if (restoreFocus) trigger.focus();
+  // ---------------------------------------------------------- detalles de actividades
+  var activityModal = $("#activityModal");
+  var activityModalTitle = $("#activityModalTitle");
+  var activityModalContent = $("#activityModalContent");
+  var activityModalClose = $(".activity-modal-close", activityModal);
+  var activityTriggers = $$(".fcard-details[data-activity-modal]");
+  var activityModalTrigger = null;
+  var activityModalScrollY = 0;
+  var activityModalBodyStyles = null;
+
+  function lockPageScroll() {
+    activityModalScrollY = window.scrollY;
+    activityModalBodyStyles = {
+      position: document.body.style.position,
+      top: document.body.style.top,
+      left: document.body.style.left,
+      right: document.body.style.right,
+      width: document.body.style.width,
+      overflow: document.body.style.overflow
+    };
+    document.body.style.position = "fixed";
+    document.body.style.top = "-" + activityModalScrollY + "px";
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+    document.body.style.overflow = "hidden";
   }
-  activityCards.forEach(function (card) {
-    var trigger = $(".fcard-details", card);
-    var close = $(".fcard-close", card);
-    var overlay = $(".fcard-overlay", card);
-    if (!trigger || !close || !overlay) return;
-    trigger.addEventListener("click", function () {
-      if (openActivityCard && openActivityCard !== card) closeActivityDetails(openActivityCard, false);
-      overlay.hidden = false;
-      trigger.setAttribute("aria-expanded", "true");
-      openActivityCard = card;
-      close.focus();
+
+  function restorePageScroll() {
+    if (!activityModalBodyStyles) return;
+    document.body.style.position = activityModalBodyStyles.position;
+    document.body.style.top = activityModalBodyStyles.top;
+    document.body.style.left = activityModalBodyStyles.left;
+    document.body.style.right = activityModalBodyStyles.right;
+    document.body.style.width = activityModalBodyStyles.width;
+    document.body.style.overflow = activityModalBodyStyles.overflow;
+    activityModalBodyStyles = null;
+
+    var scrollBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo(0, activityModalScrollY);
+    document.documentElement.style.scrollBehavior = scrollBehavior;
+  }
+
+  function closeActivityModal(restoreFocus) {
+    if (!activityModal || !activityModal.open) return;
+    activityModal.close();
+    if (activityModalTrigger) activityModalTrigger.setAttribute("aria-expanded", "false");
+    restorePageScroll();
+    if (restoreFocus && activityModalTrigger) activityModalTrigger.focus({ preventScroll: true });
+    activityModalTrigger = null;
+  }
+
+  if (activityModal && activityModalTitle && activityModalContent && activityModalClose) {
+    activityTriggers.forEach(function (trigger) {
+      trigger.addEventListener("click", function () {
+        if (activityModal.open) return;
+        var template = document.getElementById(trigger.getAttribute("data-activity-modal"));
+        if (!template || template.tagName !== "TEMPLATE") return;
+        activityModalTitle.textContent = template.getAttribute("data-title");
+        activityModalContent.replaceChildren(template.content.cloneNode(true));
+        activityModalTrigger = trigger;
+        lockPageScroll();
+        activityModal.showModal();
+        trigger.setAttribute("aria-expanded", "true");
+        activityModalClose.focus();
+      });
     });
-    close.addEventListener("click", function () { closeActivityDetails(card, true); });
-  });
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape" && openActivityCard) closeActivityDetails(openActivityCard, true);
-  });
+
+    activityModal.addEventListener("cancel", function (event) {
+      event.preventDefault();
+    });
+    activityModalClose.addEventListener("click", function () { closeActivityModal(true); });
+    activityModalContent.addEventListener("click", function (event) {
+      if (event.target.closest("a[href^='#']")) closeActivityModal(false);
+    });
+  }
 
   // ---------------------------------------------------------- mapa del viento
   var windWrap = $("#windWrap");
