@@ -68,15 +68,22 @@
   if (statement && !reduceMotion) {
     words = $$(".w", statement);
     if (!words.length) {
-      var text = statement.textContent.trim().split(/\s+/);
-      statement.textContent = "";
-      words = text.map(function (word, i) {
-        var span = document.createElement("span");
-        span.className = "w";
-        span.textContent = word;
-        if (i > 0) statement.appendChild(document.createTextNode(" "));
-        statement.appendChild(span);
-        return span;
+      Array.from(statement.childNodes).forEach(function (node) {
+        if (node.nodeType !== Node.TEXT_NODE) return;
+        var fragment = document.createDocumentFragment();
+        node.textContent.split(/(\s+)/).forEach(function (part) {
+          if (!part) return;
+          if (/^\s+$/.test(part)) {
+            fragment.appendChild(document.createTextNode(part));
+            return;
+          }
+          var span = document.createElement("span");
+          span.className = "w";
+          span.textContent = part;
+          fragment.appendChild(span);
+          words.push(span);
+        });
+        node.replaceWith(fragment);
       });
     }
     statement.setAttribute("data-word-gradient", "");
