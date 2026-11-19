@@ -65,16 +65,38 @@
   // ---------------------------------------------------------- frase que se ilumina palabra por palabra
   var statement = $("#statementText");
   var words = [];
-  if (statement) {
-    var text = statement.textContent.trim().split(/\s+/);
-    statement.textContent = "";
-    text.forEach(function (w, i) {
-      var span = document.createElement("span");
-      span.className = "w";
-      span.textContent = w;
-      statement.appendChild(span);
-      if (i < text.length - 1) statement.appendChild(document.createTextNode(" "));
-      words.push(span);
+  if (statement && !reduceMotion) {
+    words = $$(".w", statement);
+    if (!words.length) {
+      var text = statement.textContent.trim().split(/\s+/);
+      statement.textContent = "";
+      words = text.map(function (word, i) {
+        var span = document.createElement("span");
+        span.className = "w";
+        span.textContent = word;
+        if (i > 0) statement.appendChild(document.createTextNode(" "));
+        statement.appendChild(span);
+        return span;
+      });
+    }
+    statement.setAttribute("data-word-gradient", "");
+    layoutStatementGradient();
+    window.addEventListener("resize", layoutStatementGradient);
+    if ("ResizeObserver" in window) {
+      new ResizeObserver(layoutStatementGradient).observe(statement);
+    }
+    if (document.fonts) document.fonts.ready.then(layoutStatementGradient);
+  }
+
+  function layoutStatementGradient() {
+    var bounds = statement.getBoundingClientRect();
+    var offsets = words.map(function (word) {
+      return bounds.left - word.getBoundingClientRect().left;
+    });
+    // Todas las palabras muestran un recorte del mismo degradado horizontal.
+    statement.style.setProperty("--statement-gradient-width", bounds.width + "px");
+    words.forEach(function (word, i) {
+      word.style.setProperty("--statement-gradient-offset", offsets[i] + "px");
     });
   }
 

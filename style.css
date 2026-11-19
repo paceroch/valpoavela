@@ -124,10 +124,20 @@ section[id] { scroll-margin-top: var(--nav-h); }
 .hl-play span { width: 10px; height: 12px; border-left: 3px solid rgba(0,0,0,0.75); border-right: 3px solid rgba(0,0,0,0.75); }
 .hl-play.is-paused span { width: 0; height: 0; border: 0; border-left: 11px solid rgba(0,0,0,0.75); border-top: 7px solid transparent; border-bottom: 7px solid transparent; margin-left: 3px; }
 
-/* 7. FRASE (se ilumina al desplazarse) */
+/* 7. FRASE (degradado continuo que se ilumina al desplazarse) */
 .statement { padding: clamp(80px, 12vw, 160px) var(--pad); text-align: center; }
-.statement-text { max-width: 980px; margin: 0 auto; font-size: clamp(34px, 6vw, 72px); font-weight: 700; line-height: 1.08; letter-spacing: -0.035em; }
-.statement-text .w { color: var(--ink); opacity: calc(0.22 + 0.78 * var(--wp, 1)); }
+.statement-text { width: fit-content; max-width: min(100%, 980px); margin: 0 auto; font-weight: 700; }
+.statement-text[data-word-gradient] { background-image: none; }
+.statement-text[data-word-gradient] .w {
+  display: inline-block;
+  background-image: var(--grad);
+  background-size: var(--statement-gradient-width) 100%;
+  background-position: var(--statement-gradient-offset) 0;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: calc(0.22 + 0.78 * var(--wp, 1));
+}
 .statement .lede { margin: 30px auto 0; }
 
 /* 8. SECCIONES Y TARJETAS DESLIZABLES */
@@ -319,7 +329,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--b
   .js .rv { opacity: 1; transform: none; transition: none; }
   .hero { background-image: url("fotos/portada.webp"); background-position: center; background-size: cover; }
   .hero-video { display: none; }
-  .statement-text .w { opacity: 1; }
+  .statement-text[data-word-gradient] .w { opacity: 1; }
   .hl-dot.is-active.is-playing i { animation: none; transform: scaleX(1); }
   .drawer a { animation: none; opacity: 1; transform: none; }
 }
