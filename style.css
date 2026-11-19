@@ -96,7 +96,7 @@ section[id] { scroll-margin-top: var(--nav-h); }
 .hero .arrow-link { color: #fff; }
 .hero .fine { margin-top: 22px; color: #a1a1a6; }
 .hero .fine sup a { color: #9bcaff; }
-.hero-media { --hp: 0; margin: clamp(36px, 6vw, 72px) auto 0; width: min(100% - 2 * var(--pad), 1280px); aspect-ratio: 16 / 9; max-height: 78vh; overflow: hidden; border-radius: calc(var(--radius) - 12px * var(--hp)); background: var(--bg-2); transform: scale(calc(0.88 + 0.12 * var(--hp))); transform-origin: 50% 0; will-change: transform; }
+.hero-media { --hp: 0; margin: clamp(36px, 6vw, 72px) auto 0; width: var(--hw, min(100% - 2 * var(--pad), 1280px)); aspect-ratio: 16 / 9; max-height: 78vh; overflow: hidden; border-radius: var(--hr, var(--radius)); background: var(--bg-2); will-change: width; }
 .hero-video { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* 6. DESTACADOS (carrusel) */
@@ -322,7 +322,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--b
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .js .rv { opacity: 1; transform: none; transition: none; }
-  .hero-media { transform: none; border-radius: var(--radius); }
+  .hero-media { border-radius: var(--radius); }
   .statement-text .w { opacity: 1; }
   .hl-dot.is-active.is-playing i { animation: none; transform: scaleX(1); }
   .drawer a { animation: none; opacity: 1; transform: none; }

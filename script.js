@@ -75,6 +75,7 @@
 
   // ---------------------------------------------------------- efectos ligados al scroll
   var heroMedia = $("#heroMedia");
+  var heroMediaBaseWidth = heroMedia ? heroMedia.getBoundingClientRect().width : 0;
   var backToTop = $(".back-to-top");
   var ticking = false;
   function update() {
@@ -90,7 +91,10 @@
     if (heroMedia && !reduceMotion) {
       var r = heroMedia.getBoundingClientRect();
       var p = clamp((vh - r.top) / (vh * 0.85), 0, 1);
+      var width = heroMediaBaseWidth + (document.documentElement.clientWidth - heroMediaBaseWidth) * p;
       heroMedia.style.setProperty("--hp", p.toFixed(3));
+      heroMedia.style.setProperty("--hw", width.toFixed(2) + "px");
+      heroMedia.style.setProperty("--hr", (28 * (1 - p)).toFixed(2) + "px");
     }
 
     if (words.length && !reduceMotion) {
@@ -106,7 +110,13 @@
   }
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
   window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
+  window.addEventListener("resize", function () {
+    if (heroMedia) {
+      heroMedia.style.removeProperty("--hw");
+      heroMediaBaseWidth = heroMedia.getBoundingClientRect().width;
+    }
+    onScroll();
+  });
   update();
 
   // ---------------------------------------------------------- carrusel de destacados
