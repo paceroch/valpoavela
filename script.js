@@ -195,8 +195,13 @@
     var indicator = sc.nextElementSibling;
     if (!tr) return;
     var dotsWrap = $(".hl-dots", indicator);
+    var play = $(".hl-play", indicator);
     var cards = Array.from(tr.children);
     var positions = [];
+    var active = 0;
+    var playing = false;
+    var visible = !("IntersectionObserver" in window);
+    var timer;
     var dots = cards.map(function (card, i) {
       var dot = document.createElement("button");
       dot.type = "button";
@@ -204,22 +209,44 @@
       dot.setAttribute("aria-label", "Ir a la posición " + (i + 1));
       dot.appendChild(document.createElement("i"));
       dot.addEventListener("click", function () {
-        tr.scrollTo({ left: positions[i], behavior: reduceMotion ? "auto" : "smooth" });
+        pause();
+        goTo(i);
       });
       dotsWrap.appendChild(dot);
       return dot;
     });
+    function goTo(i) {
+      tr.scrollTo({ left: positions[i], behavior: reduceMotion ? "auto" : "smooth" });
+    }
+    function schedule() {
+      clearTimeout(timer);
+      state();
+      if (playing && visible && positions.length > 1) {
+        timer = setTimeout(function () {
+          goTo((active + 1) % positions.length);
+          schedule();
+        }, 6000);
+      }
+    }
+    function pause() {
+      if (!playing) return;
+      playing = false;
+      schedule();
+    }
     function state() {
       var left = tr.scrollLeft;
-      var active = 0;
+      active = 0;
       positions.forEach(function (position, i) {
         if (Math.abs(left - position) < Math.abs(left - positions[active])) active = i;
       });
       dots.forEach(function (dot, i) {
         dot.classList.toggle("is-active", i === active);
+        dot.classList.toggle("is-playing", i === active && playing && visible);
         if (i === active) dot.setAttribute("aria-current", "true");
         else dot.removeAttribute("aria-current");
       });
+      play.classList.toggle("is-paused", !playing);
+      play.setAttribute("aria-label", playing ? "Pausar reproducción automática" : "Iniciar reproducción automática");
     }
     function layout() {
       var max = tr.scrollWidth - tr.clientWidth;
@@ -232,7 +259,20 @@
       });
       dots.forEach(function (dot, i) { dot.hidden = i >= positions.length; });
       indicator.hidden = positions.length < 2;
-      state();
+      schedule();
+    }
+    play.addEventListener("click", function () {
+      playing = !playing;
+      schedule();
+    });
+    ["pointerdown", "touchstart", "wheel", "focusin"].forEach(function (event) {
+      tr.addEventListener(event, pause, { passive: true });
+    });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        visible = entries[0].isIntersecting;
+        schedule();
+      }).observe(tr);
     }
     tr.addEventListener("scroll", state, { passive: true });
     window.addEventListener("resize", layout);
