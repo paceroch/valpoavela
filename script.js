@@ -3,98 +3,264 @@
 
   var WA_NUMBER = "56993145696";
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.documentElement.classList.add("js");
 
-  // Año del pie de página
-  var yearEl = document.getElementById("year");
+  var $ = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+  var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
+
+  var yearEl = $("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // ------------------------------------------------------------ cabecera
-  var topbar = document.getElementById("topbar");
-  function onScroll() {
-    if (topbar) topbar.classList.toggle("is-solid", window.scrollY > 40);
-  }
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+  // ---------------------------------------------------------- navegación
+  var nav = $("#nav");
+  var toggle = $("#navToggle");
+  var drawer = $("#drawer");
 
-  // ------------------------------------------------------------ menú móvil
-  var menuBtn = document.getElementById("menuBtn");
-  var drawer = document.getElementById("drawer");
   function setMenu(open) {
-    if (!menuBtn || !drawer) return;
+    if (!toggle || !drawer) return;
     drawer.hidden = !open;
-    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
-    menuBtn.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    toggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
     document.body.style.overflow = open ? "hidden" : "";
-    if (topbar && open) topbar.classList.add("is-solid");
-    else onScroll();
   }
-  if (menuBtn && drawer) {
-    menuBtn.addEventListener("click", function () {
-      setMenu(drawer.hidden);
-    });
-    drawer.addEventListener("click", function (e) {
-      if (e.target.closest("a")) setMenu(false);
-    });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && !drawer.hidden) setMenu(false);
-    });
-    window.addEventListener("resize", function () {
-      if (window.innerWidth > 960 && !drawer.hidden) setMenu(false);
-    });
+  if (toggle && drawer) {
+    toggle.addEventListener("click", function () { setMenu(drawer.hidden); });
+    drawer.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !drawer.hidden) setMenu(false); });
+    window.addEventListener("resize", function () { if (window.innerWidth > 860 && !drawer.hidden) setMenu(false); });
   }
 
-  // ------------------------------------------- menú: sección que se está viendo
+  // Sección activa en el menú
   if ("IntersectionObserver" in window) {
-    var links = document.querySelectorAll(".links a[href^='#']");
-    var map = {
-      actividades: "actividades", yate: "actividades", raquero: "actividades",
-      hansa: "actividades", pesca: "actividades",
-      capella: "capella", embarcaciones: "embarcaciones",
-      clima: "clima", preguntas: "preguntas", contacto: "contacto",
-    };
-    var spy = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          var key = map[entry.target.id];
-          links.forEach(function (a) {
-            a.classList.toggle("is-active", a.getAttribute("href") === "#" + key);
-          });
-        });
-      },
-      { rootMargin: "-45% 0px -50% 0px" }
-    );
-    Object.keys(map).forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) spy.observe(el);
+    var links = $$(".nav-links a[href^='#']");
+    var map = { actividades: "actividades", capella: "capella", embarcaciones: "embarcaciones", clima: "clima", preguntas: "preguntas", contacto: "contacto" };
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        links.forEach(function (a) { a.classList.toggle("is-active", a.getAttribute("href") === "#" + map[en.target.id]); });
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    Object.keys(map).forEach(function (id) { var el = document.getElementById(id); if (el) spy.observe(el); });
+  }
+
+  // ---------------------------------------------------------- aparición al desplazarse
+  var rv = $$(".rv");
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    var io = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add("in"); obs.unobserve(en.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+    rv.forEach(function (el) { io.observe(el); });
+  } else {
+    rv.forEach(function (el) { el.classList.add("in"); });
+  }
+
+  // ---------------------------------------------------------- frase que se ilumina palabra por palabra
+  var statement = $("#statementText");
+  var words = [];
+  if (statement) {
+    var text = statement.textContent.trim().split(/\s+/);
+    statement.textContent = "";
+    text.forEach(function (w, i) {
+      var span = document.createElement("span");
+      span.className = "w";
+      span.textContent = w;
+      statement.appendChild(span);
+      if (i < text.length - 1) statement.appendChild(document.createTextNode(" "));
+      words.push(span);
     });
   }
 
-  // ------------------------------------------------------------ mapa del viento
-  var windWrap = document.getElementById("windWrap");
-  var windCover = document.getElementById("windCover");
-  if (windWrap && windCover) {
-    windCover.addEventListener("click", function () {
-      windWrap.classList.add("is-active");
+  // ---------------------------------------------------------- efectos ligados al scroll
+  var heroMedia = $("#heroMedia");
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var vh = window.innerHeight;
+    if (nav) nav.classList.toggle("is-scrolled", window.scrollY > 8);
+
+    if (heroMedia && !reduceMotion) {
+      var r = heroMedia.getBoundingClientRect();
+      var p = clamp((vh - r.top) / (vh * 0.85), 0, 1);
+      heroMedia.style.setProperty("--hp", p.toFixed(3));
+    }
+
+    if (words.length && !reduceMotion) {
+      var sr = statement.getBoundingClientRect();
+      // 0 cuando la frase entra por abajo, 1 cuando llega al 35 % de la pantalla
+      var prog = clamp((vh * 0.9 - sr.top) / (vh * 0.9 - vh * 0.35 + sr.height * 0.4), 0, 1);
+      words.forEach(function (w, i) {
+        var start = i / words.length * 0.85;
+        var wp = clamp((prog - start) / 0.15, 0, 1);
+        w.style.setProperty("--wp", wp.toFixed(3));
+      });
+    }
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  update();
+
+  // ---------------------------------------------------------- carrusel de destacados
+  var track = $("#hlTrack");
+  var dotsWrap = $("#hlDots");
+  var playBtn = $("#hlPlay");
+  if (track && dotsWrap) {
+    var cards = $$(".hl-card", track);
+    var dots = cards.map(function (c, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "hl-dot";
+      b.setAttribute("role", "tab");
+      b.setAttribute("aria-label", "Ir a la experiencia " + (i + 1));
+      b.appendChild(document.createElement("i"));
+      b.addEventListener("click", function () { goTo(i, true); });
+      dotsWrap.appendChild(b);
+      return b;
     });
+    var index = 0;
+    var playing = !reduceMotion;
+    var timer = null;
+    var TIME = 6000;
+    track.style.setProperty("--hl-time", TIME + "ms");
+    dotsWrap.style.setProperty("--hl-time", TIME + "ms");
+
+    function stride() {
+      return cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : track.clientWidth;
+    }
+    function render() {
+      dots.forEach(function (d, i) {
+        d.classList.toggle("is-active", i === index);
+        d.classList.toggle("is-playing", i === index && playing);
+        d.setAttribute("aria-selected", i === index ? "true" : "false");
+        d.style.setProperty("--hl-time", TIME + "ms");
+      });
+      if (playBtn) {
+        playBtn.classList.toggle("is-paused", !playing);
+        playBtn.setAttribute("aria-label", playing ? "Pausar reproducción automática" : "Reanudar reproducción automática");
+      }
+    }
+    function schedule() {
+      clearTimeout(timer);
+      if (!playing) return;
+      timer = setTimeout(function () { goTo((index + 1) % cards.length, false); }, TIME);
+    }
+    function goTo(i, user) {
+      index = i;
+      track.scrollTo({ left: i * stride(), behavior: reduceMotion ? "auto" : "smooth" });
+      if (user) playing = false;
+      render();
+      schedule();
+    }
+    var scrollEnd;
+    track.addEventListener("scroll", function () {
+      clearTimeout(scrollEnd);
+      scrollEnd = setTimeout(function () {
+        var i = clamp(Math.round(track.scrollLeft / stride()), 0, cards.length - 1);
+        if (i !== index) { index = i; render(); schedule(); }
+      }, 90);
+    }, { passive: true });
+    ["pointerdown", "touchstart", "wheel"].forEach(function (ev) {
+      track.addEventListener(ev, function () { if (playing) { playing = false; render(); clearTimeout(timer); } }, { passive: true });
+    });
+    if (playBtn) {
+      playBtn.addEventListener("click", function () {
+        playing = !playing;
+        render();
+        schedule();
+      });
+    }
+    // Solo avanza solo cuando el carrusel está a la vista
+    if ("IntersectionObserver" in window) {
+      var visible = true;
+      new IntersectionObserver(function (es) {
+        visible = es[0].isIntersecting;
+        if (!visible) { clearTimeout(timer); }
+        else { render(); schedule(); }
+      }, { threshold: 0.35 }).observe(track);
+    }
+    render();
+    schedule();
   }
 
-  // ------------------------------------------------------------ video de portada
-  var heroVideo = document.querySelector(".hero-video");
-  if (heroVideo && reduceMotion) {
-    heroVideo.removeAttribute("autoplay");
-    heroVideo.pause();
-  }
-
-  // ---------------------------- botones que preseleccionan la actividad en el formulario
-  var select = document.getElementById("contact-activity-page");
-  document.addEventListener("click", function (e) {
-    var trigger = e.target.closest("[data-actividad]");
-    if (trigger && select) select.value = trigger.getAttribute("data-actividad");
+  // ---------------------------------------------------------- tarjetas deslizables con flechas
+  $$("[data-scroller]").forEach(function (sc) {
+    var tr = $(".track", sc);
+    var nav2 = sc.nextElementSibling;
+    var prev = nav2 && $("[data-dir='-1']", nav2);
+    var next = nav2 && $("[data-dir='1']", nav2);
+    if (!tr) return;
+    function step() {
+      var first = tr.children[0], second = tr.children[1];
+      return second ? second.offsetLeft - first.offsetLeft : tr.clientWidth * 0.8;
+    }
+    function state() {
+      if (prev) prev.disabled = tr.scrollLeft <= 4;
+      if (next) next.disabled = tr.scrollLeft >= tr.scrollWidth - tr.clientWidth - 4;
+    }
+    [prev, next].forEach(function (b) {
+      if (!b) return;
+      b.addEventListener("click", function () {
+        tr.scrollBy({ left: step() * Number(b.getAttribute("data-dir")), behavior: reduceMotion ? "auto" : "smooth" });
+      });
+    });
+    tr.addEventListener("scroll", state, { passive: true });
+    window.addEventListener("resize", state);
+    state();
   });
 
-  // ------------------------------------------------------------ formulario → WhatsApp
-  var form = document.getElementById("contact-form-page");
+  // ---------------------------------------------------------- detalles superpuestos de actividades
+  var activityCards = $$(".fcard:not(.fcard-dark)");
+  var openActivityCard = null;
+  function closeActivityDetails(card, restoreFocus) {
+    var trigger = $(".fcard-details", card);
+    var overlay = $(".fcard-overlay", card);
+    if (!trigger || !overlay) return;
+    overlay.hidden = true;
+    trigger.setAttribute("aria-expanded", "false");
+    if (openActivityCard === card) openActivityCard = null;
+    if (restoreFocus) trigger.focus();
+  }
+  activityCards.forEach(function (card) {
+    var trigger = $(".fcard-details", card);
+    var close = $(".fcard-close", card);
+    var overlay = $(".fcard-overlay", card);
+    if (!trigger || !close || !overlay) return;
+    trigger.addEventListener("click", function () {
+      if (openActivityCard && openActivityCard !== card) closeActivityDetails(openActivityCard, false);
+      overlay.hidden = false;
+      trigger.setAttribute("aria-expanded", "true");
+      openActivityCard = card;
+      close.focus();
+    });
+    close.addEventListener("click", function () { closeActivityDetails(card, true); });
+  });
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && openActivityCard) closeActivityDetails(openActivityCard, true);
+  });
+
+  // ---------------------------------------------------------- mapa del viento
+  var windWrap = $("#windWrap");
+  var windCover = $("#windCover");
+  if (windWrap && windCover) {
+    windCover.addEventListener("click", function () { windWrap.classList.add("is-active"); });
+  }
+
+  // ---------------------------------------------------------- video de portada
+  var heroVideo = $(".hero-video");
+  if (heroVideo && reduceMotion) { heroVideo.removeAttribute("autoplay"); heroVideo.pause(); }
+
+  // ---------------------------------------------------------- botones que preseleccionan actividad
+  var select = $("#contact-activity-page");
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest("[data-actividad]");
+    if (t && select) select.value = t.getAttribute("data-actividad");
+  });
+
+  // ---------------------------------------------------------- formulario → WhatsApp
+  var form = $("#contact-form-page");
   if (form) {
     var dateInput = form.elements.namedItem("date");
     if (dateInput) {
@@ -102,31 +268,25 @@
       var pad = function (n) { return String(n).padStart(2, "0"); };
       dateInput.min = now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate());
     }
-
     form.addEventListener("submit", function (event) {
       event.preventDefault();
       if (!form.reportValidity()) return;
-
       var val = function (name) { return form.elements.namedItem(name).value.trim(); };
       var sel = form.elements.namedItem("activity");
       var activity = sel.value ? sel.options[sel.selectedIndex].text : "";
       var date = val("date");
       var dateText = "";
       if (date) {
-        dateText = new Date(date + "T12:00:00").toLocaleDateString("es-CL", {
-          weekday: "long", day: "numeric", month: "long",
-        });
+        dateText = new Date(date + "T12:00:00").toLocaleDateString("es-CL", { weekday: "long", day: "numeric", month: "long" });
       }
-
       var lines = ["Hola, soy " + val("name") + "."];
       if (activity) lines.push("Me interesa: " + activity + ".");
       lines.push("Participantes: " + val("people") + ".");
       if (dateText) lines.push("Fecha preferida: " + dateText + ".");
       if (val("message")) lines.push("", val("message"));
-
       var url = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(lines.join("\n"));
       var win = window.open(url, "_blank");
-      var status = document.getElementById("contact-status-page");
+      var status = $("#contact-status-page");
       if (status) {
         if (win) {
           win.opener = null;
