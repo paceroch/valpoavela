@@ -112,6 +112,7 @@ section[id] { scroll-margin-top: var(--nav-h); }
 .hl-text p { margin-top: 10px; font-size: clamp(16px, 1.5vw, 19px); line-height: 1.35; opacity: 0.92; }
 .hl-text .arrow-link { display: inline-block; margin-top: 14px; }
 .hl-controls { margin-top: 28px; display: flex; justify-content: center; align-items: center; gap: 12px; }
+.hl-controls[hidden], .hl-dot[hidden] { display: none; }
 .hl-dots { display: flex; align-items: center; gap: 12px; padding: 17px 20px; border-radius: 980px; background: rgba(232,232,237,0.7); }
 .hl-dot { position: relative; width: 8px; height: 8px; border-radius: 4px; padding: 0; border: 0; background: rgba(0,0,0,0.3); cursor: pointer; overflow: hidden; transition: width 0.4s var(--ease), background 0.3s; }
 .hl-dot.is-active { width: 44px; background: rgba(0,0,0,0.3); }
@@ -189,11 +190,6 @@ section[id] { scroll-margin-top: var(--nav-h); }
 .plain dt { font-weight: 600; font-size: 17px; }
 .plain dd { color: var(--gray); font-size: 15px; margin-top: 2px; }
 .timed dt { color: var(--ink); }
-.scroll-nav { display: flex; justify-content: flex-end; gap: 12px; width: min(100% - 2 * var(--pad), 1280px); margin: 24px auto 0; }
-.sn-btn { width: 40px; height: 40px; border-radius: 50%; border: 0; background: rgba(210,210,215,0.64); cursor: pointer; display: grid; place-items: center; transition: background 0.2s, opacity 0.2s; }
-.sn-btn:hover { background: rgba(210,210,215,0.95); }
-.sn-btn[disabled] { opacity: 0.35; cursor: default; }
-.sn-btn svg { width: 20px; height: 20px; fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
 /* 9. CAPELLA (fondo oscuro) */
 .dark { background: #000; color: #f5f5f7; }
@@ -207,9 +203,6 @@ section[id] { scroll-margin-top: var(--nav-h); }
 .dark .gcard { flex: 0 0 auto; width: min(78vw, 420px); scroll-snap-align: start; }
 .gcard img { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; object-position: center; border-radius: var(--radius); background: #1d1d1f; }
 .gcard figcaption { margin-top: 14px; font-size: 14px; color: #a1a1a6; }
-.dark .sn-btn { background: rgba(66,66,69,0.7); }
-.dark .sn-btn:hover { background: rgba(90,90,94,0.9); }
-.dark .sn-btn svg { stroke: #f5f5f7; }
 
 /* 10. EMBARCACIONES */
 .boats { padding: clamp(72px, 10vw, 130px) 0; background: var(--bg); }

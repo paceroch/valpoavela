@@ -189,30 +189,54 @@
     schedule();
   }
 
-  // ---------------------------------------------------------- tarjetas deslizables con flechas
+  // ---------------------------------------------------------- indicadores de tarjetas deslizables
   $$("[data-scroller]").forEach(function (sc) {
     var tr = $(".track", sc);
-    var nav2 = sc.nextElementSibling;
-    var prev = nav2 && $("[data-dir='-1']", nav2);
-    var next = nav2 && $("[data-dir='1']", nav2);
+    var indicator = sc.nextElementSibling;
     if (!tr) return;
-    function step() {
-      var first = tr.children[0], second = tr.children[1];
-      return second ? second.offsetLeft - first.offsetLeft : tr.clientWidth * 0.8;
-    }
-    function state() {
-      if (prev) prev.disabled = tr.scrollLeft <= 4;
-      if (next) next.disabled = tr.scrollLeft >= tr.scrollWidth - tr.clientWidth - 4;
-    }
-    [prev, next].forEach(function (b) {
-      if (!b) return;
-      b.addEventListener("click", function () {
-        tr.scrollBy({ left: step() * Number(b.getAttribute("data-dir")), behavior: reduceMotion ? "auto" : "smooth" });
+    var dotsWrap = $(".hl-dots", indicator);
+    var cards = Array.from(tr.children);
+    var positions = [];
+    var dots = cards.map(function (card, i) {
+      var dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "hl-dot";
+      dot.setAttribute("aria-label", "Ir a la posición " + (i + 1));
+      dot.appendChild(document.createElement("i"));
+      dot.addEventListener("click", function () {
+        tr.scrollTo({ left: positions[i], behavior: reduceMotion ? "auto" : "smooth" });
       });
+      dotsWrap.appendChild(dot);
+      return dot;
     });
+    function state() {
+      var left = tr.scrollLeft;
+      var active = 0;
+      positions.forEach(function (position, i) {
+        if (Math.abs(left - position) < Math.abs(left - positions[active])) active = i;
+      });
+      dots.forEach(function (dot, i) {
+        dot.classList.toggle("is-active", i === active);
+        if (i === active) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
+    }
+    function layout() {
+      var max = tr.scrollWidth - tr.clientWidth;
+      positions = [];
+      cards.forEach(function (card) {
+        var position = Math.min(card.offsetLeft - cards[0].offsetLeft, max);
+        if (!positions.length || position - positions[positions.length - 1] > 1) {
+          positions.push(position);
+        }
+      });
+      dots.forEach(function (dot, i) { dot.hidden = i >= positions.length; });
+      indicator.hidden = positions.length < 2;
+      state();
+    }
     tr.addEventListener("scroll", state, { passive: true });
-    window.addEventListener("resize", state);
-    state();
+    window.addEventListener("resize", layout);
+    layout();
   });
 
   // ---------------------------------------------------------- detalles de actividades
