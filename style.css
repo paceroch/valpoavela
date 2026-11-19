@@ -55,8 +55,8 @@ section[id] { scroll-margin-top: var(--nav-h); }
 .sec-head .lede { margin: 22px auto 0; }
 
 /* 3. NAVEGACIÓN (vidrio translúcido) */
-.nav { position: fixed; inset: 0 0 auto 0; z-index: 60; height: var(--nav-h); background: rgba(0,0,0,0.82); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); transition: box-shadow 0.3s var(--ease), background 0.3s var(--ease); }
-.nav.is-scrolled { box-shadow: 0 1px 0 rgba(255,255,255,0.12); }
+.nav { position: fixed; top: 0; left: 0; z-index: 60; width: 100%; height: var(--nav-h); background: transparent; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; transition: background 0.3s var(--ease); }
+.nav.header-scrolled { background: rgba(0,0,0,0.82); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); }
 .nav-in { height: 100%; width: min(100% - 2 * var(--pad), 1024px); margin-inline: auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .nav-brand img { height: 50px; width: auto; }
 .nav-links { display: flex; align-items: center; gap: clamp(14px, 2.4vw, 32px); }
@@ -87,17 +87,18 @@ section[id] { scroll-margin-top: var(--nav-h); }
 .arrow-link.light { color: #fff; }
 
 /* 5. PORTADA */
-.hero { padding: 0 0 clamp(48px, 7vw, 88px); padding-top: calc(var(--nav-h) + clamp(40px, 8vw, 96px)); text-align: center; background: #000; color: #f5f5f7; }
-.hero .eyebrow { color: #f5f5f7; }
-.hero-text { padding: 0 var(--pad); max-width: 1040px; margin: 0 auto; }
-.hero .grad { margin: 14px auto 0; font-size: clamp(40px, 7.6vw, 92px); letter-spacing: -0.04em; }
-.hero .lede { margin: 22px auto 0; color: #a1a1a6; }
-.hero-links { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px 28px; }
+.hero { position: relative; display: flex; align-items: center; isolation: isolate; overflow: hidden; min-height: 100vh; min-height: 100dvh; padding: calc(var(--nav-h) + clamp(48px, 8vh, 96px)) var(--pad) clamp(48px, 8vh, 96px); text-align: left; background: #000; color: #f5f5f7; }
+.hero::before { content: ""; position: absolute; z-index: 1; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.58) 38%, rgba(0,0,0,0.16) 100%), linear-gradient(0deg, rgba(0,0,0,0.26), transparent 45%); pointer-events: none; }
+.hero .eyebrow { color: #f5f5f7; text-shadow: 0 2px 18px rgba(0,0,0,0.45); }
+.hero-text { position: relative; z-index: 2; width: min(100%, 740px); margin: 0; }
+.hero .grad { margin: 14px 0 0; background: none; color: #fff; -webkit-text-fill-color: #fff; font-size: clamp(40px, 6.4vw, 80px); letter-spacing: -0.04em; text-shadow: 0 2px 24px rgba(0,0,0,0.4); }
+.hero .lede { margin: 22px 0 0; color: rgba(255,255,255,0.88); text-shadow: 0 1px 14px rgba(0,0,0,0.5); }
+.hero-links { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: center; gap: 14px 28px; }
 .hero .arrow-link { color: #fff; }
 .hero .fine { margin-top: 22px; color: #a1a1a6; }
 .hero .fine sup a { color: #9bcaff; }
-.hero-media { margin: clamp(36px, 6vw, 72px) auto 0; width: 70vw; aspect-ratio: 16 / 9; max-height: 78vh; overflow: hidden; border-radius: var(--radius); background: #000; transform: scaleX(var(--hs, 1)); transform-origin: center top; will-change: transform; }
-.hero-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-media { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; overflow: hidden; background: #000; pointer-events: none; }
+.hero-video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center center; }
 
 /* 6. DESTACADOS (carrusel) */
 .highlights { padding: clamp(72px, 11vw, 140px) 0 clamp(40px, 6vw, 72px); }
@@ -313,8 +314,9 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--b
   .activity-modal-image { width: 100%; height: min(48dvh, 420px); max-height: none; min-height: 240px; object-fit: cover; }
   .activity-modal-copy { gap: 20px; }
   .row { grid-template-columns: 1fr; }
-  .hero-media { aspect-ratio: 4 / 5; }
-  .hero-links { flex-direction: column; }
+  .hero { padding-top: calc(var(--nav-h) + clamp(40px, 7vh, 72px)); padding-bottom: clamp(40px, 7vh, 72px); }
+  .hero .grad { font-size: clamp(36px, 9vw, 56px); }
+  .hero-links { align-items: flex-start; flex-direction: column; gap: 18px; }
 }
 @media (max-width: 360px) {
   .fcard:not(.fcard-dark) h3 { min-height: 3.3em; }
@@ -322,7 +324,8 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--b
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .js .rv { opacity: 1; transform: none; transition: none; }
-  .hero-media { border-radius: var(--radius); }
+  .hero { background-image: url("fotos/portada.webp"); background-position: center; background-size: cover; }
+  .hero-video { display: none; }
   .statement-text .w { opacity: 1; }
   .hl-dot.is-active.is-playing i { animation: none; transform: scaleX(1); }
   .drawer a { animation: none; opacity: 1; transform: none; }

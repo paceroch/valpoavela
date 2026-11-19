@@ -16,6 +16,11 @@
   var nav = $("#nav");
   var toggle = $("#navToggle");
   var drawer = $("#drawer");
+  var heroVideo = $(".hero-video");
+  if (heroVideo && reduceMotion) {
+    heroVideo.pause();
+    heroVideo.removeAttribute("autoplay");
+  }
 
   function setMenu(open) {
     if (!toggle || !drawer) return;
@@ -74,25 +79,16 @@
   }
 
   // ---------------------------------------------------------- efectos ligados al scroll
-  var heroMedia = $("#heroMedia");
-  var heroMediaBaseWidth = heroMedia ? heroMedia.getBoundingClientRect().width : 0;
   var backToTop = $(".back-to-top");
   var ticking = false;
   function update() {
     ticking = false;
     var vh = window.innerHeight;
-    if (nav) nav.classList.toggle("is-scrolled", window.scrollY > 8);
+    if (nav) nav.classList.toggle("header-scrolled", window.scrollY > 10);
     if (backToTop) {
       var showBackToTop = window.scrollY > 320;
       backToTop.classList.toggle("is-visible", showBackToTop);
       backToTop.setAttribute("aria-hidden", showBackToTop ? "false" : "true");
-    }
-
-    if (heroMedia && !reduceMotion) {
-      var p = clamp(window.scrollY / (vh * 0.85), 0, 1);
-      var endWidth = document.documentElement.clientWidth * (window.innerWidth <= 560 ? 0.91 : 0.85);
-      var width = heroMediaBaseWidth + (endWidth - heroMediaBaseWidth) * p;
-      heroMedia.style.setProperty("--hs", (width / heroMediaBaseWidth).toFixed(4));
     }
 
     if (words.length && !reduceMotion) {
@@ -108,13 +104,7 @@
   }
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
   window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", function () {
-    if (heroMedia) {
-      heroMedia.style.removeProperty("--hs");
-      heroMediaBaseWidth = heroMedia.getBoundingClientRect().width;
-    }
-    onScroll();
-  });
+  window.addEventListener("resize", onScroll);
   update();
 
   // ---------------------------------------------------------- carrusel de destacados
