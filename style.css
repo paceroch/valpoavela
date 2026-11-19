@@ -306,7 +306,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--b
   .activity-modal-head h2 { font-size: clamp(21px, 5.5vw, 28px); }
   .activity-modal-close { flex-basis: 44px; width: 44px; height: 44px; }
   .activity-modal-layout { gap: 24px; padding: 20px 20px 36px; }
-  .activity-modal-image { width: 100%; height: auto; max-height: 48dvh; min-height: 0; object-fit: contain; }
+  .activity-modal-image { width: 100%; height: min(48dvh, 420px); max-height: none; min-height: 240px; object-fit: cover; }
   .activity-modal-copy { gap: 20px; }
   .row { grid-template-columns: 1fr; }
   .hero-media { aspect-ratio: 4 / 5; }
