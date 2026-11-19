@@ -90,7 +90,7 @@
 
     if (heroMedia && !reduceMotion) {
       var p = clamp(window.scrollY / (vh * 0.85), 0, 1);
-      var endWidth = document.documentElement.clientWidth * (window.innerWidth <= 560 ? 0.89 : 0.85);
+      var endWidth = document.documentElement.clientWidth * (window.innerWidth <= 560 ? 0.91 : 0.85);
       var width = heroMediaBaseWidth + (endWidth - heroMediaBaseWidth) * p;
       heroMedia.style.setProperty("--hs", (width / heroMediaBaseWidth).toFixed(4));
     }
