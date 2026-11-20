@@ -36,7 +36,7 @@
     <link rel="apple-touch-icon" href="fotos/favicon.png" />
   </head>
   <body>
-    <a class="skip" href="#actividades">Saltar al contenido</a>
+    <a class="skip" href="#contenido">Saltar al contenido</a>
 
     <!-- NAVEGACIÓN -->
     <header class="nav" id="nav">
@@ -51,8 +51,8 @@
           />
         </a>
         <nav class="nav-links" aria-label="Principal">
-          <a href="#actividades">Actividades</a>
           <a href="#capella">Velero Capella</a>
+          <a href="#actividades">Actividades</a>
           <a href="#embarcaciones">Embarcaciones</a>
           <a href="#clima">Viento</a>
           <a href="#preguntas">Preguntas</a>
@@ -71,21 +71,22 @@
       </div>
     </header>
     <div class="drawer" id="drawer" hidden>
-      <a href="#actividades">Actividades</a>
       <a href="#capella">Velero Capella</a>
+      <a href="#actividades">Actividades</a>
       <a href="#embarcaciones">Embarcaciones</a>
       <a href="#clima">Viento</a>
       <a href="#preguntas">Preguntas frecuentes</a>
       <a href="#contacto">Contacto</a>
     </div>
 
-    <main>
+    <main id="contenido" tabindex="-1">
       <!-- PORTADA -->
       <section class="hero" id="inicio">
         <div class="hero-text">
           <p class="eyebrow rv">El mar se vive en primera persona.</p>
           <h1 class="grad rv" style="--d: 1">
-            Hay otra forma de descubrir Valparaíso.
+            Clases de vela, travesías en velero y sesiones de pesca en la bahía
+            de Valparaíso.
           </h1>
           <p class="lede rv" style="--d: 2">
             Sube a bordo, siente el viento y mira la ciudad desde el agua:
@@ -133,7 +134,7 @@
           tabindex="0"
           aria-label="Experiencias destacadas"
         >
-          <article class="hl-card" aria-label="1 de 6">
+          <article class="hl-card" aria-label="1 de 5">
             <img
               src="fotos/capella-02.webp"
               alt="Pasajera disfrutando un paseo en velero por la bahía"
@@ -150,7 +151,7 @@
               <a class="arrow-link light" href="#yate">Ver paseos</a>
             </div>
           </article>
-          <article class="hl-card" aria-label="2 de 6">
+          <article class="hl-card" aria-label="2 de 5">
             <img
               src="fotos/practicando-1.webp"
               alt="Alumnos con chaleco a bordo del raquero"
@@ -168,7 +169,7 @@
               <a class="arrow-link light" href="#raquero">Ver la clase</a>
             </div>
           </article>
-          <article class="hl-card" aria-label="3 de 6">
+          <article class="hl-card" aria-label="3 de 5">
             <img
               src="fotos/hansa.webp"
               alt="Velero Hansa 303 de vela naranja frente a los cerros de Valparaíso"
@@ -186,7 +187,7 @@
               <a class="arrow-link light" href="#hansa">Ver la experiencia</a>
             </div>
           </article>
-          <article class="hl-card" aria-label="4 de 6">
+          <article class="hl-card" aria-label="4 de 5">
             <img
               src="fotos/pesca-deportiva.webp"
               alt="Pasajera a bordo con el mar abierto de la bahía al fondo"
@@ -201,7 +202,7 @@
               <a class="arrow-link light" href="#pesca">Ver salidas de pesca</a>
             </div>
           </article>
-          <article class="hl-card" aria-label="5 de 6">
+          <article class="hl-card" aria-label="5 de 5">
             <img
               src="fotos/practicando-3.webp"
               alt="Pasajeros con chaleco salvavidas, con la costa de Valparaíso al fondo"
@@ -224,23 +225,6 @@
               >
             </div>
           </article>
-          <article class="hl-card" aria-label="6 de 6">
-            <img
-              src="fotos/capella-04.webp"
-              alt="Tripulante en cubierta junto a la vela desplegada del Capella"
-              width="960"
-              height="1280"
-              loading="lazy"
-              decoding="async"
-            />
-            <div class="hl-text">
-              <h3>El velero Capella.</h3>
-              <p>
-                Un velero monocasco de crucero de 1990, para hasta 6 pasajeros.
-              </p>
-              <a class="arrow-link light" href="#capella">Conocer el Capella</a>
-            </div>
-          </article>
         </div>
         <div class="hl-controls">
           <div
@@ -254,6 +238,120 @@
             id="hlPlay"
             type="button"
             aria-label="Pausar reproducción automática"
+          >
+            <span></span>
+          </button>
+        </div>
+      </section>
+
+      <!-- CAPELLA -->
+      <section class="feature dark" id="capella">
+        <header class="sec-head">
+          <p class="eyebrow rv">Conoce el Capella</p>
+          <h2 class="grad rv" style="--d: 1">
+            Un velero para disfrutar del mar.
+          </h2>
+          <p class="lede rv" style="--d: 2">
+            El Capella es un velero monocasco de crucero de 1990, con una
+            distribución muy acogedora: salón con mesa central, cocina de dos
+            quemadores, WC marino y espacios de descanso en proa y popa.
+          </p>
+        </header>
+        <dl class="specs">
+          <div class="rv">
+            <dd>28 pies</dd>
+            <dt>Eslora</dt>
+          </div>
+          <div class="rv" style="--d: 1">
+            <dd>3,23 m</dd>
+            <dt>Manga</dt>
+          </div>
+          <div class="rv" style="--d: 2">
+            <dd>1,18 m</dd>
+            <dt>Calado</dt>
+          </div>
+          <div class="rv" style="--d: 3">
+            <dd>Yanmar 10 HP</dd>
+            <dt>Motor inboard diésel</dt>
+          </div>
+          <div class="rv" style="--d: 4">
+            <dd>Hasta 6</dd>
+            <dt>Pasajeros</dt>
+          </div>
+          <div class="rv" style="--d: 5">
+            <dd>Capitán y tripulante</dd>
+            <dt>Tripulación</dt>
+          </div>
+        </dl>
+        <div class="scroller" data-scroller>
+          <div class="track">
+            <figure class="gcard">
+              <img
+                src="fotos/capella-04.webp"
+                alt="Tripulante en cubierta junto a la vela desplegada del Capella"
+                width="960"
+                height="1280"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>En cubierta, con la vela desplegada.</figcaption>
+            </figure>
+            <figure class="gcard">
+              <img
+                src="fotos/ficha-08.webp"
+                alt="Cockpit y cubierta del velero Capella"
+                width="435"
+                height="580"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>Cockpit y cubierta.</figcaption>
+            </figure>
+            <figure class="gcard">
+              <img
+                src="fotos/ficha-06.webp"
+                alt="Velero Capella amarrado en el muelle"
+                width="720"
+                height="1280"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>El Capella, amarrado en el muelle.</figcaption>
+            </figure>
+            <figure class="gcard">
+              <img
+                src="fotos/ficha-09.webp"
+                alt="Salón principal del Capella con mesa central"
+                width="561"
+                height="748"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>Salón con mesa central.</figcaption>
+            </figure>
+            <figure class="gcard">
+              <img
+                src="fotos/ficha-10.webp"
+                alt="Cocina de dos quemadores del velero Capella"
+                width="436"
+                height="582"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>Cocina de dos quemadores.</figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="hl-controls" data-scroll-indicator hidden>
+          <div
+            class="hl-dots"
+            role="group"
+            aria-label="Posición en la galería"
+          ></div>
+          <button
+            class="hl-play is-paused"
+            type="button"
+            aria-label="Iniciar reproducción automática"
           >
             <span></span>
           </button>
@@ -441,114 +539,16 @@
           </div>
         </div>
         <div class="hl-controls" data-scroll-indicator hidden>
-          <div class="hl-dots" role="group" aria-label="Posición en actividades"></div>
-          <button class="hl-play is-paused" type="button" aria-label="Iniciar reproducción automática">
-            <span></span>
-          </button>
-        </div>
-      </section>
-
-      <!-- CAPELLA -->
-      <section class="feature dark" id="capella">
-        <header class="sec-head">
-          <p class="eyebrow rv">Conoce el Capella</p>
-          <h2 class="grad rv" style="--d: 1">
-            Un velero para disfrutar del mar.
-          </h2>
-          <p class="lede rv" style="--d: 2">
-            El Capella es un velero monocasco de crucero de 1990, con una
-            distribución muy acogedora: salón con mesa central, cocina de dos
-            quemadores, WC marino y espacios de descanso en proa y popa.
-          </p>
-        </header>
-        <dl class="specs">
-          <div class="rv">
-            <dd>28 pies</dd>
-            <dt>Eslora</dt>
-          </div>
-          <div class="rv" style="--d: 1">
-            <dd>3,23 m</dd>
-            <dt>Manga</dt>
-          </div>
-          <div class="rv" style="--d: 2">
-            <dd>1,18 m</dd>
-            <dt>Calado</dt>
-          </div>
-          <div class="rv" style="--d: 3">
-            <dd>Yanmar 10 HP</dd>
-            <dt>Motor inboard diésel</dt>
-          </div>
-          <div class="rv" style="--d: 4">
-            <dd>Hasta 6</dd>
-            <dt>Pasajeros</dt>
-          </div>
-          <div class="rv" style="--d: 5">
-            <dd>Capitán y tripulante</dd>
-            <dt>Tripulación</dt>
-          </div>
-        </dl>
-        <div class="scroller" data-scroller>
-          <div class="track">
-            <figure class="gcard">
-              <img
-                src="fotos/capella-04.webp"
-                alt="Tripulante en cubierta junto a la vela desplegada del Capella"
-                width="960"
-                height="1280"
-                loading="lazy"
-                decoding="async"
-              />
-              <figcaption>En cubierta, con la vela desplegada.</figcaption>
-            </figure>
-            <figure class="gcard">
-              <img
-                src="fotos/ficha-08.webp"
-                alt="Cockpit y cubierta del velero Capella"
-                width="435"
-                height="580"
-                loading="lazy"
-                decoding="async"
-              />
-              <figcaption>Cockpit y cubierta.</figcaption>
-            </figure>
-            <figure class="gcard">
-              <img
-                src="fotos/ficha-06.webp"
-                alt="Velero Capella amarrado en el muelle"
-                width="720"
-                height="1280"
-                loading="lazy"
-                decoding="async"
-              />
-              <figcaption>El Capella, amarrado en el muelle.</figcaption>
-            </figure>
-            <figure class="gcard">
-              <img
-                src="fotos/ficha-09.webp"
-                alt="Salón principal del Capella con mesa central"
-                width="561"
-                height="748"
-                loading="lazy"
-                decoding="async"
-              />
-              <figcaption>Salón con mesa central.</figcaption>
-            </figure>
-            <figure class="gcard">
-              <img
-                src="fotos/ficha-10.webp"
-                alt="Cocina de dos quemadores del velero Capella"
-                width="436"
-                height="582"
-                loading="lazy"
-                decoding="async"
-              />
-              <figcaption>Cocina de dos quemadores.</figcaption>
-            </figure>
-          </div>
-        </div>
-        <div class="hl-controls" data-scroll-indicator hidden>
-          <div class="hl-dots" role="group" aria-label="Posición en la galería"></div>
-          <button class="hl-play is-paused" type="button" aria-label="Iniciar reproducción automática">
+          <div
+            class="hl-dots"
+            role="group"
+            aria-label="Posición en actividades"
+          ></div>
+          <button
+            class="hl-play is-paused"
+            type="button"
+            aria-label="Iniciar reproducción automática"
+          >
             <span></span>
           </button>
         </div>
