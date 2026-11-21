@@ -502,10 +502,6 @@ section[id] {
   line-height: 1.35;
   opacity: 0.92;
 }
-.hl-text .arrow-link {
-  display: inline-block;
-  margin-top: 14px;
-}
 .hl-controls {
   margin-top: 28px;
   display: flex;
