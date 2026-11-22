@@ -1488,6 +1488,7 @@ textarea:focus {
     grid-template-columns: 1fr;
   }
   .contact-grid {
+    width: 90%;
     grid-template-columns: minmax(0, 1fr);
   }
   .contact-photo-frame {
