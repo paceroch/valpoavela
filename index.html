@@ -930,6 +930,21 @@
         <div class="activity-modal-content" id="activityModalContent"></div>
       </div>
 
+      <template id="activity-modal-navigation">
+        <div class="activity-modal-navigation" role="group" aria-label="Navegar entre actividades">
+          <button class="activity-modal-step" type="button" data-direction="-1" aria-label="Actividad anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m14.5 6-6 6 6 6" />
+            </svg>
+          </button>
+          <button class="activity-modal-step" type="button" data-direction="1" aria-label="Actividad siguiente">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m9.5 6 6 6-6 6" />
+            </svg>
+          </button>
+        </div>
+      </template>
+
       <template id="activity-yate" data-title="Paseos en velero.">
         <div class="activity-modal-layout">
           <img
@@ -971,15 +986,6 @@
               <a class="pill" href="#contacto" data-actividad="yate"
                 >Consultar paseos y capacidad</a
               >
-              <button
-                class="activity-modal-back"
-                type="button"
-                aria-label="Volver atrás"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m14.5 6-6 6 6 6" />
-                </svg>
-              </button>
             </div>
           </div>
         </div>
@@ -1040,15 +1046,6 @@
               <a class="pill" href="#contacto" data-actividad="raquero"
                 >Reservar clase de raquero</a
               >
-              <button
-                class="activity-modal-back"
-                type="button"
-                aria-label="Volver atrás"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m14.5 6-6 6 6 6" />
-                </svg>
-              </button>
             </div>
           </div>
         </div>
@@ -1107,15 +1104,6 @@
               <a class="pill" href="#contacto" data-actividad="hansa"
                 >Reservar esta actividad</a
               >
-              <button
-                class="activity-modal-back"
-                type="button"
-                aria-label="Volver atrás"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m14.5 6-6 6 6 6" />
-                </svg>
-              </button>
             </div>
           </div>
         </div>
@@ -1162,15 +1150,6 @@
               <a class="pill" href="#contacto" data-actividad="pesca"
                 >Consultar salidas de pesca</a
               >
-              <button
-                class="activity-modal-back"
-                type="button"
-                aria-label="Volver atrás"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m14.5 6-6 6 6 6" />
-                </svg>
-              </button>
             </div>
           </div>
         </div>

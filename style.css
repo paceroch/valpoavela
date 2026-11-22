@@ -847,7 +847,11 @@ h3 {
   gap: 12px;
   margin-top: 4px;
 }
-.activity-modal-back {
+.activity-modal-navigation {
+  display: flex;
+  gap: 12px;
+}
+.activity-modal-step {
   flex: 0 0 48px;
   width: 48px;
   height: 48px;
@@ -863,13 +867,17 @@ h3 {
     background 0.2s,
     transform 0.2s;
 }
-.activity-modal-back:hover {
+.activity-modal-step:enabled:hover {
   background: var(--blue-h);
 }
-.activity-modal-back:active {
+.activity-modal-step:enabled:active {
   transform: scale(0.96);
 }
-.activity-modal-back svg {
+.activity-modal-step:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.activity-modal-step svg {
   width: 22px;
   height: 22px;
   fill: none;

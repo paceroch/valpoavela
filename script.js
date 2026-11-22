@@ -342,7 +342,10 @@
   var activityModalTitle = $("#activityModalTitle");
   var activityModalContent = $("#activityModalContent");
   var activityModalClose = $(".activity-modal-close", activityModal);
+  var activityModalScroll = $(".activity-modal-scroll", activityModal);
+  var activityModalNavigation = $("#activity-modal-navigation");
   var activityTriggers = $$(".fcard-details[data-activity-modal]");
+  var activityIndex = -1;
   var activityModalTrigger = null;
   var activityModalScrollY = 0;
   var activityModalBodyStyles = null;
@@ -388,19 +391,36 @@
     restorePageScroll();
     if (restoreFocus && activityModalTrigger) activityModalTrigger.focus({ preventScroll: true });
     activityModalTrigger = null;
+    activityIndex = -1;
   }
 
-  if (activityModal && activityModalTitle && activityModalContent && activityModalClose) {
-    activityTriggers.forEach(function (trigger) {
+  function showActivityDetails(index) {
+    var trigger = activityTriggers[index];
+    var template = document.getElementById(trigger.getAttribute("data-activity-modal"));
+    if (!template || template.tagName !== "TEMPLATE") return false;
+
+    var content = template.content.cloneNode(true);
+    var navigation = activityModalNavigation.content.cloneNode(true);
+    if (index === 0) $('[data-direction="-1"]', navigation).setAttribute("aria-label", "Volver a actividades");
+    $('[data-direction="1"]', navigation).disabled = index === activityTriggers.length - 1;
+    $(".activity-modal-actions", content).appendChild(navigation);
+    activityModalTitle.textContent = template.getAttribute("data-title");
+    activityModalContent.replaceChildren(content);
+    activityIndex = index;
+    activityModalScroll.scrollTop = 0;
+    return true;
+  }
+
+  if (activityModal && activityModalTitle && activityModalContent && activityModalClose &&
+      activityModalScroll && activityModalNavigation) {
+    activityTriggers.forEach(function (trigger, index) {
       trigger.addEventListener("click", function () {
         if (activityModal.open) return;
-        var template = document.getElementById(trigger.getAttribute("data-activity-modal"));
-        if (!template || template.tagName !== "TEMPLATE") return;
-        activityModalTitle.textContent = template.getAttribute("data-title");
-        activityModalContent.replaceChildren(template.content.cloneNode(true));
+        if (!showActivityDetails(index)) return;
         activityModalTrigger = trigger;
         lockPageScroll();
         activityModal.showModal();
+        activityModalScroll.scrollTop = 0;
         trigger.setAttribute("aria-expanded", "true");
         activityModalClose.focus();
       });
@@ -411,8 +431,13 @@
     });
     activityModalClose.addEventListener("click", function () { closeActivityModal(true); });
     activityModalContent.addEventListener("click", function (event) {
-      if (event.target.closest(".activity-modal-back")) {
-        closeActivityModal(true);
+      var step = event.target.closest(".activity-modal-step");
+      if (step) {
+        var nextIndex = activityIndex + Number(step.dataset.direction);
+        if (nextIndex < 0) closeActivityModal(true);
+        else if (nextIndex < activityTriggers.length && showActivityDetails(nextIndex)) {
+          activityModalClose.focus({ preventScroll: true });
+        }
         return;
       }
       if (event.target.closest("a[href^='#']")) closeActivityModal(false);
