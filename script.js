@@ -3,6 +3,7 @@
 
   var WA_NUMBER = "56993145696";
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var mobileScroll = window.matchMedia("(max-width: 768px), (pointer: coarse)");
   document.documentElement.classList.add("js");
 
   var navigation = performance.getEntriesByType("navigation")[0];
@@ -78,6 +79,24 @@
     window.addEventListener("resize", function () { if (window.innerWidth > 860 && !drawer.hidden) setMenu(false); });
   }
 
+  document.addEventListener("click", function (event) {
+    if (event.defaultPrevented || event.button !== 0 ||
+        event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+    var link = event.target.closest('a[href^="#"]');
+    if (!link || link.target || link.hasAttribute("download")) return;
+    var hash = link.hash;
+    var target = hash && document.getElementById(decodeURIComponent(hash.slice(1)));
+    if (!target) return;
+    event.preventDefault();
+    if (location.hash !== hash) history.pushState(history.state, "", hash);
+    if (target.tabIndex < 0 && !target.hasAttribute("tabindex")) {
+      target.setAttribute("tabindex", "-1");
+      target.addEventListener("blur", function () { target.removeAttribute("tabindex"); }, { once: true });
+    }
+    target.focus({ preventScroll: true });
+    target.scrollIntoView({ behavior: reduceMotion ? "instant" : "smooth" });
+  });
+
   // Sección activa en el menú
   if ("IntersectionObserver" in window) {
     var links = $$(".nav-links a[href^='#']");
@@ -104,12 +123,18 @@
     rv.forEach(function (el) { el.classList.add("in"); });
   }
 
-  // ---------------------------------------------------------- frase que se ilumina palabra por palabra
+  // ---------------------------------------------------------- frase y efectos ligados al scroll
   var statement = $("#statementText");
   var words = [];
-  if (statement && !reduceMotion) {
-    words = $$(".w", statement);
-    if (!words.length) {
+  var statementVisible = false;
+  var statementLayoutDirty = true;
+  var statementProgress;
+  var wordOpacities = [];
+
+  function prepareStatement() {
+    statement.toggleAttribute("data-word-gradient", !mobileScroll.matches);
+    statement.toggleAttribute("data-simple-gradient", mobileScroll.matches);
+    if (!mobileScroll.matches && !words.length) {
       Array.from(statement.childNodes).forEach(function (node) {
         if (node.nodeType !== Node.TEXT_NODE) return;
         var fragment = document.createDocumentFragment();
@@ -128,41 +153,44 @@
         node.replaceWith(fragment);
       });
     }
-    statement.setAttribute("data-word-gradient", "");
-    layoutStatementGradient();
-    onViewportWidthChange(layoutStatementGradient);
-    if ("ResizeObserver" in window) {
-      new ResizeObserver(layoutStatementGradient).observe(statement);
-    }
-    if (document.fonts) document.fonts.ready.then(layoutStatementGradient);
+    statementProgress = undefined;
+    invalidateStatementLayout();
   }
 
-  function layoutStatementGradient() {
-    var bounds = statement.getBoundingClientRect();
-    var offsets = words.map(function (word) {
-      return bounds.left - word.getBoundingClientRect().left;
-    });
-    // Todas las palabras muestran un recorte del mismo degradado horizontal.
-    statement.style.setProperty("--statement-gradient-width", bounds.width + "px");
-    words.forEach(function (word, i) {
-      word.style.setProperty("--statement-gradient-offset", offsets[i] + "px");
-    });
+  function invalidateStatementLayout() {
+    statementLayoutDirty = true;
+    if (statementVisible) onScroll();
   }
 
-  // ---------------------------------------------------------- efectos ligados al scroll
   var backToTop = $(".back-to-top");
   var ticking = false;
-  var statementProgress;
-  var wordOpacities = [];
+  if (statement && !reduceMotion && "IntersectionObserver" in window) {
+    prepareStatement();
+    mobileScroll.addEventListener("change", prepareStatement);
+    new IntersectionObserver(function (entries) {
+      statementVisible = entries[entries.length - 1].isIntersecting;
+      if (statementVisible) invalidateStatementLayout();
+    }).observe(statement);
+    onViewportWidthChange(invalidateStatementLayout);
+    if ("ResizeObserver" in window) {
+      new ResizeObserver(invalidateStatementLayout).observe(statement);
+    }
+    if (document.fonts) document.fonts.ready.then(invalidateStatementLayout);
+  }
+
   function update() {
     ticking = false;
     var scrollY = window.scrollY;
-    var progress;
-    if (words.length) {
+    var bounds, progress, offsets;
+    if (statementVisible) {
       var vh = window.innerHeight;
-      var sr = statement.getBoundingClientRect();
-      // 0 cuando la frase entra por abajo, 1 cuando llega al 35 % de la pantalla
-      progress = clamp((vh * 0.9 - sr.top) / (vh * 0.9 - vh * 0.35 + sr.height * 0.4), 0, 1);
+      bounds = statement.getBoundingClientRect();
+      progress = clamp((vh * 0.9 - bounds.top) / (vh * 0.55 + bounds.height * 0.4), 0, 1);
+      if (!mobileScroll.matches && statementLayoutDirty) {
+        offsets = words.map(function (word) {
+          return bounds.left - word.getBoundingClientRect().left;
+        });
+      }
     }
 
     if (nav) nav.classList.toggle("header-scrolled", scrollY > 10);
@@ -174,19 +202,38 @@
         backToTop.setAttribute("aria-hidden", ariaHidden);
       }
     }
+    if (!statementVisible) return;
 
-    if (progress !== statementProgress) {
-      statementProgress = progress;
-      words.forEach(function (w, i) {
+    if (offsets) {
+      statement.style.setProperty("--statement-gradient-width", bounds.width + "px");
+      words.forEach(function (word, i) {
+        word.style.setProperty("--statement-gradient-offset", offsets[i] + "px");
+      });
+      statementLayoutDirty = false;
+    }
+
+    var opacityProgress = mobileScroll.matches ? progress.toFixed(3) : progress;
+    if (opacityProgress === statementProgress) return;
+    statementProgress = opacityProgress;
+    if (mobileScroll.matches) {
+      statement.style.setProperty("--statement-opacity", opacityProgress);
+    } else {
+      words.forEach(function (word, i) {
         var start = i / words.length * 0.85;
         var opacity = clamp((progress - start) / 0.15, 0, 1).toFixed(3);
         if (opacity === wordOpacities[i]) return;
         wordOpacities[i] = opacity;
-        w.style.setProperty("--wp", opacity);
+        word.style.setProperty("--wp", opacity);
       });
     }
   }
-  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+
+  function onScroll() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll);
   update();
@@ -209,8 +256,9 @@
       return b;
     });
     var index = 0;
-    var playing = !reduceMotion;
+    var playing = !reduceMotion && !mobileScroll.matches;
     var timer = null;
+    var visible = !("IntersectionObserver" in window);
     var TIME = 6000;
     track.style.setProperty("--hl-time", TIME + "ms");
     dotsWrap.style.setProperty("--hl-time", TIME + "ms");
@@ -232,7 +280,7 @@
     }
     function schedule() {
       clearTimeout(timer);
-      if (!playing) return;
+      if (!playing || !visible) return;
       timer = setTimeout(function () { goTo((index + 1) % cards.length, false); }, TIME);
     }
     function goTo(i, user) {
@@ -262,11 +310,10 @@
     }
     // Solo avanza solo cuando el carrusel está a la vista
     if ("IntersectionObserver" in window) {
-      var visible = true;
       new IntersectionObserver(function (es) {
         visible = es[0].isIntersecting;
-        if (!visible) { clearTimeout(timer); }
-        else { render(); schedule(); }
+        render();
+        schedule();
       }, { threshold: 0.35 }).observe(track);
     }
     render();
@@ -470,12 +517,20 @@
     });
   }
 
-  // ---------------------------------------------------------- mapa del viento
-  var windWrap = $("#windWrap");
-  var windCover = $("#windCover");
-  if (windWrap && windCover) {
-    windCover.addEventListener("click", function () { windWrap.classList.add("is-active"); });
-  }
+  // ---------------------------------------------------------- mapas interactivos
+  [["#windWrap", "#windCover"], ["#harborMapWrap", "#harborMapCover"]].forEach(function (selectors) {
+    var wrap = $(selectors[0]);
+    var cover = $(selectors[1]);
+    if (!wrap || !cover) return;
+    cover.addEventListener("click", function () {
+      wrap.classList.add("is-active");
+      if (wrap.id === "harborMapWrap") {
+        var frame = $("iframe", wrap);
+        frame.removeAttribute("tabindex");
+        frame.focus({ preventScroll: true });
+      }
+    });
+  });
 
   // ---------------------------------------------------------- botones que preseleccionan actividad
   var select = $("#contact-activity-page");
