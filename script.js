@@ -133,7 +133,6 @@
 
   function prepareStatement() {
     statement.toggleAttribute("data-word-gradient", !mobileScroll.matches);
-    statement.toggleAttribute("data-simple-gradient", mobileScroll.matches);
     if (!mobileScroll.matches && !words.length) {
       Array.from(statement.childNodes).forEach(function (node) {
         if (node.nodeType !== Node.TEXT_NODE) return;
