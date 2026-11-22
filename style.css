@@ -1452,6 +1452,9 @@ textarea:focus {
 
 /* 16. RESPONSIVE */
 @media (max-width: 860px) {
+  #actividades .track {
+    --card-width: calc(min(86vw, 640px) * 0.82 * 1.02);
+  }
   #capella .track {
     --card-width: calc(min(88vw, 1024px) * 0.82);
   }
