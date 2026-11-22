@@ -26,6 +26,19 @@
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
 
+  // La barra del navegador móvil puede cambiar la altura sin mover las tarjetas.
+  function onViewportWidthChange(callback) {
+    var width = window.innerWidth;
+    var contentWidth = document.documentElement.clientWidth;
+    window.addEventListener("resize", function () {
+      var nextContentWidth = document.documentElement.clientWidth;
+      if (window.innerWidth === width && nextContentWidth === contentWidth) return;
+      width = window.innerWidth;
+      contentWidth = nextContentWidth;
+      callback();
+    });
+  }
+
   var yearEl = $("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
@@ -117,7 +130,7 @@
     }
     statement.setAttribute("data-word-gradient", "");
     layoutStatementGradient();
-    window.addEventListener("resize", layoutStatementGradient);
+    onViewportWidthChange(layoutStatementGradient);
     if ("ResizeObserver" in window) {
       new ResizeObserver(layoutStatementGradient).observe(statement);
     }
@@ -139,24 +152,37 @@
   // ---------------------------------------------------------- efectos ligados al scroll
   var backToTop = $(".back-to-top");
   var ticking = false;
+  var statementProgress;
+  var wordOpacities = [];
   function update() {
     ticking = false;
-    var vh = window.innerHeight;
-    if (nav) nav.classList.toggle("header-scrolled", window.scrollY > 10);
-    if (backToTop) {
-      var showBackToTop = window.scrollY > 320;
-      backToTop.classList.toggle("is-visible", showBackToTop);
-      backToTop.setAttribute("aria-hidden", showBackToTop ? "false" : "true");
-    }
-
-    if (words.length && !reduceMotion) {
+    var scrollY = window.scrollY;
+    var progress;
+    if (words.length) {
+      var vh = window.innerHeight;
       var sr = statement.getBoundingClientRect();
       // 0 cuando la frase entra por abajo, 1 cuando llega al 35 % de la pantalla
-      var prog = clamp((vh * 0.9 - sr.top) / (vh * 0.9 - vh * 0.35 + sr.height * 0.4), 0, 1);
+      progress = clamp((vh * 0.9 - sr.top) / (vh * 0.9 - vh * 0.35 + sr.height * 0.4), 0, 1);
+    }
+
+    if (nav) nav.classList.toggle("header-scrolled", scrollY > 10);
+    if (backToTop) {
+      var showBackToTop = scrollY > 320;
+      var ariaHidden = showBackToTop ? "false" : "true";
+      backToTop.classList.toggle("is-visible", showBackToTop);
+      if (backToTop.getAttribute("aria-hidden") !== ariaHidden) {
+        backToTop.setAttribute("aria-hidden", ariaHidden);
+      }
+    }
+
+    if (progress !== statementProgress) {
+      statementProgress = progress;
       words.forEach(function (w, i) {
         var start = i / words.length * 0.85;
-        var wp = clamp((prog - start) / 0.15, 0, 1);
-        w.style.setProperty("--wp", wp.toFixed(3));
+        var opacity = clamp((progress - start) / 0.15, 0, 1).toFixed(3);
+        if (opacity === wordOpacities[i]) return;
+        wordOpacities[i] = opacity;
+        w.style.setProperty("--wp", opacity);
       });
     }
   }
@@ -333,7 +359,7 @@
       }).observe(tr);
     }
     tr.addEventListener("scroll", state, { passive: true });
-    window.addEventListener("resize", layout);
+    onViewportWidthChange(layout);
     layout();
   });
 
