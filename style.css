@@ -1464,6 +1464,15 @@ textarea:focus {
   .fcard:not(.fcard-dark) .fcard-body {
     padding: 18.04px 18.04px 11.48px;
   }
+  .fcard:not(.fcard-dark) .chips {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .fcard:not(.fcard-dark) .chips li {
+    max-width: 100%;
+    padding-inline: 12px;
+    text-align: left;
+  }
   .activity-modal-layout {
     grid-template-columns: minmax(0, 1fr);
   }
