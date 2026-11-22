@@ -442,6 +442,7 @@ h3 {
   display: flex;
   gap: 16px;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   padding-inline: var(--track-inset)
     max(var(--track-inset), calc(100% - var(--track-inset) - var(--card-width)));
@@ -638,6 +639,7 @@ h3 {
   display: flex;
   gap: 20px;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   padding: 4px max(var(--pad), calc((100vw - 1280px) / 2)) 8px;
   scroll-padding-inline: max(var(--pad), calc((100vw - 1280px) / 2));
@@ -648,9 +650,10 @@ h3 {
   display: none;
 }
 #actividades .track {
+  --card-width: calc(min(86vw, 640px) * 0.82);
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: calc(min(86vw, 640px) * 0.82);
+  grid-auto-columns: var(--card-width);
   grid-template-rows: repeat(4, auto);
   row-gap: 0;
 }
@@ -977,9 +980,12 @@ h3 {
   font-size: 14px;
   color: #a1a1a6;
 }
+#capella .track {
+  --card-width: calc(min(78vw, 420px) * 0.82);
+}
 .dark .gcard {
   flex: 0 0 auto;
-  width: calc(min(78vw, 420px) * 0.82);
+  width: var(--card-width);
   scroll-snap-align: start;
 }
 .gcard img {
@@ -1446,6 +1452,16 @@ textarea:focus {
 
 /* 16. RESPONSIVE */
 @media (max-width: 860px) {
+  .hl-track,
+  .track {
+    padding-inline: calc((100% - var(--card-width)) / 2);
+    scroll-padding-inline: 0;
+  }
+  .hl-card,
+  .fcard,
+  .dark .gcard {
+    scroll-snap-align: center;
+  }
   .statement-text .statement-break {
     display: none;
   }

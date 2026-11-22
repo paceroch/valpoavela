@@ -191,6 +191,30 @@
   window.addEventListener("resize", onScroll);
   update();
 
+  function observeCarouselScroll(track, onStart, onEnd) {
+    var scrolling = false;
+    var settleTimer;
+    var hasScrollEnd = "onscrollend" in track;
+    function settle() {
+      if (!scrolling) return;
+      scrolling = false;
+      onEnd();
+    }
+
+    track.addEventListener("scroll", function () {
+      if (!scrolling) {
+        scrolling = true;
+        onStart();
+      }
+      if (!hasScrollEnd) {
+        clearTimeout(settleTimer);
+        settleTimer = setTimeout(settle, 180);
+      }
+    }, { passive: true });
+    if (hasScrollEnd) track.addEventListener("scrollend", settle);
+    return function () { return scrolling; };
+  }
+
   // ---------------------------------------------------------- carrusel de destacados
   var track = $("#hlTrack");
   var dotsWrap = $("#hlDots");
@@ -209,7 +233,8 @@
       return b;
     });
     var index = 0;
-    var playing = !reduceMotion;
+    var playing = !reduceMotion && !window.matchMedia("(max-width: 860px), (pointer: coarse)").matches;
+    var visible = !("IntersectionObserver" in window);
     var timer = null;
     var TIME = 6000;
     track.style.setProperty("--hl-time", TIME + "ms");
@@ -221,7 +246,7 @@
     function render() {
       dots.forEach(function (d, i) {
         d.classList.toggle("is-active", i === index);
-        d.classList.toggle("is-playing", i === index && playing);
+        d.classList.toggle("is-playing", i === index && playing && visible);
         d.setAttribute("aria-selected", i === index ? "true" : "false");
         d.style.setProperty("--hl-time", TIME + "ms");
       });
@@ -232,7 +257,7 @@
     }
     function schedule() {
       clearTimeout(timer);
-      if (!playing) return;
+      if (!playing || !visible || isScrolling()) return;
       timer = setTimeout(function () { goTo((index + 1) % cards.length, false); }, TIME);
     }
     function goTo(i, user) {
@@ -242,14 +267,13 @@
       render();
       schedule();
     }
-    var scrollEnd;
-    track.addEventListener("scroll", function () {
-      clearTimeout(scrollEnd);
-      scrollEnd = setTimeout(function () {
-        var i = clamp(Math.round(track.scrollLeft / stride()), 0, cards.length - 1);
-        if (i !== index) { index = i; render(); schedule(); }
-      }, 90);
-    }, { passive: true });
+    var isScrolling = observeCarouselScroll(track, function () {
+      clearTimeout(timer);
+    }, function () {
+      index = clamp(Math.round(track.scrollLeft / stride()), 0, cards.length - 1);
+      render();
+      schedule();
+    });
     ["pointerdown", "touchstart", "wheel"].forEach(function (ev) {
       track.addEventListener(ev, function () { if (playing) { playing = false; render(); clearTimeout(timer); } }, { passive: true });
     });
@@ -262,11 +286,10 @@
     }
     // Solo avanza solo cuando el carrusel está a la vista
     if ("IntersectionObserver" in window) {
-      var visible = true;
       new IntersectionObserver(function (es) {
         visible = es[0].isIntersecting;
-        if (!visible) { clearTimeout(timer); }
-        else { render(); schedule(); }
+        render();
+        schedule();
       }, { threshold: 0.35 }).observe(track);
     }
     render();
@@ -283,6 +306,9 @@
     var cards = Array.from(tr.children);
     var positions = [];
     var active = 0;
+    var renderedActive = -1;
+    var renderedPlaying;
+    var renderedVisible;
     var playing = false;
     var visible = !("IntersectionObserver" in window);
     var timer;
@@ -305,7 +331,7 @@
     function schedule() {
       clearTimeout(timer);
       state();
-      if (playing && visible && positions.length > 1) {
+      if (playing && visible && !isScrolling() && positions.length > 1) {
         timer = setTimeout(function () {
           goTo((active + 1) % positions.length);
           schedule();
@@ -323,6 +349,10 @@
       positions.forEach(function (position, i) {
         if (Math.abs(left - position) < Math.abs(left - positions[active])) active = i;
       });
+      if (active === renderedActive && playing === renderedPlaying && visible === renderedVisible) return;
+      renderedActive = active;
+      renderedPlaying = playing;
+      renderedVisible = visible;
       dots.forEach(function (dot, i) {
         dot.classList.toggle("is-active", i === active);
         dot.classList.toggle("is-playing", i === active && playing && visible);
@@ -358,7 +388,11 @@
         schedule();
       }).observe(tr);
     }
-    tr.addEventListener("scroll", state, { passive: true });
+    var isScrolling = observeCarouselScroll(tr, function () {
+      clearTimeout(timer);
+    }, function () {
+      schedule();
+    });
     onViewportWidthChange(layout);
     layout();
   });
