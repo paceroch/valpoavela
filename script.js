@@ -20,16 +20,6 @@
   if (heroVideo && reduceMotion) {
     heroVideo.pause();
     heroVideo.removeAttribute("autoplay");
-  } else if (heroVideo && "IntersectionObserver" in window) {
-    new IntersectionObserver(function (entries) {
-      if (entries[0].isIntersecting) {
-        heroVideo.play().catch(function () {
-          // El navegador puede bloquear la reproducción automática.
-        });
-      } else {
-        heroVideo.pause();
-      }
-    }).observe(heroVideo);
   }
 
   function setMenu(open) {
@@ -120,33 +110,23 @@
   // ---------------------------------------------------------- efectos ligados al scroll
   var backToTop = $(".back-to-top");
   var ticking = false;
-  var statementProgress;
   function update() {
     ticking = false;
-    var scrollY = window.scrollY;
-    var progress;
-    if (words.length) {
-      var vh = window.innerHeight;
+    var vh = window.innerHeight;
+    if (nav) nav.classList.toggle("header-scrolled", window.scrollY > 10);
+    if (backToTop) {
+      var showBackToTop = window.scrollY > 320;
+      backToTop.classList.toggle("is-visible", showBackToTop);
+      backToTop.setAttribute("aria-hidden", showBackToTop ? "false" : "true");
+    }
+
+    if (words.length && !reduceMotion) {
       var sr = statement.getBoundingClientRect();
       // 0 cuando la frase entra por abajo, 1 cuando llega al 35 % de la pantalla
-      progress = clamp((vh * 0.9 - sr.top) / (vh * 0.55 + sr.height * 0.4), 0, 1);
-    }
-
-    if (nav) nav.classList.toggle("header-scrolled", scrollY > 10);
-    if (backToTop) {
-      var showBackToTop = scrollY > 320;
-      var ariaHidden = showBackToTop ? "false" : "true";
-      backToTop.classList.toggle("is-visible", showBackToTop);
-      if (backToTop.getAttribute("aria-hidden") !== ariaHidden) {
-        backToTop.setAttribute("aria-hidden", ariaHidden);
-      }
-    }
-
-    if (progress !== statementProgress) {
-      statementProgress = progress;
+      var prog = clamp((vh * 0.9 - sr.top) / (vh * 0.9 - vh * 0.35 + sr.height * 0.4), 0, 1);
       words.forEach(function (w, i) {
         var start = i / words.length * 0.85;
-        var wp = clamp((progress - start) / 0.15, 0, 1);
+        var wp = clamp((prog - start) / 0.15, 0, 1);
         w.style.setProperty("--wp", wp.toFixed(3));
       });
     }
