@@ -1452,6 +1452,9 @@ textarea:focus {
 
 /* 16. RESPONSIVE */
 @media (max-width: 860px) {
+  #capella .track {
+    --card-width: calc(min(88vw, 1024px) * 0.82);
+  }
   .hl-track,
   .track {
     padding-inline: calc((100% - var(--card-width)) / 2);
@@ -1512,6 +1515,9 @@ textarea:focus {
   }
   .hl-card {
     aspect-ratio: 3 / 4;
+  }
+  #capella .gcard img {
+    max-height: 63.96vh;
   }
   .map {
     min-height: 300px;
