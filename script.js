@@ -211,7 +211,7 @@
     }
     function goTo(i, user) {
       index = i;
-      track.scrollTo({ left: i * stride(), behavior: reduceMotion ? "auto" : "smooth" });
+      track.scrollTo({ left: cards[i].offsetLeft - cards[0].offsetLeft, behavior: reduceMotion ? "auto" : "smooth" });
       if (user) playing = false;
       render();
       schedule();

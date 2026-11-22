@@ -436,13 +436,16 @@ h3 {
   padding-bottom: clamp(40px, 6vw, 72px);
 }
 .hl-track {
+  --card-width: calc(min(88vw, 1024px) * 0.82);
+  --track-inset: max(var(--pad), calc((100vw - 1024px) / 2));
   margin-top: clamp(32px, 5vw, 56px);
   display: flex;
   gap: 16px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding: 0 max(var(--pad), calc((100vw - 1024px) / 2));
-  scroll-padding-inline: max(var(--pad), calc((100vw - 1024px) / 2));
+  padding-inline: var(--track-inset)
+    max(var(--track-inset), calc(100% - var(--track-inset) - var(--card-width)));
+  scroll-padding-inline-start: var(--track-inset);
   scrollbar-width: none;
 }
 .hl-track::-webkit-scrollbar {
@@ -450,9 +453,9 @@ h3 {
 }
 .hl-card {
   position: relative;
-  flex: 0 0 min(88vw, 1024px);
+  flex: 0 0 var(--card-width);
   aspect-ratio: 4 / 3;
-  max-height: 78vh;
+  max-height: 63.96vh;
   scroll-snap-align: start;
   border-radius: var(--radius);
   overflow: hidden;
@@ -479,11 +482,12 @@ h3 {
   pointer-events: none;
 }
 .hl-text {
+  --text-inset: calc(clamp(24px, 4vw, 48px) * 0.82);
   position: absolute;
   z-index: 1;
-  top: clamp(24px, 4vw, 48px);
-  left: clamp(24px, 4vw, 48px);
-  right: clamp(24px, 4vw, 48px);
+  top: var(--text-inset);
+  left: var(--text-inset);
+  right: var(--text-inset);
   max-width: 520px;
 }
 .hl-text h3 {
@@ -643,9 +647,16 @@ h3 {
 .track::-webkit-scrollbar {
   display: none;
 }
+#actividades .track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc(min(86vw, 640px) * 0.82);
+  grid-template-rows: repeat(4, auto);
+  row-gap: 0;
+}
 .fcard {
   position: relative;
-  flex: 0 0 min(86vw, 640px);
+  grid-row: 1 / -1;
   scroll-snap-align: start;
   background: var(--bg);
   border-radius: var(--radius);
@@ -654,17 +665,23 @@ h3 {
   flex-direction: column;
 }
 .fcard-body {
-  padding: clamp(28px, 4vw, 48px) clamp(24px, 4vw, 44px) 28px;
+  padding: calc(clamp(28px, 4vw, 48px) * 0.82)
+    calc(clamp(24px, 4vw, 44px) * 0.82) 22.96px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 16px;
+  gap: 13.12px;
 }
 .fcard:not(.fcard-dark) .fcard-body {
-  height: auto;
-  flex: 0 0 auto;
-  padding: 24px 24px 14px;
-  gap: 12px;
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  padding: 19.68px 19.68px 11.48px;
+  gap: 9.84px;
+}
+.fcard:not(.fcard-dark) {
+  display: grid;
+  grid-template-rows: subgrid;
 }
 .fcard h3 {
   font-size: clamp(26px, 3vw, 34px);
@@ -688,11 +705,18 @@ h3 {
 }
 .fcard:not(.fcard-dark) .chips {
   margin-top: 0;
+  align-self: start;
+  flex-wrap: nowrap;
+}
+.fcard:not(.fcard-dark) .chips li {
+  min-width: 0;
+  padding-inline: clamp(6px, 2vw, 14px);
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 .fcard-media {
   position: relative;
-  flex: 0 0 clamp(240px, 30vw, 360px);
-  height: clamp(240px, 30vw, 360px);
+  height: calc(clamp(240px, 30vw, 360px) * 0.82);
 }
 .fcard-img {
   width: 100%;
@@ -917,7 +941,7 @@ h3 {
   );
 }
 .specs {
-  width: min(100% - 2 * var(--pad), 1024px);
+  width: calc(min(100% - 2 * var(--pad), 1024px) * 0.82);
   margin: 0 auto clamp(48px, 7vw, 80px);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -928,7 +952,9 @@ h3 {
 }
 .specs > div {
   background: #111113;
-  padding: clamp(22px, 3vw, 36px);
+  min-width: 0;
+  padding: calc(clamp(22px, 3vw, 36px) * 0.82);
+  overflow-wrap: anywhere;
   display: flex;
   flex-direction: column-reverse;
   gap: 4px;
@@ -945,7 +971,7 @@ h3 {
 }
 .dark .gcard {
   flex: 0 0 auto;
-  width: min(78vw, 420px);
+  width: calc(min(78vw, 420px) * 0.82);
   scroll-snap-align: start;
 }
 .gcard img {
@@ -1151,26 +1177,35 @@ h3 {
   background: var(--bg);
 }
 .contact-grid {
-  width: min(100% - 2 * var(--pad), 1024px);
+  width: calc(min(100% - 2 * var(--pad), 1024px) * 0.82);
   margin: clamp(36px, 6vw, 64px) auto 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16.4px;
   align-items: stretch;
 }
+.contact-photo-frame {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: var(--radius);
+  position: relative;
+}
 .contact-photo {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  min-height: 360px;
   object-fit: cover;
-  border-radius: var(--radius);
+  object-position: center;
 }
 .form {
   background: var(--bg-2);
   border-radius: var(--radius);
-  padding: clamp(26px, 3.6vw, 44px);
+  padding: calc(clamp(26px, 3.6vw, 44px) * 0.82);
   display: grid;
-  gap: 16px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 13.12px;
 }
 .form h3 {
   font-size: clamp(26px, 3vw, 32px);
@@ -1178,11 +1213,12 @@ h3 {
 }
 .field {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 6px;
 }
 .row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
 }
 label {
@@ -1229,6 +1265,38 @@ textarea:focus {
   font-weight: 600;
   min-height: 1.4em;
   color: var(--ink);
+}
+
+@media (min-width: 861px) {
+  .contact-grid {
+    min-width: min(100% - 2 * var(--pad), 748px);
+  }
+  .contact-photo {
+    scale: 1.05;
+  }
+  .contact .form {
+    align-content: space-between;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: clamp(16px, 2vw, 28px);
+    gap: 8px 14px;
+  }
+  .contact .form > :not(.field),
+  .contact .form > .field:has(textarea) {
+    grid-column: 1 / -1;
+  }
+  .contact .form :is(input, select, textarea) {
+    padding-block: 8px;
+  }
+  .contact .form textarea {
+    height: 4em;
+    resize: vertical;
+  }
+  .contact .form .pill {
+    padding-inline: 16px;
+  }
+  .contact .form-status:empty {
+    position: absolute;
+  }
 }
 
 /* 14. PIE */
@@ -1386,7 +1454,7 @@ textarea:focus {
     display: block;
   }
   .fcard:not(.fcard-dark) .fcard-body {
-    padding: 22px 22px 14px;
+    padding: 18.04px 18.04px 11.48px;
   }
   .activity-modal-layout {
     grid-template-columns: minmax(0, 1fr);
@@ -1399,14 +1467,14 @@ textarea:focus {
     grid-template-columns: repeat(2, 1fr);
   }
   .boat-grid,
-  .harbor-grid,
-  .contact-grid {
+  .harbor-grid {
     grid-template-columns: 1fr;
   }
-  .contact-photo {
-    min-height: 0;
+  .contact-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .contact-photo-frame {
     aspect-ratio: 4 / 3;
-    height: auto;
   }
   .hl-card {
     aspect-ratio: 3 / 4;
@@ -1418,12 +1486,6 @@ textarea:focus {
 @media (max-width: 560px) {
   body {
     font-size: 16px;
-  }
-  .fcard:not(.fcard-dark) .fcard-body {
-    flex-grow: 1;
-  }
-  .fcard:not(.fcard-dark) h3 {
-    min-height: 2.2em;
   }
   .activity-modal-head {
     min-height: 72px;
@@ -1468,11 +1530,6 @@ textarea:focus {
     align-items: flex-start;
     flex-direction: column;
     gap: 18px;
-  }
-}
-@media (max-width: 360px) {
-  .fcard:not(.fcard-dark) h3 {
-    min-height: 3.3em;
   }
 }
 @media (prefers-reduced-motion: reduce) {
