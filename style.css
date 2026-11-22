@@ -79,9 +79,6 @@ h3 {
   outline-offset: 3px;
   border-radius: 6px;
 }
-section[id] {
-  scroll-margin-top: var(--nav-h);
-}
 .skip {
   position: absolute;
   left: -999px;
@@ -160,7 +157,7 @@ section[id] {
   margin: 22px auto 0;
 }
 
-/* 3. NAVEGACIÓN (vidrio translúcido) */
+/* 3. NAVEGACIÓN */
 .nav {
   position: fixed;
   top: 0;
@@ -170,14 +167,10 @@ section[id] {
   height: var(--nav-h);
   background: transparent;
   box-shadow: none;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
   transition: background 0.3s var(--ease);
 }
 .nav.header-scrolled {
-  background: rgba(0, 0, 0, 0.82);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
+  background: rgba(0, 0, 0, 0.92);
 }
 .nav-in {
   height: 100%;
@@ -353,9 +346,11 @@ section[id] {
   isolation: isolate;
   overflow: hidden;
   min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 100svh;
   padding: calc(var(--nav-h) + clamp(48px, 8vh, 96px)) var(--pad)
     clamp(48px, 8vh, 96px);
+  padding: calc(var(--nav-h) + clamp(48px, 8svh, 96px)) var(--pad)
+    clamp(48px, 8svh, 96px);
   text-align: left;
   background: #000;
   color: #f5f5f7;
@@ -1366,15 +1361,11 @@ textarea:focus {
 /* 15. MOVIMIENTO: aparición suave al entrar en pantalla */
 .js .rv {
   opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 0.9s var(--ease),
-    transform 0.9s var(--ease);
+  transition: opacity 0.9s var(--ease);
   transition-delay: calc(var(--d, 0) * 0.12s);
 }
 .js .rv.in {
   opacity: 1;
-  transform: none;
 }
 
 /* 16. RESPONSIVE */
@@ -1467,6 +1458,8 @@ textarea:focus {
   .hero {
     padding-top: calc(var(--nav-h) + clamp(40px, 7vh, 72px));
     padding-bottom: clamp(40px, 7vh, 72px);
+    padding-top: calc(var(--nav-h) + clamp(40px, 7svh, 72px));
+    padding-bottom: clamp(40px, 7svh, 72px);
   }
   .hero .grad {
     font-size: clamp(36px, 9vw, 56px);
@@ -1488,7 +1481,6 @@ textarea:focus {
   }
   .js .rv {
     opacity: 1;
-    transform: none;
     transition: none;
   }
   .hero {

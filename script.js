@@ -5,6 +5,23 @@
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   document.documentElement.classList.add("js");
 
+  var navigation = performance.getEntriesByType("navigation")[0];
+  var isReload = navigation ? navigation.type === "reload"
+    : performance.navigation && performance.navigation.type === 1;
+  if (isReload) {
+    var scrollRestoration = history.scrollRestoration;
+    if (scrollRestoration) history.scrollRestoration = "manual";
+    if (location.hash) {
+      history.replaceState(history.state, "", location.pathname + location.search);
+    }
+    window.addEventListener("pageshow", function () {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      if (scrollRestoration) {
+        setTimeout(function () { history.scrollRestoration = scrollRestoration; }, 0);
+      }
+    }, { once: true });
+  }
+
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
@@ -12,16 +29,28 @@
   var yearEl = $("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // ---------------------------------------------------------- navegación
-  var nav = $("#nav");
-  var toggle = $("#navToggle");
-  var drawer = $("#drawer");
+  // ---------------------------------------------------------- video de portada
   var heroVideo = $(".hero-video");
   if (heroVideo && reduceMotion) {
     heroVideo.pause();
     heroVideo.removeAttribute("autoplay");
+  } else if (heroVideo && "IntersectionObserver" in window) {
+    heroVideo.removeAttribute("autoplay");
+    new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) {
+        heroVideo.play().catch(function () {
+          // El navegador puede bloquear la reproducción automática.
+        });
+      } else {
+        heroVideo.pause();
+      }
+    }).observe(heroVideo);
   }
 
+  // ---------------------------------------------------------- navegación
+  var nav = $("#nav");
+  var toggle = $("#navToggle");
+  var drawer = $("#drawer");
   function setMenu(open) {
     if (!toggle || !drawer) return;
     drawer.hidden = !open;
@@ -396,10 +425,6 @@
   if (windWrap && windCover) {
     windCover.addEventListener("click", function () { windWrap.classList.add("is-active"); });
   }
-
-  // ---------------------------------------------------------- video de portada
-  var heroVideo = $(".hero-video");
-  if (heroVideo && reduceMotion) { heroVideo.removeAttribute("autoplay"); heroVideo.pause(); }
 
   // ---------------------------------------------------------- botones que preseleccionan actividad
   var select = $("#contact-activity-page");
