@@ -479,7 +479,7 @@ h3 {
     rgba(0, 0, 0, 0.62) 0%,
     rgba(0, 0, 0, 0.18) 42%,
     rgba(0, 0, 0, 0) 62%,
-    rgba(0, 0, 0, 0.65) 100%
+    rgba(0, 0, 0, var(--hl-bottom-shade, 0)) 100%
   );
   pointer-events: none;
 }
@@ -487,28 +487,25 @@ h3 {
   --text-inset: calc(clamp(24px, 4vw, 48px) * 0.82);
   position: absolute;
   z-index: 1;
-  inset: var(--text-inset);
-  display: flex;
-  flex-direction: column;
+  top: var(--text-inset);
+  left: var(--text-inset);
+  right: var(--text-inset);
+  max-width: 520px;
 }
 .hl-text h3 {
-  max-width: 50%;
   font-size: clamp(24px, 3.2vw, 40px);
   line-height: 1.1;
   letter-spacing: -0.03em;
 }
 .hl-text p {
-  max-width: 40%;
-  margin-top: 16px;
+  margin-top: 10px;
   font-size: clamp(16px, 1.5vw, 19px);
   line-height: 1.35;
   opacity: 0.92;
 }
 .hl-text .arrow-link {
   display: inline-block;
-  align-self: flex-end;
-  margin-top: auto;
-  text-align: right;
+  margin-top: 14px;
 }
 .hl-controls {
   margin-top: 28px;
@@ -1456,13 +1453,15 @@ textarea:focus {
 
 /* 16. RESPONSIVE */
 @media (max-width: 860px) {
+  .hl-track {
+    --card-width: 90vw;
+    --hl-bottom-shade: 0.65;
+  }
   #actividades .track {
     --card-width: calc(min(86vw, 640px) * 0.82 * 1.02);
   }
-  .hl-track,
   #capella .track {
     --card-width: calc(min(88vw, 1024px) * 0.82);
-    gap: 20px;
   }
   .hl-track,
   .track {
@@ -1525,18 +1524,19 @@ textarea:focus {
   .hl-card {
     aspect-ratio: 3 / 4;
   }
+  .hl-text {
+    bottom: var(--text-inset);
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .hl-text .arrow-link {
+    align-self: flex-end;
+    margin-top: auto;
+    text-align: right;
+  }
   #capella .gcard img {
     max-height: 63.96vh;
-  }
-  .hl-text h3,
-  .hl-text p {
-    max-width: none;
-  }
-  .hl-title-break {
-    display: none;
-  }
-  .hl-text p {
-    margin-top: 10px;
   }
   .map {
     min-height: 300px;
