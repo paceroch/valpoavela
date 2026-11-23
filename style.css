@@ -819,9 +819,6 @@ h3 {
   gap: 24px;
   padding: 8px 0 28px;
 }
-.activity-modal-copy > .chips {
-  margin: 0;
-}
 .activity-modal-copy > p {
   margin: 0;
   color: var(--gray);
@@ -1462,6 +1459,31 @@ textarea:focus {
 @media (max-width: 860px) {
   .hl-track {
     --card-width: 90vw;
+  }
+  .hl-text {
+    top: calc(var(--text-inset) + clamp(8px, 1.5vw, 20px));
+  }
+  .hl-text h3 {
+    align-self: center;
+    width: min(calc(var(--card-width) * 0.7), 100%);
+    text-align: center;
+  }
+  .hl-text p {
+    width: min(50vw, 100%);
+    margin-block: auto;
+    padding-block: 10px;
+    text-align: left;
+  }
+  .hl-text .hl-text-lower {
+    position: relative;
+    top: 48px;
+  }
+  .hl-text .hl-text-higher {
+    position: relative;
+    top: -60px;
+  }
+  .hl-text .arrow-link {
+    margin-top: 0;
   }
   #actividades .track {
     --card-width: calc(min(86vw, 640px) * 0.82 * 1.02);
