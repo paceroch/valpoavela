@@ -1529,10 +1529,10 @@ textarea:focus {
     max-height: 47.97vh;
   }
   .hl-card:first-child {
-    --hl-start-gutter: 11%;
+    --hl-start-gutter: 43px;
   }
   .hl-card:last-child {
-    --hl-end-gutter: 11%;
+    --hl-end-gutter: 43px;
   }
   .hl-card:is(:first-child, :last-child) {
     background: transparent;
