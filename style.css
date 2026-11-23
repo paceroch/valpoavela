@@ -479,7 +479,7 @@ h3 {
     rgba(0, 0, 0, 0.62) 0%,
     rgba(0, 0, 0, 0.18) 42%,
     rgba(0, 0, 0, 0) 62%,
-    rgba(0, 0, 0, var(--hl-bottom-shade, 0)) 100%
+    rgba(0, 0, 0, 0.65) 100%
   );
   pointer-events: none;
 }
@@ -487,25 +487,28 @@ h3 {
   --text-inset: calc(clamp(24px, 4vw, 48px) * 0.82);
   position: absolute;
   z-index: 1;
-  top: var(--text-inset);
-  left: var(--text-inset);
-  right: var(--text-inset);
-  max-width: 520px;
+  inset: var(--text-inset);
+  display: flex;
+  flex-direction: column;
 }
 .hl-text h3 {
+  max-width: 50%;
   font-size: clamp(24px, 3.2vw, 40px);
   line-height: 1.1;
   letter-spacing: -0.03em;
 }
 .hl-text p {
-  margin-top: 10px;
+  max-width: 40%;
+  margin-top: 16px;
   font-size: clamp(16px, 1.5vw, 19px);
   line-height: 1.35;
   opacity: 0.92;
 }
 .hl-text .arrow-link {
   display: inline-block;
-  margin-top: 14px;
+  align-self: flex-end;
+  margin-top: auto;
+  text-align: right;
 }
 .hl-controls {
   margin-top: 28px;
@@ -1455,7 +1458,6 @@ textarea:focus {
 @media (max-width: 860px) {
   .hl-track {
     --card-width: 100%;
-    --hl-bottom-shade: 0.65;
     gap: 0;
   }
   #actividades .track {
@@ -1552,17 +1554,18 @@ textarea:focus {
     border-end-end-radius: 0;
   }
   .hl-text {
-    bottom: var(--text-inset);
     inset-inline-start: calc(var(--text-inset) + var(--hl-start-gutter, 0px));
     inset-inline-end: calc(var(--text-inset) + var(--hl-end-gutter, 0px));
-    max-width: none;
-    display: flex;
-    flex-direction: column;
   }
-  .hl-text .arrow-link {
-    align-self: flex-end;
-    margin-top: auto;
-    text-align: right;
+  .hl-text h3,
+  .hl-text p {
+    max-width: none;
+  }
+  .hl-title-break {
+    display: none;
+  }
+  .hl-text p {
+    margin-top: 10px;
   }
   #capella .gcard img {
     max-height: 63.96vh;
