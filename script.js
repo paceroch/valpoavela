@@ -471,18 +471,40 @@
     return true;
   }
 
+  function openActivityModal(trigger, link) {
+    if (activityModal.open || !showActivityDetails(activityTriggers.indexOf(trigger))) return;
+    if (link) {
+      if (location.hash !== link.hash) history.pushState(history.state, "", link.hash);
+      trigger.closest(".fcard").scrollIntoView({
+        behavior: "instant",
+        block: "start",
+        inline: "center"
+      });
+      trigger.focus({ preventScroll: true });
+    }
+    activityModalTrigger = trigger;
+    lockPageScroll();
+    activityModal.showModal();
+    activityModalScroll.scrollTop = 0;
+    trigger.setAttribute("aria-expanded", "true");
+    activityModalClose.focus({ preventScroll: true });
+  }
+
   if (activityModal && activityModalTitle && activityModalContent && activityModalClose &&
       activityModalScroll && activityModalNavigation) {
-    activityTriggers.forEach(function (trigger, index) {
-      trigger.addEventListener("click", function () {
-        if (activityModal.open) return;
-        if (!showActivityDetails(index)) return;
-        activityModalTrigger = trigger;
-        lockPageScroll();
-        activityModal.showModal();
-        activityModalScroll.scrollTop = 0;
-        trigger.setAttribute("aria-expanded", "true");
-        activityModalClose.focus();
+    activityTriggers.forEach(function (trigger) {
+      trigger.addEventListener("click", function () { openActivityModal(trigger); });
+    });
+    $$("#hlTrack a[data-open-activity]").forEach(function (link) {
+      var card = document.getElementById(link.hash.slice(1));
+      var trigger = card && $(".fcard-details[data-activity-modal]", card);
+      if (!trigger || activityTriggers.indexOf(trigger) === -1) return;
+      link.setAttribute("aria-haspopup", "dialog");
+      link.addEventListener("click", function (event) {
+        if (event.defaultPrevented || event.button !== 0 ||
+            event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+        event.preventDefault();
+        openActivityModal(trigger, link);
       });
     });
 
