@@ -1456,15 +1456,13 @@ textarea:focus {
 
 /* 16. RESPONSIVE */
 @media (max-width: 860px) {
-  .hl-track {
-    --card-width: 100%;
-    gap: 0;
-  }
   #actividades .track {
     --card-width: calc(min(86vw, 640px) * 0.82 * 1.02);
   }
+  .hl-track,
   #capella .track {
     --card-width: calc(min(88vw, 1024px) * 0.82);
+    gap: 20px;
   }
   .hl-track,
   .track {
@@ -1525,49 +1523,10 @@ textarea:focus {
     aspect-ratio: 4 / 3;
   }
   .hl-card {
-    aspect-ratio: 1;
-    max-height: 47.97vh;
-    border-radius: 0;
+    aspect-ratio: 3 / 4;
   }
-  .hl-card:first-child {
-    --hl-start-gutter: 43px;
-  }
-  .hl-card:last-child {
-    --hl-end-gutter: 43px;
-  }
-  .hl-card:is(:first-child, :last-child) {
-    background: transparent;
-  }
-  .hl-card img,
-  .hl-card::after {
-    inset-inline: var(--hl-start-gutter, 0px) var(--hl-end-gutter, 0px);
-  }
-  .hl-card:first-child img,
-  .hl-card:first-child::after {
-    border-radius: var(--radius) 0 0 var(--radius);
-  }
-  .hl-card:last-child img,
-  .hl-card:last-child::after {
-    border-radius: 0 var(--radius) var(--radius) 0;
-  }
-  .hl-card img {
-    width: calc(100% - var(--hl-start-gutter, 0px) - var(--hl-end-gutter, 0px));
-    background: #000;
-  }
-  .hl-card:nth-child(2) {
-    overflow: visible;
-  }
-  .hl-card:nth-child(2) img,
-  .hl-card:nth-child(2)::after {
-    inset-inline-start: calc(-1 * var(--hl-seam-cover, 0px));
-  }
-  .hl-card:nth-child(2) img {
-    max-width: none;
-    width: calc(100% + var(--hl-seam-cover, 0px));
-  }
-  .hl-text {
-    inset-inline-start: calc(var(--text-inset) + var(--hl-start-gutter, 0px));
-    inset-inline-end: calc(var(--text-inset) + var(--hl-end-gutter, 0px));
+  #capella .gcard img {
+    max-height: 63.96vh;
   }
   .hl-text h3,
   .hl-text p {
@@ -1578,9 +1537,6 @@ textarea:focus {
   }
   .hl-text p {
     margin-top: 10px;
-  }
-  #capella .gcard img {
-    max-height: 63.96vh;
   }
   .map {
     min-height: 300px;
