@@ -478,7 +478,8 @@ h3 {
     180deg,
     rgba(0, 0, 0, 0.62) 0%,
     rgba(0, 0, 0, 0.18) 42%,
-    rgba(0, 0, 0, 0) 62%
+    rgba(0, 0, 0, 0) 62%,
+    rgba(0, 0, 0, var(--hl-bottom-shade, 0)) 100%
   );
   pointer-events: none;
 }
@@ -1452,6 +1453,10 @@ textarea:focus {
 
 /* 16. RESPONSIVE */
 @media (max-width: 860px) {
+  .hl-track {
+    --card-width: 90vw;
+    --hl-bottom-shade: 0.65;
+  }
   #actividades .track {
     --card-width: calc(min(86vw, 640px) * 0.82 * 1.02);
   }
@@ -1518,6 +1523,17 @@ textarea:focus {
   }
   .hl-card {
     aspect-ratio: 3 / 4;
+  }
+  .hl-text {
+    bottom: var(--text-inset);
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .hl-text .arrow-link {
+    align-self: flex-end;
+    margin-top: auto;
+    text-align: right;
   }
   #capella .gcard img {
     max-height: 63.96vh;
