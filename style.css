@@ -1458,7 +1458,7 @@ textarea:focus {
 @media (max-width: 860px) {
   .hl-track {
     --card-width: 100%;
-    gap: 0;
+    gap: 4px;
   }
   #actividades .track {
     --card-width: calc(min(86vw, 640px) * 0.82 * 1.02);
