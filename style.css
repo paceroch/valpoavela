@@ -1454,8 +1454,9 @@ textarea:focus {
 /* 16. RESPONSIVE */
 @media (max-width: 860px) {
   .hl-track {
-    --card-width: 90vw;
+    --card-width: 100%;
     --hl-bottom-shade: 0.65;
+    gap: 0;
   }
   #actividades .track {
     --card-width: calc(min(86vw, 640px) * 0.82 * 1.02);
@@ -1524,8 +1525,36 @@ textarea:focus {
   .hl-card {
     aspect-ratio: 3 / 4;
   }
+  .hl-card:first-child {
+    --hl-start-gutter: 5%;
+  }
+  .hl-card:last-child {
+    --hl-end-gutter: 5%;
+  }
+  .hl-card:is(:first-child, :last-child) {
+    background: transparent;
+  }
+  .hl-card img,
+  .hl-card::after {
+    inset-inline: var(--hl-start-gutter, 0px) var(--hl-end-gutter, 0px);
+    border-radius: inherit;
+  }
+  .hl-card img {
+    width: calc(100% - var(--hl-start-gutter, 0px) - var(--hl-end-gutter, 0px));
+    background: #000;
+  }
+  .hl-card:not(:first-child) {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+  .hl-card:not(:last-child) {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
   .hl-text {
     bottom: var(--text-inset);
+    inset-inline-start: calc(var(--text-inset) + var(--hl-start-gutter, 0px));
+    inset-inline-end: calc(var(--text-inset) + var(--hl-end-gutter, 0px));
     max-width: none;
     display: flex;
     flex-direction: column;
