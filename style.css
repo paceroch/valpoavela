@@ -1527,32 +1527,22 @@ textarea:focus {
   .hl-card {
     aspect-ratio: 1;
     max-height: 47.97vh;
+    border-radius: 0;
   }
   .hl-card:first-child {
     --hl-start-gutter: 43px;
+    clip-path: inset(0 0 0 var(--hl-start-gutter) round var(--radius) 0 0 var(--radius));
   }
   .hl-card:last-child {
     --hl-end-gutter: 43px;
-  }
-  .hl-card:is(:first-child, :last-child) {
-    background: transparent;
+    clip-path: inset(0 var(--hl-end-gutter) 0 0 round 0 var(--radius) var(--radius) 0);
   }
   .hl-card img,
   .hl-card::after {
     inset-inline: var(--hl-start-gutter, 0px) var(--hl-end-gutter, 0px);
-    border-radius: inherit;
   }
   .hl-card img {
     width: calc(100% - var(--hl-start-gutter, 0px) - var(--hl-end-gutter, 0px));
-    background: #000;
-  }
-  .hl-card:not(:first-child) {
-    border-start-start-radius: 0;
-    border-end-start-radius: 0;
-  }
-  .hl-card:not(:last-child) {
-    border-start-end-radius: 0;
-    border-end-end-radius: 0;
   }
   .hl-text {
     inset-inline-start: calc(var(--text-inset) + var(--hl-start-gutter, 0px));
