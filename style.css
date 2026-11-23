@@ -831,6 +831,20 @@ h3 {
 .activity-modal-copy .plain {
   margin: 0;
 }
+.activity-modal-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding-inline-start: 1.5em;
+  list-style: disc;
+  color: var(--gray);
+}
+.activity-modal-list li::marker {
+  color: var(--blue);
+}
+.activity-modal-list strong {
+  color: var(--ink);
+}
 .activity-modal-copy .plain > div {
   padding: 16px 0;
 }
