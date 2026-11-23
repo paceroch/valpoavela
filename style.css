@@ -1554,6 +1554,17 @@ textarea:focus {
     width: calc(100% - var(--hl-start-gutter, 0px) - var(--hl-end-gutter, 0px));
     background: #000;
   }
+  .hl-card:nth-child(2) {
+    overflow: visible;
+  }
+  .hl-card:nth-child(2) img,
+  .hl-card:nth-child(2)::after {
+    inset-inline-start: calc(-1 * var(--hl-seam-cover, 0px));
+  }
+  .hl-card:nth-child(2) img {
+    max-width: none;
+    width: calc(100% + var(--hl-seam-cover, 0px));
+  }
   .hl-text {
     inset-inline-start: calc(var(--text-inset) + var(--hl-start-gutter, 0px));
     inset-inline-end: calc(var(--text-inset) + var(--hl-end-gutter, 0px));

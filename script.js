@@ -233,6 +233,9 @@
       return b;
     });
     var index = 0;
+    var mobileCarousel = window.matchMedia("(max-width: 860px)");
+    var startedOnFirstCard = false;
+    var finishFirstSwipe = false;
     var playing = !reduceMotion && !window.matchMedia("(max-width: 860px), (pointer: coarse)").matches;
     var visible = !("IntersectionObserver" in window);
     var timer = null;
@@ -270,10 +273,39 @@
     var isScrolling = observeCarouselScroll(track, function () {
       clearTimeout(timer);
     }, function () {
+      finishFirstSwipe = false;
+      track.style.removeProperty("--hl-seam-cover");
       index = clamp(Math.round(track.scrollLeft / stride()), 0, cards.length - 1);
       render();
       schedule();
     });
+    function coverFirstSeam() {
+      if (!finishFirstSwipe) return;
+      var remaining = stride() - track.scrollLeft;
+      // Cubre el borde saliente durante los últimos píxeles del encaje nativo.
+      if (remaining > 0 && remaining <= 8) {
+        track.style.setProperty("--hl-seam-cover", remaining + "px");
+      } else {
+        track.style.removeProperty("--hl-seam-cover");
+      }
+    }
+
+    track.addEventListener("touchstart", function (event) {
+      finishFirstSwipe = false;
+      startedOnFirstCard = mobileCarousel.matches && event.touches.length === 1 && Math.abs(track.scrollLeft) <= 1;
+      track.style.removeProperty("--hl-seam-cover");
+    }, { passive: true });
+    track.addEventListener("touchend", function () {
+      finishFirstSwipe = startedOnFirstCard;
+      startedOnFirstCard = false;
+      coverFirstSeam();
+    }, { passive: true });
+    track.addEventListener("touchcancel", function () {
+      startedOnFirstCard = false;
+      finishFirstSwipe = false;
+      track.style.removeProperty("--hl-seam-cover");
+    }, { passive: true });
+    track.addEventListener("scroll", coverFirstSeam, { passive: true });
     ["pointerdown", "touchstart", "wheel"].forEach(function (ev) {
       track.addEventListener(ev, function () { if (playing) { playing = false; render(); clearTimeout(timer); } }, { passive: true });
     });
