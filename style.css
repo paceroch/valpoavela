@@ -1064,7 +1064,7 @@ h3 {
 .wind-card.is-active .wind-cover {
   display: none;
 }
-.wind > .lede {
+.wind > .fine {
   margin: 18px auto 0;
   padding: 0 var(--pad);
   max-width: 640px;
