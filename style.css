@@ -1525,13 +1525,14 @@ textarea:focus {
     aspect-ratio: 4 / 3;
   }
   .hl-card {
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 1;
+    max-height: 47.97vh;
   }
   .hl-card:first-child {
-    --hl-start-gutter: 5%;
+    --hl-start-gutter: 11%;
   }
   .hl-card:last-child {
-    --hl-end-gutter: 5%;
+    --hl-end-gutter: 11%;
   }
   .hl-card:is(:first-child, :last-child) {
     background: transparent;
