@@ -437,6 +437,7 @@ h3 {
 }
 .hl-track {
   --card-width: calc(min(88vw, 1024px) * 0.82);
+  --hl-bottom-shade: 0.65;
   --track-inset: max(var(--pad), calc((100vw - 1024px) / 2));
   margin-top: clamp(32px, 5vw, 56px);
   display: flex;
@@ -488,9 +489,11 @@ h3 {
   position: absolute;
   z-index: 1;
   top: var(--text-inset);
+  bottom: var(--text-inset);
   left: var(--text-inset);
   right: var(--text-inset);
-  max-width: 520px;
+  display: flex;
+  flex-direction: column;
 }
 .hl-text h3 {
   font-size: clamp(24px, 3.2vw, 40px);
@@ -504,8 +507,9 @@ h3 {
   opacity: 0.92;
 }
 .hl-text .arrow-link {
-  display: inline-block;
-  margin-top: 14px;
+  align-self: flex-end;
+  margin-top: auto;
+  text-align: right;
 }
 .hl-controls {
   margin-top: 28px;
@@ -804,23 +808,9 @@ h3 {
   width: 100%;
 }
 .activity-modal-layout {
-  width: min(100%, 1600px);
+  width: min(100%, 960px);
   margin: 0 auto;
   padding: clamp(28px, 5vw, 72px);
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  align-items: start;
-  gap: clamp(28px, 5vw, 80px);
-}
-.activity-modal-image {
-  position: sticky;
-  top: 112px;
-  width: 100%;
-  height: min(72dvh, 780px);
-  min-height: 320px;
-  object-fit: cover;
-  border-radius: var(--radius);
-  background: var(--bg-2);
 }
 .activity-modal-copy {
   display: flex;
@@ -1283,6 +1273,9 @@ textarea:focus {
 }
 
 @media (min-width: 861px) {
+  .hl-text > :is(h3, p) {
+    max-width: 520px;
+  }
   .contact-grid {
     min-width: min(100% - 2 * var(--pad), 748px);
   }
@@ -1455,7 +1448,6 @@ textarea:focus {
 @media (max-width: 860px) {
   .hl-track {
     --card-width: 90vw;
-    --hl-bottom-shade: 0.65;
   }
   #actividades .track {
     --card-width: calc(min(86vw, 640px) * 0.82 * 1.02);
@@ -1500,13 +1492,6 @@ textarea:focus {
     padding-inline: 12px;
     text-align: left;
   }
-  .activity-modal-layout {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .activity-modal-image {
-    position: static;
-    height: min(54dvh, 560px);
-  }
   .specs {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1523,17 +1508,6 @@ textarea:focus {
   }
   .hl-card {
     aspect-ratio: 3 / 4;
-  }
-  .hl-text {
-    bottom: var(--text-inset);
-    max-width: none;
-    display: flex;
-    flex-direction: column;
-  }
-  .hl-text .arrow-link {
-    align-self: flex-end;
-    margin-top: auto;
-    text-align: right;
   }
   #capella .gcard img {
     max-height: 63.96vh;
@@ -1560,15 +1534,7 @@ textarea:focus {
     height: 44px;
   }
   .activity-modal-layout {
-    gap: 24px;
     padding: 20px 20px 36px;
-  }
-  .activity-modal-image {
-    width: 100%;
-    height: min(48dvh, 420px);
-    max-height: none;
-    min-height: 240px;
-    object-fit: cover;
   }
   .activity-modal-copy {
     gap: 20px;
