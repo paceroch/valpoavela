@@ -1064,7 +1064,7 @@ h3 {
 .wind-card.is-active .wind-cover {
   display: none;
 }
-.wind .fine {
+.wind > .lede {
   margin: 18px auto 0;
   padding: 0 var(--pad);
   max-width: 640px;
@@ -1149,7 +1149,7 @@ h3 {
   top: 50%;
   width: 14px;
   height: 1.6px;
-  background: var(--ink);
+  background: var(--blue);
   transition: transform 0.35s var(--ease);
 }
 .faq-list summary::after {
@@ -1160,7 +1160,7 @@ h3 {
 }
 .faq-list details p {
   padding: 0 48px 24px 0;
-  color: var(--gray);
+  color: var(--blue);
 }
 .faq-list details[open] p {
   animation: fold 0.4s var(--ease);
