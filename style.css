@@ -488,12 +488,16 @@ h3 {
   --text-inset: calc(clamp(24px, 4vw, 48px) * 0.82);
   position: absolute;
   z-index: 1;
-  top: var(--text-inset);
+  top: calc(var(--text-inset) + clamp(8px, 1.5vw, 20px));
   bottom: var(--text-inset);
   left: var(--text-inset);
   right: var(--text-inset);
   display: flex;
   flex-direction: column;
+}
+.hl-text > :is(h3, p) {
+  width: min(50vw, 100%);
+  text-align: left;
 }
 .hl-text h3 {
   font-size: clamp(24px, 3.2vw, 40px);
@@ -1284,8 +1288,15 @@ textarea:focus {
 }
 
 @media (min-width: 861px) {
-  .hl-text > :is(h3, p) {
-    max-width: 520px;
+  .hl-track {
+    --track-inset: max(var(--pad), min(calc((100vw - 1024px) / 2), 30vw - 270px));
+  }
+  .hl-text > h3 {
+    width: min(100%, calc(50vw - var(--track-inset) - var(--text-inset)));
+  }
+  .hl-text > p {
+    width: min(100%, calc(30vw - var(--track-inset) - var(--text-inset)));
+    overflow-wrap: anywhere;
   }
   .contact-grid {
     min-width: min(100% - 2 * var(--pad), 748px);
@@ -1459,13 +1470,6 @@ textarea:focus {
 @media (max-width: 860px) {
   .hl-track {
     --card-width: 90vw;
-  }
-  .hl-text {
-    top: calc(var(--text-inset) + clamp(8px, 1.5vw, 20px));
-  }
-  .hl-text > :is(h3, p) {
-    width: min(50vw, 100%);
-    text-align: left;
   }
   #actividades .track {
     --card-width: calc(min(86vw, 640px) * 0.82 * 1.02);
