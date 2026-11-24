@@ -742,6 +742,8 @@ h3 {
   z-index: 1;
 }
 .activity-modal {
+  --activity-content-width: 960px;
+  --activity-content-padding: clamp(28px, 5vw, 72px);
   position: fixed;
   inset: 0;
   width: 100vw;
@@ -773,8 +775,9 @@ h3 {
   z-index: 2;
   min-height: 84px;
   padding: 16px clamp(24px, 5vw, 72px);
+  padding-inline-start: calc(max(0px, (100% - var(--activity-content-width)) / 2) + var(--activity-content-padding));
   display: grid;
-  grid-template-columns: var(--close-size) minmax(0, 1fr) var(--close-size);
+  grid-template-columns: minmax(0, 1fr) var(--close-size);
   align-items: center;
   gap: 24px;
   border-bottom: 1px solid var(--line);
@@ -786,8 +789,7 @@ h3 {
   font-size: 20px;
 }
 .activity-modal-head h2 {
-  grid-column: 2;
-  text-align: center;
+  text-align: left;
   font-size: clamp(24px, 3vw, 38px);
   line-height: 1.1;
   letter-spacing: -0.03em;
@@ -818,9 +820,9 @@ h3 {
   width: 100%;
 }
 .activity-modal-layout {
-  width: min(100%, 960px);
+  width: min(100%, var(--activity-content-width));
   margin: 0 auto;
-  padding: clamp(28px, 5vw, 72px);
+  padding: var(--activity-content-padding);
 }
 .activity-modal-copy {
   display: flex;
@@ -854,7 +856,7 @@ h3 {
 .activity-modal-copy .plain > div {
   padding: 16px 0;
 }
-.activity-modal-copy .activity-modal-price {
+.activity-modal-copy .activity-modal-accent {
   color: var(--blue);
 }
 .activity-modal-actions {
@@ -1588,17 +1590,21 @@ textarea:focus {
   body {
     font-size: 16px;
   }
+  .activity-modal {
+    --activity-mobile-content-width: 83%;
+  }
   .activity-modal-head {
     --close-size: 44px;
     min-height: 72px;
     padding: 12px 16px;
+    padding-inline-start: calc((100% - var(--activity-mobile-content-width)) / 2);
     gap: 12px;
   }
   .activity-modal-head h2 {
     font-size: clamp(21px, 5.5vw, 28px);
   }
   .activity-modal-layout {
-    width: 83%;
+    width: var(--activity-mobile-content-width);
     padding: 20px 0 36px;
   }
   .activity-modal-copy {
