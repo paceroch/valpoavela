@@ -755,6 +755,7 @@ h3 {
   overflow: hidden;
   background: #fff;
   color: var(--ink);
+  font-size: 17px;
 }
 .activity-modal::backdrop {
   background: #fff;
@@ -766,29 +767,35 @@ h3 {
   overscroll-behavior: contain;
 }
 .activity-modal-head {
+  --close-size: 48px;
   position: sticky;
   top: 0;
   z-index: 2;
   min-height: 84px;
   padding: 16px clamp(24px, 5vw, 72px);
-  display: flex;
+  display: grid;
+  grid-template-columns: var(--close-size) minmax(0, 1fr) var(--close-size);
   align-items: center;
-  justify-content: space-between;
   gap: 24px;
   border-bottom: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.94);
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
 }
+.activity-modal-copy h3,
+.activity-modal-list li > strong:first-child {
+  font-size: 20px;
+}
 .activity-modal-head h2 {
+  grid-column: 2;
+  text-align: center;
   font-size: clamp(24px, 3vw, 38px);
   line-height: 1.1;
   letter-spacing: -0.03em;
 }
 .activity-modal-close {
-  flex: 0 0 48px;
-  width: 48px;
-  height: 48px;
+  width: var(--close-size);
+  height: var(--close-size);
   display: grid;
   place-items: center;
   border: 0;
@@ -826,7 +833,6 @@ h3 {
 .activity-modal-copy > p {
   margin: 0;
   color: var(--gray);
-  font-size: clamp(17px, 1.5vw, 20px);
   line-height: 1.5;
 }
 .activity-modal-copy .plain {
@@ -849,12 +855,18 @@ h3 {
 .activity-modal-copy .plain > div {
   padding: 16px 0;
 }
+.activity-modal-copy .activity-modal-price {
+  color: var(--blue);
+}
 .activity-modal-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
   margin-top: 4px;
+}
+.activity-modal-actions .pill {
+  font-size: inherit;
 }
 .activity-modal-navigation {
   display: flex;
@@ -1578,20 +1590,17 @@ textarea:focus {
     font-size: 16px;
   }
   .activity-modal-head {
+    --close-size: 44px;
     min-height: 72px;
-    padding: 12px 16px 12px 20px;
+    padding: 12px 16px;
     gap: 12px;
   }
   .activity-modal-head h2 {
     font-size: clamp(21px, 5.5vw, 28px);
   }
-  .activity-modal-close {
-    flex-basis: 44px;
-    width: 44px;
-    height: 44px;
-  }
   .activity-modal-layout {
-    padding: 20px 20px 36px;
+    width: 83%;
+    padding: 20px 0 36px;
   }
   .activity-modal-copy {
     gap: 20px;
