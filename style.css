@@ -1291,8 +1291,21 @@ textarea:focus {
   .hl-track {
     --track-inset: max(var(--pad), min(calc((100vw - 1024px) / 2), 30vw - 270px));
   }
+  .hl-card .hl-charter-photo {
+    object-position: center 38%;
+  }
+  .hl-card .hl-raquero-photo {
+    object-position: center 77%;
+  }
   .hl-text > h3 {
     width: min(100%, calc(50vw - var(--track-inset) - var(--text-inset)));
+  }
+  .hl-title-charter-desktop {
+    display: block;
+    white-space: nowrap;
+  }
+  .hl-title-charter-mobile {
+    display: none;
   }
   .hl-text > p {
     width: min(100%, calc(30vw - var(--track-inset) - var(--text-inset)));
@@ -1470,6 +1483,28 @@ textarea:focus {
 @media (max-width: 860px) {
   .hl-track {
     --card-width: 90vw;
+  }
+  .hl-card .hl-charter-photo {
+    object-position: left 80%;
+    translate: 0 -5%;
+    scale: 1.45;
+    transform-origin: top left;
+  }
+  .hl-text .hl-title-charter {
+    width: 100%;
+    font-size: min(clamp(24px, 3.2vw, 40px), 6.3vw);
+    white-space: nowrap;
+  }
+  .hl-title-charter + p {
+    width: min(calc(var(--card-width) * 0.48), 100%);
+  }
+  .hl-title-charter-desktop {
+    display: none;
+  }
+  .hl-title-charter-mobile,
+  .hl-title-charter-mobile span,
+  .hl-title-charter-end {
+    display: block;
   }
   #actividades .track {
     --card-width: calc(min(86vw, 640px) * 0.82 * 1.02);
