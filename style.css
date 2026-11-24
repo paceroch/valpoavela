@@ -1487,7 +1487,7 @@ textarea:focus {
   .hl-card .hl-charter-photo {
     object-position: left 80%;
     translate: 0 -5%;
-    scale: 1.45;
+    scale: 1.36;
     transform-origin: top left;
   }
   .hl-text .hl-title-charter {
@@ -1496,7 +1496,7 @@ textarea:focus {
     white-space: nowrap;
   }
   .hl-title-charter + p {
-    width: min(calc(var(--card-width) * 0.48), 100%);
+    width: min(calc(var(--card-width) * 0.43), 100%);
   }
   .hl-title-charter-desktop {
     display: none;
