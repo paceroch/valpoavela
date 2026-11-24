@@ -782,8 +782,7 @@ h3 {
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
 }
-.activity-modal-copy h3,
-.activity-modal-list li > strong:first-child {
+.activity-modal-copy h3 {
   font-size: 20px;
 }
 .activity-modal-head h2 {
