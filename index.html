@@ -813,8 +813,18 @@
               decoding="async"
             />
           </div>
-          <form class="form rv" style="--d: 1" id="contact-form-page">
+          <form
+            class="form rv"
+            style="--d: 1"
+            id="contact-form-page"
+            action="https://formspree.io/f/mrpqrrar"
+            method="post"
+          >
             <h3>Envíanos tu consulta.</h3>
+            <input type="hidden" name="subject" value="Nuevo mensaje desde valpoavela.cl" />
+            <div hidden>
+              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+            </div>
             <div class="field">
               <label for="contact-name-page">Nombre</label>
               <input
@@ -823,6 +833,16 @@
                 autocomplete="name"
                 required
               />
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="contact-email-page">Correo electrónico</label>
+                <input id="contact-email-page" name="email" type="email" autocomplete="email" required />
+              </div>
+              <div class="field">
+                <label for="contact-phone-page">Teléfono <span class="opt">(opcional)</span></label>
+                <input id="contact-phone-page" name="phone" type="tel" autocomplete="tel" />
+              </div>
             </div>
             <div class="field">
               <label for="contact-activity-page">Actividad de interés</label>
@@ -860,20 +880,20 @@
               </div>
             </div>
             <div class="field">
-              <label for="contact-message-page"
-                >Mensaje <span class="opt">(opcional)</span></label
-              >
+              <label for="contact-message-page">Mensaje</label>
               <textarea
                 id="contact-message-page"
                 name="message"
                 rows="4"
+                required
               ></textarea>
             </div>
             <button class="pill pill-lg" type="submit">
-              Preparar mensaje por WhatsApp
+              Enviar mensaje
             </button>
             <p class="fine">
-              Se abrirá WhatsApp con tu consulta lista para enviar.
+              También puedes escribirnos a
+              <a href="mailto:contacto@valpoavela.cl">contacto@valpoavela.cl</a>.
             </p>
             <p
               class="form-status"

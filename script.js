@@ -1,7 +1,6 @@
 (function () {
   "use strict";
 
-  var WA_NUMBER = "56993145696";
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   document.documentElement.classList.add("js");
 
@@ -540,7 +539,7 @@
     if (t && select) select.value = t.getAttribute("data-actividad");
   });
 
-  // ---------------------------------------------------------- formulario → WhatsApp
+  // ---------------------------------------------------------- formulario → Formspree
   var form = $("#contact-form-page");
   if (form) {
     var dateInput = form.elements.namedItem("date");
@@ -549,34 +548,36 @@
       var pad = function (n) { return String(n).padStart(2, "0"); };
       dateInput.min = now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate());
     }
-    form.addEventListener("submit", function (event) {
+    var submitButton = form.querySelector('button[type="submit"]');
+    var status = $("#contact-status-page");
+
+    form.addEventListener("submit", async function (event) {
       event.preventDefault();
-      if (!form.reportValidity()) return;
-      var val = function (name) { return form.elements.namedItem(name).value.trim(); };
-      var sel = form.elements.namedItem("activity");
-      var activity = sel.value ? sel.options[sel.selectedIndex].text : "";
-      var date = val("date");
-      var dateText = "";
-      if (date) {
-        dateText = new Date(date + "T12:00:00").toLocaleDateString("es-CL", { weekday: "long", day: "numeric", month: "long" });
-      }
-      var lines = ["Hola, soy " + val("name") + "."];
-      if (activity) lines.push("Me interesa: " + activity + ".");
-      lines.push("Participantes: " + val("people") + ".");
-      if (dateText) lines.push("Fecha preferida: " + dateText + ".");
-      if (val("message")) lines.push("", val("message"));
-      var url = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(lines.join("\n"));
-      var win = window.open(url, "_blank");
-      var status = $("#contact-status-page");
-      if (status) {
-        if (win) {
-          win.opener = null;
-          status.textContent = "Se abrió WhatsApp. Revisa el mensaje y presiona enviar.";
-          form.reset();
-        } else {
-          status.textContent = "Abriendo WhatsApp…";
-          window.location.assign(url);
+      if (submitButton.disabled || !form.reportValidity()) return;
+
+      var data = new FormData(form);
+      var activity = form.elements.namedItem("activity");
+      data.set("activity", activity.options[activity.selectedIndex].text.trim());
+      submitButton.disabled = true;
+      status.textContent = "Enviando mensaje…";
+
+      try {
+        var response = await fetch(form.action, {
+          method: form.method,
+          headers: { Accept: "application/json" },
+          body: data,
+        });
+        if (!response.ok) {
+          status.textContent = "No pudimos enviar tu mensaje. Revisa los datos e inténtalo de nuevo.";
+          return;
         }
+
+        form.reset();
+        status.textContent = "Tu mensaje se envió con éxito.";
+      } catch (error) {
+        status.textContent = "No pudimos conectar con el servicio de envío. Inténtalo de nuevo.";
+      } finally {
+        submitButton.disabled = false;
       }
     });
   }
