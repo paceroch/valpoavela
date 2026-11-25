@@ -170,10 +170,10 @@ h3 {
   height: var(--nav-h);
   background: transparent;
   box-shadow: none;
-  transition: background 0.3s var(--ease);
 }
-.nav.header-scrolled {
-  background: rgba(0, 0, 0, 0.92);
+.nav.header-scrolled,
+.activity-page .nav {
+  background: #000;
 }
 .nav-in {
   height: 100%;
@@ -1262,9 +1262,6 @@ h3 {
 }
 
 /* PÁGINAS DE ACTIVIDAD */
-.activity-page .nav {
-  background: rgba(0, 0, 0, 0.92);
-}
 .activity-content {
   width: min(100% - 2 * var(--pad), 1024px);
   margin-inline: auto;

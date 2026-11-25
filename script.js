@@ -73,6 +73,14 @@
 
   // ---------------------------------------------------------- navegación
   var nav = $("#nav");
+  if (nav) {
+    function updateHeaderBackground() {
+      nav.classList.toggle("header-scrolled", window.scrollY > 0);
+    }
+    window.addEventListener("scroll", updateHeaderBackground, { passive: true });
+    window.addEventListener("pageshow", updateHeaderBackground);
+    updateHeaderBackground();
+  }
   var toggle = $("#navToggle");
   var drawer = $("#drawer");
   function setMenu(open) {
@@ -214,7 +222,6 @@
       return { gradient: gradient, progress: progress };
     });
 
-    if (nav) nav.classList.toggle("header-scrolled", scrollY > 10);
     if (backToTop) {
       var showBackToTop = scrollY > 320;
       var ariaHidden = showBackToTop ? "false" : "true";
