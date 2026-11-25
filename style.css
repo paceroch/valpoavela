@@ -1061,6 +1061,110 @@ h3 {
   font-weight: 600;
   color: var(--ink);
 }
+#embarcacion-hansa {
+  --barco-foto: url("fotos/ficha-hansa.webp");
+}
+#embarcacion-raquero {
+  --barco-foto: url("fotos/ficha-raquero.webp");
+}
+.bcard-con-ficha {
+  --barco-padding: clamp(26px, 3.4vw, 40px);
+  position: relative;
+  min-height: 250px;
+  background: #19242b var(--barco-foto) center 70% / cover no-repeat;
+  color: #fff;
+}
+.bcard-con-ficha h3 {
+  align-self: flex-start;
+  text-shadow: 0 1px 5px #000;
+}
+.bcard-con-ficha:has(.barco-ficha[open]) {
+  background: var(--bg-2);
+  color: var(--ink);
+}
+.bcard-con-ficha:has(.barco-ficha[open]) h3 {
+  visibility: hidden;
+}
+.barco-ficha[open] {
+  position: absolute;
+  inset: 0;
+}
+.barco-ficha summary {
+  position: absolute;
+  top: calc(var(--barco-padding) + clamp(24px, 2.6vw, 30px) * 1.1 + 4px);
+  left: var(--barco-padding);
+  z-index: 2;
+  list-style: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 400;
+  text-shadow: 0 1px 5px #000;
+}
+.barco-ficha summary::-webkit-details-marker {
+  display: none;
+}
+.barco-ficha:not([open]) .barco-cerrar,
+.barco-ficha[open] .barco-ver {
+  display: none;
+}
+.barco-ficha[open] summary {
+  top: 16px;
+  right: 16px;
+  left: auto;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #0066cc;
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  text-shadow: none;
+}
+.barco-cerrar {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  font-size: 0;
+}
+.barco-cerrar::before,
+.barco-cerrar::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.barco-cerrar::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+.barco-caracteristicas {
+  position: absolute;
+  inset: 22px var(--barco-padding);
+  overflow: auto;
+}
+.barco-caracteristicas h4 {
+  margin: 0;
+  padding-right: 30px;
+}
+.barco-caracteristicas ul {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.barco-caracteristicas li:nth-child(n + 4) {
+  flex-basis: 100%;
+}
 
 /* 11. VIENTO Y ZARPE */
 .wind {
