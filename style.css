@@ -1304,6 +1304,12 @@ textarea:focus {
 .form .pill {
   justify-self: start;
 }
+.contact .form > .fine {
+  font-size: 13px;
+}
+.contact .form > .fine a {
+  color: var(--link);
+}
 .form-status {
   font-size: 15px;
   font-weight: 600;
@@ -1601,6 +1607,9 @@ textarea:focus {
 @media (max-width: 560px) {
   body {
     font-size: 16px;
+  }
+  .wind > .fine {
+    font-size: 15px;
   }
   .activity-modal {
     --activity-mobile-content-width: 83%;
