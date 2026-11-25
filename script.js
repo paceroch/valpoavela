@@ -103,13 +103,36 @@
     rv.forEach(function (el) { el.classList.add("in"); });
   }
 
-  // ---------------------------------------------------------- frase que se ilumina palabra por palabra
-  var statement = $("#statementText");
-  var words = [];
-  if (statement && !reduceMotion) {
-    words = $$(".w", statement);
-    if (!words.length) {
-      Array.from(statement.childNodes).forEach(function (node) {
+  // ---------------------------------------------------------- texto que se ilumina palabra por palabra
+  var wordGradients = new Map();
+  var visibleGradients = new Set();
+  if (!reduceMotion) {
+    var gradientObserver = "IntersectionObserver" in window
+      ? new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          var gradient = wordGradients.get(entry.target);
+          if (entry.isIntersecting) {
+            visibleGradients.add(gradient);
+          } else {
+            visibleGradients.delete(gradient);
+            updateWordGradient(gradient, entry.boundingClientRect.top < 0 ? 1 : 0);
+          }
+        });
+        onScroll();
+      })
+      : null;
+    var gradientResizeObserver = "ResizeObserver" in window
+      ? new ResizeObserver(function (entries) {
+        entries.forEach(function (entry) {
+          layoutWordGradient(wordGradients.get(entry.target));
+        });
+        onScroll();
+      })
+      : null;
+
+    $$("#statementText, h2.grad").forEach(function (element) {
+      var words = [];
+      Array.from(element.childNodes).forEach(function (node) {
         if (node.nodeType !== Node.TEXT_NODE) return;
         var fragment = document.createDocumentFragment();
         node.textContent.split(/(\s+)/).forEach(function (part) {
@@ -126,43 +149,58 @@
         });
         node.replaceWith(fragment);
       });
-    }
-    statement.setAttribute("data-word-gradient", "");
-    layoutStatementGradient();
-    onViewportWidthChange(layoutStatementGradient);
-    if ("ResizeObserver" in window) {
-      new ResizeObserver(layoutStatementGradient).observe(statement);
-    }
-    if (document.fonts) document.fonts.ready.then(layoutStatementGradient);
+      if (!words.length) return;
+
+      var gradient = { element: element, words: words, opacities: [] };
+      wordGradients.set(element, gradient);
+      element.setAttribute("data-word-gradient", "");
+      layoutWordGradient(gradient);
+      if (gradientObserver) gradientObserver.observe(element);
+      else visibleGradients.add(gradient);
+      if (gradientResizeObserver) gradientResizeObserver.observe(element);
+    });
+
+    function layoutWordGradients() { wordGradients.forEach(layoutWordGradient); }
+    onViewportWidthChange(layoutWordGradients);
+    if (document.fonts) document.fonts.ready.then(layoutWordGradients);
   }
 
-  function layoutStatementGradient() {
-    var bounds = statement.getBoundingClientRect();
-    var offsets = words.map(function (word) {
+  function layoutWordGradient(gradient) {
+    var bounds = gradient.element.getBoundingClientRect();
+    var offsets = gradient.words.map(function (word) {
       return bounds.left - word.getBoundingClientRect().left;
     });
     // Todas las palabras muestran un recorte del mismo degradado horizontal.
-    statement.style.setProperty("--statement-gradient-width", bounds.width + "px");
-    words.forEach(function (word, i) {
-      word.style.setProperty("--statement-gradient-offset", offsets[i] + "px");
+    gradient.element.style.setProperty("--word-gradient-width", bounds.width + "px");
+    gradient.words.forEach(function (word, i) {
+      word.style.setProperty("--word-gradient-offset", offsets[i] + "px");
+    });
+  }
+
+  function updateWordGradient(gradient, progress) {
+    if (gradient.progress === progress) return;
+    gradient.progress = progress;
+    gradient.words.forEach(function (word, i) {
+      var start = i / gradient.words.length * 0.85;
+      var opacity = clamp((progress - start) / 0.15, 0, 1).toFixed(3);
+      if (opacity === gradient.opacities[i]) return;
+      gradient.opacities[i] = opacity;
+      word.style.setProperty("--wp", opacity);
     });
   }
 
   // ---------------------------------------------------------- efectos ligados al scroll
   var backToTop = $(".back-to-top");
   var ticking = false;
-  var statementProgress;
-  var wordOpacities = [];
   function update() {
     ticking = false;
     var scrollY = window.scrollY;
-    var progress;
-    if (words.length) {
-      var vh = window.innerHeight;
-      var sr = statement.getBoundingClientRect();
-      // 0 cuando la frase entra por abajo, 1 cuando llega al 35 % de la pantalla
-      progress = clamp((vh * 0.9 - sr.top) / (vh * 0.9 - vh * 0.35 + sr.height * 0.4), 0, 1);
-    }
+    var vh = window.innerHeight;
+    var gradientPositions = Array.from(visibleGradients, function (gradient) {
+      var bounds = gradient.element.getBoundingClientRect();
+      var progress = clamp((vh * 0.9 - bounds.top) / (vh * 0.55 + bounds.height * 0.4), 0, 1);
+      return { gradient: gradient, progress: progress };
+    });
 
     if (nav) nav.classList.toggle("header-scrolled", scrollY > 10);
     if (backToTop) {
@@ -174,16 +212,9 @@
       }
     }
 
-    if (progress !== statementProgress) {
-      statementProgress = progress;
-      words.forEach(function (w, i) {
-        var start = i / words.length * 0.85;
-        var opacity = clamp((progress - start) / 0.15, 0, 1).toFixed(3);
-        if (opacity === wordOpacities[i]) return;
-        wordOpacities[i] = opacity;
-        w.style.setProperty("--wp", opacity);
-      });
-    }
+    gradientPositions.forEach(function (position) {
+      updateWordGradient(position.gradient, position.progress);
+    });
   }
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
   window.addEventListener("scroll", onScroll, { passive: true });

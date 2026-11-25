@@ -613,14 +613,14 @@ h3 {
   margin: 0 auto;
   font-weight: 700;
 }
-.statement-text[data-word-gradient] {
+.grad[data-word-gradient] {
   background-image: none;
 }
-.statement-text[data-word-gradient] .w {
+.grad[data-word-gradient] .w {
   display: inline-block;
   background-image: var(--grad);
-  background-size: var(--statement-gradient-width) 100%;
-  background-position: var(--statement-gradient-offset) 0;
+  background-size: var(--word-gradient-width) 100%;
+  background-position: var(--word-gradient-offset) 0;
   background-repeat: no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
@@ -963,7 +963,7 @@ h3 {
   color: #a1a1a6;
 }
 .dark .grad {
-  background-image: linear-gradient(
+  --grad: linear-gradient(
     90deg,
     #4da3ff 0%,
     #5ad7e8 50%,
@@ -1484,8 +1484,12 @@ textarea:focus {
   transition: opacity 0.9s var(--ease);
   transition-delay: calc(var(--d, 0) * 0.12s);
 }
-.js .rv.in {
+.js .rv.in,
+.js .rv[data-word-gradient] {
   opacity: 1;
+}
+.js .rv[data-word-gradient] {
+  transition: none;
 }
 
 /* 16. RESPONSIVE */
@@ -1640,7 +1644,7 @@ textarea:focus {
   .hero-video {
     display: none;
   }
-  .statement-text[data-word-gradient] .w {
+  .grad[data-word-gradient] .w {
     opacity: 1;
   }
   .hl-dot.is-active.is-playing i {
