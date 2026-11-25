@@ -19,6 +19,26 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
+    <script>
+      if (location.hash === "#contacto") {
+        const root = document.documentElement;
+        root.style.scrollBehavior = "auto";
+        window.addEventListener(
+          "pageshow",
+          function () {
+            if (location.hash === "#contacto") {
+              document
+                .getElementById("contacto")
+                .scrollIntoView({ behavior: "instant" });
+            }
+            requestAnimationFrame(function () {
+              root.style.removeProperty("scroll-behavior");
+            });
+          },
+          { once: true },
+        );
+      }
+    </script>
     <meta name="theme-color" content="#ffffff" />
     <meta
       name="description"
@@ -33,20 +53,27 @@
     <link rel="stylesheet" href="style.css" />
     <title>Valpo a Vela | Clases de vela y paseos en Valparaíso</title>
     <link rel="canonical" href="https://valpoavela.cl/" />
-    <meta property="og:title" content="Valpo a Vela | Clases de vela y paseos en Valparaíso" />
+    <meta
+      property="og:title"
+      content="Valpo a Vela | Clases de vela y paseos en Valparaíso"
+    />
     <meta
       property="og:description"
       content="Experiencias a vela en Valparaíso: clases prácticas en raquero, navegación acompañada para patrones, paseos recreativos y pesca. Zarpe desde Muelle Barón."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://valpoavela.cl/" />
-    <meta property="og:image" content="https://valpoavela.cl/fotos/portada.webp" />
+    <meta
+      property="og:image"
+      content="https://valpoavela.cl/fotos/portada.webp"
+    />
     <meta property="og:locale" content="es_CL" />
     <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
+        "@id": "https://valpoavela.cl/#valpo-a-vela",
         "name": "Valpo a Vela",
         "description": "Experiencias a vela en Valparaíso: clases prácticas en raquero, navegación acompañada para patrones, paseos recreativos y pesca. Zarpe desde Muelle Barón.",
         "url": "https://valpoavela.cl/",
@@ -74,7 +101,10 @@
             },
             {
               "@type": "Offer",
-              "itemOffered": { "@type": "Service", "name": "Experiencia en Hansa" }
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Experiencia en Hansa"
+              }
             },
             {
               "@type": "Offer",
@@ -212,7 +242,7 @@
                 de Valparaíso para celebrar, relajarse o simplemente conectar
                 con la naturaleza y el entorno marino.
               </p>
-              <a class="arrow-link light" href="#yate" data-open-activity
+              <a class="arrow-link light" href="/paseo-en-velero/"
                 >Ver el paseo privado</a
               >
             </div>
@@ -233,7 +263,7 @@
                 Aprende a leer el viento, ajustar las velas y participar en las
                 maniobras con un instructor a bordo.
               </p>
-              <a class="arrow-link light" href="#raquero" data-open-activity
+              <a class="arrow-link light" href="/clase-de-vela/"
                 >Ver la clase práctica</a
               >
             </div>
@@ -254,7 +284,7 @@
                 capitán que sabe dónde y cuándo pican. Más tiempo pescando,
                 menos tiempo buscando.
               </p>
-              <a class="arrow-link light" href="#pesca" data-open-activity
+              <a class="arrow-link light" href="/pesca-deportiva/"
                 >Ver salidas de pesca</a
               >
             </div>
@@ -431,16 +461,13 @@
                   loading="eager"
                   decoding="async"
                 />
-                <button
+                <a
                   class="pill fcard-details"
-                  type="button"
-                  aria-haspopup="dialog"
-                  aria-expanded="false"
-                  aria-controls="activityModal"
+                  href="/paseo-en-velero/"
                   data-activity-modal="activity-yate"
                 >
                   Ver detalles
-                </button>
+                </a>
               </div>
             </article>
 
@@ -468,16 +495,13 @@
                   loading="eager"
                   decoding="async"
                 />
-                <button
+                <a
                   class="pill fcard-details"
-                  type="button"
-                  aria-haspopup="dialog"
-                  aria-expanded="false"
-                  aria-controls="activityModal"
+                  href="/clase-de-vela/"
                   data-activity-modal="activity-raquero"
                 >
                   Ver detalles
-                </button>
+                </a>
               </div>
             </article>
 
@@ -507,16 +531,13 @@
                   loading="eager"
                   decoding="async"
                 />
-                <button
+                <a
                   class="pill fcard-details"
-                  type="button"
-                  aria-haspopup="dialog"
-                  aria-expanded="false"
-                  aria-controls="activityModal"
+                  href="/vela-inclusiva-hansa/"
                   data-activity-modal="activity-hansa"
                 >
                   Ver detalles
-                </button>
+                </a>
               </div>
             </article>
 
@@ -545,29 +566,43 @@
                   loading="eager"
                   decoding="async"
                 />
-                <button
+                <a
                   class="pill fcard-details"
-                  type="button"
-                  aria-haspopup="dialog"
-                  aria-expanded="false"
-                  aria-controls="activityModal"
+                  href="/pesca-deportiva/"
                   data-activity-modal="activity-pesca"
                 >
                   Ver detalles
-                </button>
+                </a>
               </div>
             </article>
 
-            <article class="fcard fcard-dark" id="practica">
+            <article class="fcard" id="practica">
               <div class="fcard-body">
-                <h3>¿Ya tienes licencia para navegar?</h3>
+                <h3>Práctica asistida para navegantes con licencia</h3>
                 <p>
-                  Coordinamos prácticas asistidas para que ganes confianza
-                  gobernando. Cuéntanos tu nivel y qué embarcación buscas.
+                  Gana confianza y experiencia a bordo con un instructor que te
+                  acompaña. Elige qué quieres reforzar, desde el timón y las
+                  velas hasta el clima y las cartas náuticas, y prepárate para
+                  salir a navegar con seguridad.
                 </p>
-                <a class="pill" href="#contacto" data-actividad="practica"
-                  >Consultar práctica asistida</a
-                >
+                <ul class="chips">
+                  <li>Para navegantes con licencia</li>
+                  <li>Práctica personalizada</li>
+                </ul>
+              </div>
+              <div class="fcard-media">
+                <img
+                  class="fcard-img"
+                  src="fotos/practica-asistida.webp"
+                  alt="Dos navegantes con chalecos salvavidas a bordo de un velero"
+                  width="2648"
+                  height="1548"
+                  loading="eager"
+                  decoding="async"
+                />
+                <a class="pill fcard-details" href="/practica-asistida/">
+                  Ver detalles
+                </a>
               </div>
             </article>
           </div>
@@ -774,52 +809,6 @@
               Si van a participar menores de edad, indícanos sus edades al
               escribirnos. La participación se define según la actividad y la
               embarcación.
-            </p>
-          </details>
-          <details>
-            <summary>¿Es una experiencia accesible?</summary>
-            <p>
-              La navegación en velero Hansa está pensada para facilitar la
-              participación a bordo y se personaliza con especial atención a la
-              accesibilidad. Cuéntanos tus necesidades y buscamos la mejor
-              opción.
-            </p>
-          </details>
-          <details>
-            <summary>
-              ¿Cuántas personas pueden participar en una clase de raquero?
-            </summary>
-            <p>
-              La clase práctica de raquero tiene un máximo de cuatro
-              participantes. Para paseos en veleros de mayor tamaño, la
-              capacidad se confirma según la embarcación disponible.
-            </p>
-          </details>
-          <details>
-            <summary>¿Cuánto dura la clase de raquero?</summary>
-            <p>
-              La duración mínima es de dos horas: 15 minutos para armado e
-              inducción, una hora y media de navegación práctica y 15 minutos
-              para desarmar la embarcación.
-            </p>
-          </details>
-          <details>
-            <summary>¿Qué incluye la clase?</summary>
-            <p>
-              Incluye chalecos salvavidas, apoyo de zodiac, acercamiento al
-              bote, acompañamiento de profesor o instructor, guía y certificado.
-              Consulta al coordinar la reserva cualquier requisito específico de
-              la actividad.
-            </p>
-          </details>
-          <details>
-            <summary>
-              ¿Ofrecen prácticas para quienes ya tienen licencia?
-            </summary>
-            <p>
-              Sí. Coordinamos prácticas acompañadas para navegantes con licencia
-              que quieren ganar confianza gobernando. Cuéntanos tu nivel y la
-              embarcación que buscas.
             </p>
           </details>
           <details>
@@ -1240,21 +1229,18 @@
             <h3>Técnicas de pesca</h3>
             <ul class="activity-modal-list">
               <li>
-                <strong>Trolling (hasta 6 personas)</strong
-                ><br />
+                <strong>Trolling (hasta 6 personas)</strong><br />
                 Los señuelos se arrastran mientras la embarcación navega,
                 cubriendo distintas zonas de la bahía mientras esperas la
                 picada.
               </li>
               <li>
-                <strong>Jigging (hasta 6 personas)</strong
-                ><br />
+                <strong>Jigging (hasta 6 personas)</strong><br />
                 Se trabaja un señuelo artificial llamado jig, dándole movimiento
                 con la caña a distintas profundidades para atraer a los peces.
               </li>
               <li>
-                <strong
-                  >Pesca de fondo (6 a 8 personas, según la salida)</strong
+                <strong>Pesca de fondo (6 a 8 personas, según la salida)</strong
                 ><br />
                 Se baja el aparejo con plomada y carnada hasta cerca del fondo y
                 se espera la picada. Es una técnica tranquila y muy

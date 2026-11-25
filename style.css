@@ -15,6 +15,9 @@
   --blue-h: #0077ed;
   --link: #0066cc;
   --grad: linear-gradient(90deg, #0071e3 0%, #2bb8d9 48%, #ffa94d 100%);
+  --section-title-size: clamp(38px, 6.6vw, 80px);
+  --section-description-size: clamp(17px, 1.6vw, 21px);
+  --activity-card-title-size: clamp(25px, 2.7vw, 32px);
   /* Apple usa SF Pro (tipografía propia, no distribuible en la web).
      En dispositivos Apple se usa la del sistema; en el resto, Inter, la más cercana. */
   --font:
@@ -125,13 +128,13 @@ h3 {
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
-  font-size: clamp(38px, 6.6vw, 80px);
+  font-size: var(--section-title-size);
   line-height: 1.06;
   letter-spacing: -0.035em;
   padding-bottom: 0.08em;
 }
 .lede {
-  font-size: clamp(17px, 1.6vw, 21px);
+  font-size: var(--section-description-size);
   line-height: 1.38;
   color: var(--gray);
   letter-spacing: -0.016em;
@@ -701,7 +704,7 @@ h3 {
   letter-spacing: -0.03em;
 }
 .fcard:not(.fcard-dark) h3 {
-  font-size: clamp(25px, 2.7vw, 32px);
+  font-size: var(--activity-card-title-size);
   line-height: 1.1;
   letter-spacing: -0.03em;
 }
@@ -729,6 +732,7 @@ h3 {
 .fcard-media {
   position: relative;
   height: calc(clamp(240px, 30vw, 360px) * 0.82);
+  background: var(--bg-2);
 }
 .fcard-img {
   width: 100%;
@@ -889,10 +893,10 @@ h3 {
     background 0.2s,
     transform 0.2s;
 }
-.activity-modal-step:enabled:hover {
+.activity-modal-step:not(:disabled):hover {
   background: var(--blue-h);
 }
-.activity-modal-step:enabled:active {
+.activity-modal-step:not(:disabled):active {
   transform: scale(0.96);
 }
 .activity-modal-step:disabled {
@@ -1153,6 +1157,119 @@ h3 {
   background: var(--bg-2);
 }
 
+/* PÁGINAS DE ACTIVIDAD */
+.activity-page .nav {
+  background: rgba(0, 0, 0, 0.92);
+}
+.activity-content {
+  width: min(100% - 2 * var(--pad), 1024px);
+  margin-inline: auto;
+  padding-block: clamp(40px, 7vw, 88px);
+  overflow-wrap: break-word;
+}
+.activity-page main {
+  padding-top: var(--nav-h);
+  color: #000;
+}
+article.activity-content {
+  padding-block-start: var(--pad);
+}
+.activity-content h1,
+.activity-page #actividad-faq {
+  font-size: calc(var(--section-title-size) * var(--activity-text-scale, 1));
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+}
+.activity-layout {
+  --activity-photo-gap: clamp(32px, 4vw, 48px);
+  display: flow-root;
+  margin-top: 24px;
+}
+.activity-description {
+  color: var(--gray);
+  font-size: calc(var(--section-description-size) * var(--activity-text-scale, 1));
+  line-height: 1.6;
+}
+.activity-photo {
+  float: left;
+  width: calc((100% - var(--activity-photo-gap)) / 4);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--radius);
+  margin: 0 var(--activity-photo-gap) 12px 0;
+}
+.activity-page main :is(h2, h3):not(#actividad-faq) {
+  color: var(--ink);
+  font-size: calc(var(--activity-card-title-size) * var(--activity-text-scale, 1));
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.activity-description > * + * {
+  margin-top: 12px;
+}
+.activity-description > h3 {
+  margin-top: 24px;
+}
+.activity-description .activity-modal-list {
+  display: block;
+  list-style-position: inside;
+  padding-inline-start: 0;
+  color: inherit;
+}
+.activity-description .activity-modal-list strong {
+  color: #000;
+}
+.activity-page main li::marker {
+  color: var(--blue);
+}
+.activity-description .activity-modal-accent {
+  color: var(--link);
+}
+.activity-content li + li {
+  margin-top: 10px;
+}
+.activity-page .faq-list {
+  max-width: min(100% - 2 * var(--pad), 65ch);
+}
+.activity-page .faq-list p {
+  color: var(--link);
+}
+.activity-contact,
+.activity-related ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 22px;
+}
+.activity-contact {
+  margin-top: 24px;
+}
+.activity-history {
+  display: flex;
+  gap: 8px;
+}
+.activity-related ul {
+  margin-top: 12px;
+}
+.activity-related li + li {
+  margin-top: 0;
+}
+.activity-related .pill {
+  text-align: center;
+}
+@media (max-width: 767px) {
+  .activity-page main {
+    --pad: clamp(32px, 8.5vw, 44px);
+  }
+  .activity-layout {
+    --activity-photo-gap: 16px;
+  }
+  .activity-photo {
+    width: 50%;
+  }
+}
+
 /* 12. PREGUNTAS FRECUENTES */
 .faq {
   padding: clamp(72px, 10vw, 120px) 0;
@@ -1319,6 +1436,9 @@ textarea:focus {
 }
 
 @media (min-width: 861px) {
+  .activity-page main {
+    --activity-text-scale: 0.9;
+  }
   .hl-track {
     --track-inset: max(var(--pad), min(calc((100vw - 1024px) / 2), 30vw - 270px));
   }

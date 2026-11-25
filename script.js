@@ -7,6 +7,18 @@
   var navigation = performance.getEntriesByType("navigation")[0];
   var isReload = navigation ? navigation.type === "reload"
     : performance.navigation && performance.navigation.type === 1;
+  var isActivityPage = document.body.classList.contains("activity-page");
+  function scrollToPageStart() {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }
+  if (isActivityPage) {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    var isHistoryTraversal = navigation ? navigation.type === "back_forward"
+      : performance.navigation && performance.navigation.type === 2;
+    window.addEventListener("pageshow", function (event) {
+      if (event.persisted || isHistoryTraversal) scrollToPageStart();
+    });
+  }
   if (isReload) {
     var scrollRestoration = history.scrollRestoration;
     if (scrollRestoration) history.scrollRestoration = "manual";
@@ -14,7 +26,7 @@
       history.replaceState(history.state, "", location.pathname + location.search);
     }
     window.addEventListener("pageshow", function () {
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      scrollToPageStart();
       if (scrollRestoration) {
         setTimeout(function () { history.scrollRestoration = scrollRestoration; }, 0);
       }
@@ -130,7 +142,7 @@
       })
       : null;
 
-    $$("#statementText, h2.grad").forEach(function (element) {
+    $$("#statementText, h2.grad, .activity-page h1.grad").forEach(function (element) {
       var words = [];
       Array.from(element.childNodes).forEach(function (node) {
         if (node.nodeType !== Node.TEXT_NODE) return;
@@ -477,7 +489,6 @@
   function closeActivityModal(restoreFocus) {
     if (!activityModal || !activityModal.open) return;
     activityModal.close();
-    if (activityModalTrigger) activityModalTrigger.setAttribute("aria-expanded", "false");
     restorePageScroll();
     if (restoreFocus && activityModalTrigger) activityModalTrigger.focus({ preventScroll: true });
     activityModalTrigger = null;
@@ -516,15 +527,11 @@
     lockPageScroll();
     activityModal.showModal();
     activityModalScroll.scrollTop = 0;
-    trigger.setAttribute("aria-expanded", "true");
     activityModalClose.focus({ preventScroll: true });
   }
 
   if (activityModal && activityModalTitle && activityModalContent && activityModalClose &&
       activityModalScroll && activityModalNavigation) {
-    activityTriggers.forEach(function (trigger) {
-      trigger.addEventListener("click", function () { openActivityModal(trigger); });
-    });
     $$("#hlTrack a[data-open-activity]").forEach(function (link) {
       var card = document.getElementById(link.hash.slice(1));
       var trigger = card && $(".fcard-details[data-activity-modal]", card);
@@ -556,6 +563,18 @@
     });
   }
 
+  // ---------------------------------------------------------- historial de las fichas
+  var activityBack = $("[data-activity-back]");
+  if (activityBack) {
+    activityBack.addEventListener("click", function (event) {
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+      var canGoBack = window.navigation ? window.navigation.canGoBack : history.length > 1;
+      if (!canGoBack) return;
+      event.preventDefault();
+      history.back();
+    });
+  }
+
   // ---------------------------------------------------------- mapa del viento
   var windWrap = $("#windWrap");
   var windCover = $("#windCover");
@@ -565,10 +584,18 @@
 
   // ---------------------------------------------------------- botones que preseleccionan actividad
   var select = $("#contact-activity-page");
-  document.addEventListener("click", function (e) {
-    var t = e.target.closest("[data-actividad]");
-    if (t && select) select.value = t.getAttribute("data-actividad");
-  });
+  if (select) {
+    var requestedActivity = new URLSearchParams(location.search).get("actividad");
+    if (requestedActivity && Array.from(select.options).some(function (option) {
+      return option.value === requestedActivity;
+    })) {
+      select.value = requestedActivity;
+    }
+    document.addEventListener("click", function (e) {
+      var link = e.target.closest("[data-actividad]");
+      if (link) select.value = link.getAttribute("data-actividad");
+    });
+  }
 
   // ---------------------------------------------------------- formulario → Formspree
   var form = $("#contact-form-page");
