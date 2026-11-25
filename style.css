@@ -1332,13 +1332,9 @@ textarea:focus {
   }
   .contact .form {
     align-content: space-between;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
     padding: clamp(16px, 2vw, 28px);
-    gap: 8px 14px;
-  }
-  .contact .form > :not(.field),
-  .contact .form > .field:has(textarea) {
-    grid-column: 1 / -1;
+    gap: 8px;
   }
   .contact .form :is(input, select, textarea) {
     padding-block: 8px;
