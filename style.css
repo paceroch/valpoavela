@@ -1117,6 +1117,7 @@ h3 {
   overflow: hidden;
   background: #16232d;
   color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
   border-radius: var(--radius);
   padding: clamp(26px, 3.4vw, 40px);
 }
@@ -1128,7 +1129,7 @@ h3 {
   transform: scale(1.3);
   transform-origin: 45% 74%;
   background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.68), rgba(0, 0, 0, 0.24)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.43), rgba(0, 0, 0, 0.03)),
     url("fotos/muelle-baron-zarpe.webp") 45% 74% / cover no-repeat;
 }
 .harbor-facts dt {
