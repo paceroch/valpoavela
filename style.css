@@ -1331,12 +1331,9 @@ textarea:focus {
   .hl-text > h3 {
     width: min(100%, calc(50vw - var(--track-inset) - var(--text-inset)));
   }
-  .hl-title-charter-desktop {
+  .hl-title-charter-start {
     display: block;
     white-space: nowrap;
-  }
-  .hl-title-charter-mobile {
-    display: none;
   }
   .hl-text > p {
     width: min(100%, calc(30vw - var(--track-inset) - var(--text-inset)));
@@ -1529,11 +1526,8 @@ textarea:focus {
   .hl-title-charter + p {
     width: min(calc(var(--card-width) * 0.43), 100%);
   }
-  .hl-title-charter-desktop {
-    display: none;
-  }
-  .hl-title-charter-mobile,
-  .hl-title-charter-mobile span,
+  .hl-title-charter-start,
+  .hl-title-charter-start span,
   .hl-title-charter-end {
     display: block;
   }
