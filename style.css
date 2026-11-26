@@ -662,7 +662,7 @@ h3 {
   display: none;
 }
 #actividades .track {
-  --card-width: calc(min(86vw, 640px) * 0.82);
+  --card-width: calc(min(86vw, 640px) * 0.82 * 1.05);
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: var(--card-width);
@@ -975,7 +975,7 @@ h3 {
   );
 }
 .specs {
-  width: calc(min(100% - 2 * var(--pad), 1024px) * 0.82);
+  width: calc(min(100% - 2 * var(--pad), 1024px) * 0.82 * 1.05);
   margin: 0 auto clamp(48px, 7vw, 80px);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1004,7 +1004,7 @@ h3 {
   color: #a1a1a6;
 }
 #capella .track {
-  --card-width: calc(min(78vw, 420px) * 0.82);
+  --card-width: calc(min(78vw, 420px) * 0.82 * 1.05);
 }
 .dark .gcard {
   flex: 0 0 auto;
@@ -1297,6 +1297,7 @@ article.activity-content {
   height: auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
+  background-color: var(--bg-2);
   border-radius: var(--radius);
   margin: 0 var(--activity-photo-gap) 12px 0;
 }
@@ -1753,10 +1754,10 @@ textarea:focus {
     display: block;
   }
   #actividades .track {
-    --card-width: calc(min(86vw, 640px) * 0.82 * 1.02);
+    --card-width: calc(min(86vw, 640px) * 0.82 * 1.02 * 1.05);
   }
   #capella .track {
-    --card-width: calc(min(88vw, 1024px) * 0.82);
+    --card-width: calc(min(88vw, 1024px) * 0.82 * 1.05);
   }
   .hl-track,
   .track {
