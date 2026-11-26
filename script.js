@@ -19,16 +19,16 @@
       if (event.persisted || isHistoryTraversal) scrollToPageStart();
     });
   }
-  if (isReload) {
+  if (isReload && !location.hash) {
     var scrollRestoration = history.scrollRestoration;
     if (scrollRestoration) history.scrollRestoration = "manual";
-    if (location.hash) {
-      history.replaceState(history.state, "", location.pathname + location.search);
-    }
+
     window.addEventListener("pageshow", function () {
       scrollToPageStart();
       if (scrollRestoration) {
-        setTimeout(function () { history.scrollRestoration = scrollRestoration; }, 0);
+        setTimeout(function () {
+          history.scrollRestoration = scrollRestoration;
+        }, 0);
       }
     }, { once: true });
   }
