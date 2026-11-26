@@ -662,7 +662,7 @@ h3 {
   display: none;
 }
 #actividades .track {
-  --card-width: calc(min(86vw, 640px) * 0.82 * 1.05);
+  --card-width: calc(min(86vw, 640px) * 0.82);
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: var(--card-width);
@@ -975,7 +975,7 @@ h3 {
   );
 }
 .specs {
-  width: calc(min(100% - 2 * var(--pad), 1024px) * 0.82 * 1.05);
+  width: calc(min(100% - 2 * var(--pad), 1024px) * 0.82);
   margin: 0 auto clamp(48px, 7vw, 80px);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1004,7 +1004,7 @@ h3 {
   color: #a1a1a6;
 }
 #capella .track {
-  --card-width: calc(min(78vw, 420px) * 0.82 * 1.05);
+  --card-width: calc(min(78vw, 420px) * 0.82);
 }
 .dark .gcard {
   flex: 0 0 auto;
@@ -1797,6 +1797,7 @@ textarea:focus {
     text-align: left;
   }
   .specs {
+    width: calc(min(100% - 2 * var(--pad), 1024px) * 0.82 * 1.05);
     grid-template-columns: repeat(2, 1fr);
   }
   .boat-grid,
