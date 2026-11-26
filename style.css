@@ -1538,6 +1538,16 @@ textarea:focus {
 }
 
 @media (min-width: 861px) {
+  .hl-track,
+  .track {
+    scroll-snap-type: none;
+    cursor: grab;
+    user-select: none;
+  }
+  :is(.hl-track, .track).is-dragging,
+  :is(.hl-track, .track).is-dragging * {
+    cursor: grabbing;
+  }
   .activity-page main {
     --activity-text-scale: 0.9;
   }

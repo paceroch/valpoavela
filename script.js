@@ -264,11 +264,116 @@
     return function () { return scrolling; };
   }
 
+  var desktopCarousel = window.matchMedia("(min-width: 861px)");
+  function enableCarouselDrag(track) {
+    var pointerId = null;
+    var dragging = false;
+    var suppressClick = false;
+    var lastX, lastMove, position, velocity;
+    var frame = 0;
+
+    function stopMomentum() {
+      cancelAnimationFrame(frame);
+      frame = 0;
+    }
+
+    function scrollToPosition(left) {
+      var max = track.scrollWidth - track.clientWidth;
+      position = clamp(left, 0, max);
+      track.scrollLeft = position;
+      return position !== left;
+    }
+
+    function endDrag() {
+      pointerId = null;
+      dragging = false;
+      track.classList.remove("is-dragging");
+    }
+
+    track.addEventListener("pointerdown", function (event) {
+      stopMomentum();
+      suppressClick = false;
+      if (!desktopCarousel.matches || event.pointerType !== "mouse" || event.button !== 0 ||
+          event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+      if (track.scrollWidth <= track.clientWidth) return;
+      pointerId = event.pointerId;
+      lastX = event.clientX;
+      lastMove = event.timeStamp;
+      position = track.scrollLeft;
+      velocity = 0;
+      track.scrollTo({ left: position, behavior: "instant" });
+    });
+
+    track.addEventListener("pointermove", function (event) {
+      if (event.pointerId !== pointerId) return;
+      var delta = lastX - event.clientX;
+      if (!dragging) {
+        if (Math.abs(delta) < 5) return;
+        dragging = true;
+        suppressClick = true;
+        track.setPointerCapture(pointerId);
+        track.classList.add("is-dragging");
+      }
+      if (!delta) return;
+      event.preventDefault();
+      var previous = position;
+      scrollToPosition(position + delta);
+      velocity = (position - previous) / Math.max(8, event.timeStamp - lastMove);
+      lastX = event.clientX;
+      lastMove = event.timeStamp;
+    });
+
+    track.addEventListener("pointerup", function (event) {
+      if (event.pointerId !== pointerId) return;
+      var coast = dragging && !reduceMotion && event.timeStamp - lastMove < 80;
+      endDrag();
+      if (!coast || Math.abs(velocity) < 0.1) return;
+
+      // Frena según el tiempo transcurrido, sin depender de la frecuencia de pantalla.
+      var friction = 0.004;
+      var lastFrame = performance.now();
+      function glide(now) {
+        var decay = Math.exp(-Math.max(0, now - lastFrame) * friction);
+        var reachedEdge = scrollToPosition(position + velocity * (1 - decay) / friction);
+        velocity *= decay;
+        lastFrame = now;
+        frame = !reachedEdge && Math.abs(velocity) >= 0.03 ? requestAnimationFrame(glide) : 0;
+      }
+      frame = requestAnimationFrame(glide);
+    });
+
+    track.addEventListener("pointerleave", function () {
+      if (!dragging) endDrag();
+    });
+    ["pointercancel", "lostpointercapture"].forEach(function (type) {
+      track.addEventListener(type, function (event) {
+        if (event.pointerId === pointerId) endDrag();
+      });
+    });
+    track.addEventListener("dragstart", function (event) {
+      if (pointerId !== null) event.preventDefault();
+    });
+    track.addEventListener("click", function (event) {
+      if (!suppressClick || !event.detail) return;
+      event.preventDefault();
+      event.stopPropagation();
+      suppressClick = false;
+    }, true);
+    track.addEventListener("wheel", stopMomentum, { passive: true });
+    track.addEventListener("keydown", stopMomentum);
+    desktopCarousel.addEventListener("change", function () {
+      endDrag();
+      stopMomentum();
+    });
+    return stopMomentum;
+  }
+
   // ---------------------------------------------------------- carrusel de destacados
   var track = $("#hlTrack");
   var dotsWrap = $("#hlDots");
   var playBtn = $("#hlPlay");
   if (track && dotsWrap) {
+    var stopMomentum = enableCarouselDrag(track);
     var cards = $$(".hl-card", track);
     var dots = cards.map(function (c, i) {
       var b = document.createElement("button");
@@ -310,6 +415,7 @@
       timer = setTimeout(function () { goTo((index + 1) % cards.length, false); }, TIME);
     }
     function goTo(i, user) {
+      stopMomentum();
       index = i;
       track.scrollTo({ left: cards[i].offsetLeft - cards[0].offsetLeft, behavior: reduceMotion ? "auto" : "smooth" });
       if (user) playing = false;
@@ -350,6 +456,7 @@
     var tr = $(".track", sc);
     var indicator = sc.nextElementSibling;
     if (!tr) return;
+    var stopMomentum = enableCarouselDrag(tr);
     var dotsWrap = $(".hl-dots", indicator);
     var play = $(".hl-play", indicator);
     var cards = Array.from(tr.children);
@@ -375,6 +482,7 @@
       return dot;
     });
     function goTo(i) {
+      stopMomentum();
       tr.scrollTo({ left: positions[i], behavior: reduceMotion ? "auto" : "smooth" });
     }
     function schedule() {
