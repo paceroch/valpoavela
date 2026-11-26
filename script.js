@@ -575,6 +575,8 @@
   if (activityBack) {
     activityBack.addEventListener("click", function (event) {
       if (event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+      if (!document.referrer ||
+          new URL(document.referrer).origin !== location.origin) return;
       var canGoBack = window.navigation ? window.navigation.canGoBack : history.length > 1;
       if (!canGoBack) return;
       event.preventDefault();
