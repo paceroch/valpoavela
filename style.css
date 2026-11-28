@@ -1740,6 +1740,80 @@ textarea:focus {
 }
 
 /* 16. RESPONSIVE */
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  :root {
+    --section-title-size: clamp(48px, 5.56vw, 80px);
+    --section-description-size: clamp(17px, 1.46vw, 21px);
+    --activity-card-title-size: clamp(25px, 2.223vw, 32px);
+  }
+  .hero .grad {
+    font-size: min(var(--section-title-size), max(48px, 8.89svh));
+  }
+  #actividades .track {
+    --activity-card-scale: 0.8;
+    --card-width: calc(clamp(420px, 36.45vw, 524.8px) * var(--activity-card-scale));
+  }
+  #actividades .fcard {
+    border-radius: calc(var(--radius) * var(--activity-card-scale));
+  }
+  #actividades .fcard-body {
+    padding: calc(19.68px * var(--activity-card-scale))
+      calc(19.68px * var(--activity-card-scale))
+      calc(11.48px * var(--activity-card-scale));
+    gap: calc(9.84px * var(--activity-card-scale));
+  }
+  #actividades .fcard h3 {
+    font-size: calc(var(--activity-card-title-size) * var(--activity-card-scale));
+  }
+  #actividades .fcard-body > p {
+    font-size: calc(16px * var(--activity-card-scale));
+  }
+  #actividades .chips {
+    gap: calc(8px * var(--activity-card-scale));
+  }
+  #actividades .chips li {
+    font-size: calc(14px * var(--activity-card-scale));
+    padding: calc(6px * var(--activity-card-scale))
+      calc(clamp(6px, 2vw, 14px) * var(--activity-card-scale));
+  }
+  #actividades .fcard-media {
+    height: calc(clamp(240px, 30vw, 360px) * 0.82 * var(--activity-card-scale));
+  }
+  #actividades .fcard-details {
+    font-size: calc(17px * var(--activity-card-scale));
+    padding: calc(12px * var(--activity-card-scale))
+      calc(22px * var(--activity-card-scale));
+    right: calc(20px * var(--activity-card-scale));
+    bottom: calc(20px * var(--activity-card-scale));
+  }
+  .hl-card {
+    max-height: max(345px, 63.96vh);
+  }
+  .hl-text h3 {
+    font-size: clamp(28px, 2.778vw, 40px);
+  }
+  .hl-text p {
+    font-size: clamp(16px, 1.32vw, 19px);
+  }
+
+  /* La vista de referencia conserva sus saltos y el resumen de tres líneas. */
+  @media not all and (width: 1440px) and (height: 900px) {
+    .hl-text > h3 {
+      max-inline-size: 520px;
+      min-block-size: 2.2em;
+    }
+    .hl-title-charter-start {
+      white-space: normal;
+    }
+    #actividades .fcard-body > p {
+      display: block;
+      overflow: visible;
+      -webkit-line-clamp: none;
+      line-clamp: none;
+    }
+  }
+}
+
 @media (max-width: 860px) {
   .hl-track {
     --card-width: 90vw;
