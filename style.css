@@ -1751,7 +1751,11 @@ textarea:focus {
   }
   #actividades .track {
     --activity-card-scale: 0.8;
+    --activity-card-text-increase: 3px;
+    --activity-card-height: 412px;
     --card-width: calc(clamp(420px, 36.45vw, 524.8px) * var(--activity-card-scale));
+    min-block-size: calc(var(--activity-card-height) + 12px);
+    grid-template-rows: auto auto auto minmax(150px, 1fr);
   }
   #actividades .fcard {
     border-radius: calc(var(--radius) * var(--activity-card-scale));
@@ -1763,24 +1767,38 @@ textarea:focus {
     gap: calc(9.84px * var(--activity-card-scale));
   }
   #actividades .fcard h3 {
-    font-size: calc(var(--activity-card-title-size) * var(--activity-card-scale));
+    font-size: calc(
+      var(--activity-card-title-size) * var(--activity-card-scale) + var(--activity-card-text-increase)
+    );
+  }
+  #actividades :is(.fcard h3, .chips li) {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
   }
   #actividades .fcard-body > p {
-    font-size: calc(16px * var(--activity-card-scale));
+    font-size: calc(16px * var(--activity-card-scale) + var(--activity-card-text-increase));
   }
   #actividades .chips {
     gap: calc(8px * var(--activity-card-scale));
+    min-inline-size: 0;
   }
   #actividades .chips li {
-    font-size: calc(14px * var(--activity-card-scale));
+    font-size: calc(14px * var(--activity-card-scale) + var(--activity-card-text-increase));
     padding: calc(6px * var(--activity-card-scale))
       calc(clamp(6px, 2vw, 14px) * var(--activity-card-scale));
   }
   #actividades .fcard-media {
-    height: calc(clamp(240px, 30vw, 360px) * 0.82 * var(--activity-card-scale));
+    height: auto;
+  }
+  #actividades .fcard-img {
+    position: absolute;
+    inset: 0;
   }
   #actividades .fcard-details {
-    font-size: calc(17px * var(--activity-card-scale));
+    font-size: calc(17px * var(--activity-card-scale) + var(--activity-card-text-increase));
     padding: calc(12px * var(--activity-card-scale))
       calc(22px * var(--activity-card-scale));
     right: calc(20px * var(--activity-card-scale));
@@ -1798,6 +1816,9 @@ textarea:focus {
 
   /* La vista de referencia conserva sus saltos y el resumen de tres líneas. */
   @media not all and (width: 1440px) and (height: 900px) {
+    #actividades .track {
+      --activity-card-height: clamp(417px, calc(373px + 4vw), 430px);
+    }
     .hl-text > h3 {
       max-inline-size: 520px;
       min-block-size: 2.2em;
@@ -1806,10 +1827,8 @@ textarea:focus {
       white-space: normal;
     }
     #actividades .fcard-body > p {
-      display: block;
-      overflow: visible;
-      -webkit-line-clamp: none;
-      line-clamp: none;
+      -webkit-line-clamp: 4;
+      line-clamp: 4;
     }
   }
 }
